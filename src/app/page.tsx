@@ -1,145 +1,296 @@
 import Link from "next/link";
+import Container from "@/components/Container";
+import Reveal from "@/components/Reveal";
+import SectionHeading from "@/components/SectionHeading";
+import Counter from "@/components/Counter";
+import Hero from "@/components/home/Hero";
+import Testimonials from "@/components/Testimonials";
+import FAQ from "@/components/FAQ";
+import ContactForm from "@/components/ContactForm";
+import BeforeAfterSlider from "@/components/BeforeAfterSlider";
+import Photo from "@/components/ui/Photo";
+import Icon from "@/components/ui/Icon";
+import { services, projects, stats, badges, process } from "@/lib/data";
+import { site } from "@/lib/site";
 
-const stats = [
-  { value: "120+", label: "Proiecte livrate" },
-  { value: "98%", label: "Clienți mulțumiți" },
-  { value: "8 ani", label: "Experiență" },
-  { value: "24h", label: "Timp de răspuns" },
-];
-
-const services = [
-  {
-    title: "Design UI/UX",
-    desc: "Interfețe clare și elegante, gândite în jurul utilizatorului.",
-    icon: (
-      <path d="M4 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Zm5 14h6M12 15v4" />
-    ),
-  },
-  {
-    title: "Dezvoltare web",
-    desc: "Site-uri și aplicații rapide, scalabile, cu cod curat.",
-    icon: <path d="m8 9-3 3 3 3m8-6 3 3-3 3M14 5l-4 14" />,
-  },
-  {
-    title: "Branding",
-    desc: "Identitate vizuală memorabilă, coerentă pe toate canalele.",
-    icon: <path d="M12 3v18M5 8l7-5 7 5-7 5-7-5Z" />,
-  },
-];
-
-export default function Home() {
+export default function HomePage() {
   return (
     <>
-      {/* Hero */}
-      <section className="relative">
-        <div className="mx-auto max-w-6xl px-5 pb-16 pt-24 text-center sm:pt-32">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium text-zinc-300">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            Disponibili pentru proiecte noi
-          </span>
+      <Hero />
 
-          <h1 className="mx-auto mt-7 max-w-3xl text-5xl font-bold leading-[1.05] tracking-tight text-white sm:text-7xl">
-            Experiențe digitale <span className="text-gradient">premium</span>{" "}
-            pentru brandul tău
-          </h1>
+      {/* Trust badges */}
+      <section className="border-y border-white/10 bg-charcoal/60">
+        <Container className="grid grid-cols-2 gap-px py-2 lg:grid-cols-4">
+          {badges.map((b) => (
+            <Reveal key={b.title} className="flex items-center gap-3 p-5">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-gold/30 bg-gold/10 text-gold">
+                <Icon name={b.icon} className="h-5 w-5" />
+              </span>
+              <span>
+                <span className="block text-sm font-semibold text-white">
+                  {b.title}
+                </span>
+                <span className="block text-xs text-concrete">{b.sub}</span>
+              </span>
+            </Reveal>
+          ))}
+        </Container>
+      </section>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400">
-            Suntem Nova Studio — proiectăm și construim site-uri moderne, rapide
-            și memorabile. De la idee la lansare, ne ocupăm de fiecare detaliu.
-          </p>
-
-          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link
-              href="/contact"
-              className="w-full rounded-xl bg-white px-6 py-3 text-sm font-semibold text-zinc-900 transition-transform hover:scale-[1.03] sm:w-auto"
-            >
-              Începe un proiect
-            </Link>
-            <Link
-              href="/services"
-              className="w-full rounded-xl border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10 sm:w-auto"
-            >
-              Vezi serviciile
-            </Link>
-          </div>
-        </div>
-
-        {/* Stats */}
-        <div className="mx-auto max-w-6xl px-5">
-          <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 md:grid-cols-4">
+      {/* Stats — animated counters */}
+      <section className="py-16">
+        <Container>
+          <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
             {stats.map((s) => (
-              <div key={s.label} className="bg-[#0b0c14] px-6 py-8 text-center">
-                <div className="text-3xl font-bold text-white">{s.value}</div>
-                <div className="mt-1 text-sm text-zinc-400">{s.label}</div>
-              </div>
+              <Reveal key={s.label} className="text-center">
+                <div className="font-display text-4xl font-extrabold text-gold-gradient sm:text-5xl">
+                  <Counter
+                    to={s.value}
+                    decimals={s.decimals ?? 0}
+                    suffix={s.suffix ?? ""}
+                  />
+                </div>
+                <div className="mt-2 text-sm text-concrete">{s.label}</div>
+              </Reveal>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
 
-      {/* Services preview */}
-      <section className="mx-auto max-w-6xl px-5 py-24">
-        <div className="max-w-2xl">
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Ce putem face împreună
-          </h2>
-          <p className="mt-4 text-zinc-400">
-            Servicii complete pentru a-ți duce produsul digital la nivelul
-            următor.
-          </p>
-        </div>
-
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {services.map((s) => (
-            <div
-              key={s.title}
-              className="group rounded-2xl border border-white/10 bg-white/[0.03] p-7 transition-colors hover:border-white/20 hover:bg-white/[0.05]"
-            >
-              <div className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-indigo-500/20 to-cyan-400/20 text-indigo-300 ring-1 ring-inset ring-white/10">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-6 w-6"
+      {/* Services */}
+      <section id="services" className="py-20">
+        <Container>
+          <SectionHeading
+            eyebrow="What we do"
+            title="Premium services, delivered properly"
+            subtitle="From a single room to a complete refurbishment, every project gets the same meticulous standard of workmanship."
+          />
+          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {services.map((s, i) => (
+              <Reveal key={s.slug} delay={(i % 3) * 0.08}>
+                <Link
+                  href={`/services#${s.slug}`}
+                  className="group flex h-full flex-col rounded-2xl border border-white/10 bg-surface/40 p-7 transition-colors hover:border-gold/40 hover:bg-surface"
                 >
-                  {s.icon}
-                </svg>
-              </div>
-              <h3 className="mt-5 text-lg font-semibold text-white">{s.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-zinc-400">
-                {s.desc}
-              </p>
-              <Link
-                href="/services"
-                className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-indigo-300 transition-colors group-hover:text-indigo-200"
-              >
-                Află mai mult
-                <span aria-hidden>→</span>
-              </Link>
-            </div>
-          ))}
-        </div>
+                  <span className="grid h-12 w-12 place-items-center rounded-xl border border-gold/30 bg-gold/10 text-gold">
+                    <Icon name={s.icon} className="h-6 w-6" />
+                  </span>
+                  <h3 className="mt-5 text-lg font-semibold text-white">
+                    {s.title}
+                  </h3>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-concrete">
+                    {s.short}
+                  </p>
+                  <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-gold">
+                    Learn more
+                    <Icon
+                      name="arrow"
+                      className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                    />
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </Container>
       </section>
 
-      {/* CTA band */}
-      <section className="mx-auto max-w-6xl px-5 pb-8">
-        <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-indigo-600/20 via-violet-600/10 to-cyan-500/20 px-8 py-16 text-center">
-          <h2 className="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Hai să construim ceva remarcabil
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-zinc-300">
-            Spune-ne despre proiectul tău și revenim cu o propunere în 24 de ore.
-          </p>
-          <Link
-            href="/contact"
-            className="mt-8 inline-block rounded-xl bg-white px-7 py-3 text-sm font-semibold text-zinc-900 transition-transform hover:scale-[1.03]"
-          >
-            Contactează-ne
-          </Link>
-        </div>
+      {/* Project showcase */}
+      <section className="py-20">
+        <Container>
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <SectionHeading
+              eyebrow="Our work"
+              title="Recent projects"
+              subtitle="A glimpse of the spaces we've transformed across Hertfordshire and North London."
+            />
+            <Reveal>
+              <Link
+                href="/projects"
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:border-gold hover:text-gold"
+              >
+                View all projects
+                <Icon name="arrow" className="h-4 w-4" />
+              </Link>
+            </Reveal>
+          </div>
+
+          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {projects.slice(0, 3).map((p, i) => (
+              <Reveal key={p.title} delay={i * 0.08}>
+                <Link
+                  href="/projects"
+                  className="group block overflow-hidden rounded-2xl border border-white/10"
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-105">
+                      <Photo variant={p.variant} icon={services[i]?.icon} />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 p-5">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-gold">
+                        {p.category} · {p.location}
+                      </span>
+                      <h3 className="mt-1 text-lg font-semibold text-white">
+                        {p.title}
+                      </h3>
+                    </div>
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* Before / after */}
+      <section className="py-20">
+        <Container>
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            <SectionHeading
+              eyebrow="Before & after"
+              title="The transformation speaks for itself"
+              subtitle="Drag the slider to see the difference our team makes. Tired, dated spaces become bright, premium rooms built to last."
+            />
+            <Reveal>
+              <BeforeAfterSlider
+                before={
+                  <Photo
+                    tone="before"
+                    variant={2}
+                    icon="bath"
+                    caption="Dated & tired"
+                  />
+                }
+                after={
+                  <Photo
+                    tone="after"
+                    variant={1}
+                    icon="bath"
+                    caption="Premium finish"
+                  />
+                }
+              />
+            </Reveal>
+          </div>
+        </Container>
+      </section>
+
+      {/* Process timeline */}
+      <section className="border-y border-white/10 bg-charcoal/40 py-20">
+        <Container>
+          <SectionHeading
+            center
+            eyebrow="How it works"
+            title="A simple, transparent process"
+            subtitle="No surprises — just a clear path from first call to finished room."
+          />
+          <ol className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
+            {process.map((step, i) => (
+              <Reveal key={step.title} delay={i * 0.06}>
+                <li className="relative">
+                  <span className="font-display text-3xl font-extrabold text-gold/30">
+                    0{i + 1}
+                  </span>
+                  <h3 className="mt-2 text-lg font-semibold text-white">
+                    {step.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-concrete">
+                    {step.desc}
+                  </p>
+                </li>
+              </Reveal>
+            ))}
+          </ol>
+        </Container>
+      </section>
+
+      {/* Testimonials */}
+      <section id="testimonials" className="py-20">
+        <Container>
+          <SectionHeading
+            center
+            eyebrow="Testimonials"
+            title="Rated 4.9/5 by our customers"
+            subtitle="Don't just take our word for it — here's what homeowners across Hertfordshire say."
+          />
+          <div className="mt-12">
+            <Testimonials />
+          </div>
+        </Container>
+      </section>
+
+      {/* FAQ */}
+      <section id="faq" className="py-20">
+        <Container>
+          <SectionHeading
+            center
+            eyebrow="FAQ"
+            title="Frequently asked questions"
+          />
+          <div className="mt-12">
+            <FAQ />
+          </div>
+        </Container>
+      </section>
+
+      {/* Contact */}
+      <section id="contact" className="py-20">
+        <Container>
+          <div className="grid gap-12 lg:grid-cols-2">
+            <div>
+              <SectionHeading
+                eyebrow="Get in touch"
+                title="Start your project today"
+                subtitle="Tell us what you have in mind and we'll arrange a free, no-obligation consultation and quote."
+              />
+              <div className="mt-8 space-y-4">
+                <a
+                  href={site.phoneHref}
+                  className="flex items-center gap-4 rounded-xl border border-white/10 bg-surface/40 p-4 transition-colors hover:border-gold/40"
+                >
+                  <span className="grid h-11 w-11 place-items-center rounded-full bg-gold/10 text-gold">
+                    <Icon name="phone" className="h-5 w-5" />
+                  </span>
+                  <span>
+                    <span className="block text-xs text-concrete">Call us</span>
+                    <span className="block font-medium text-white">
+                      {site.phoneDisplay}
+                    </span>
+                  </span>
+                </a>
+                <a
+                  href={`mailto:${site.email}`}
+                  className="flex items-center gap-4 rounded-xl border border-white/10 bg-surface/40 p-4 transition-colors hover:border-gold/40"
+                >
+                  <span className="grid h-11 w-11 place-items-center rounded-full bg-gold/10 text-gold">
+                    <Icon name="mail" className="h-5 w-5" />
+                  </span>
+                  <span>
+                    <span className="block text-xs text-concrete">Email</span>
+                    <span className="block font-medium text-white">
+                      {site.email}
+                    </span>
+                  </span>
+                </a>
+                <div className="flex items-center gap-4 rounded-xl border border-white/10 bg-surface/40 p-4">
+                  <span className="grid h-11 w-11 place-items-center rounded-full bg-gold/10 text-gold">
+                    <Icon name="pin" className="h-5 w-5" />
+                  </span>
+                  <span>
+                    <span className="block text-xs text-concrete">Based in</span>
+                    <span className="block font-medium text-white">
+                      {site.baseTown}, {site.region}
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <Reveal>
+              <ContactForm />
+            </Reveal>
+          </div>
+        </Container>
       </section>
     </>
   );

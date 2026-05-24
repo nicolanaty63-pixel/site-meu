@@ -1,10 +1,26 @@
 @import "tailwindcss";
 
 @theme {
-  --color-base: #07080d;
-  --color-panel: #0e1018;
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
-    Roboto, Helvetica, Arial, sans-serif;
+  /* Surfaces — charcoal black */
+  --color-ink: #08080a;
+  --color-charcoal: #0f0f12;
+  --color-surface: #151519;
+  --color-surface-2: #1c1c22;
+
+  /* Concrete grays */
+  --color-concrete: #9a9aa2;
+  --color-concrete-dark: #5c5c64;
+
+  /* Gold accents */
+  --color-gold: #c8a24c;
+  --color-gold-light: #e7cd8c;
+  --color-gold-dark: #9c7a30;
+
+  /* Typography */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: var(--font-sora), var(--font-inter), ui-sans-serif, system-ui,
+    sans-serif;
 }
 
 :root {
@@ -16,42 +32,95 @@ html {
 }
 
 body {
-  background-color: #07080d;
-  color: #d4d4d8;
+  background-color: #08080a;
+  color: #c9c9d1;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-/* Subtle dotted/grid backdrop used behind sections */
-.bg-grid {
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+  /* Offset anchored sections for the sticky navbar */
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
 }
 
-/* Premium gradient text */
-.text-gradient {
-  background: linear-gradient(90deg, #818cf8 0%, #a78bfa 45%, #22d3ee 100%);
+/* ---- Utilities ---- */
+
+/* Premium gold gradient text */
+.text-gold-gradient {
+  background: linear-gradient(100deg, #e7cd8c 0%, #c8a24c 50%, #9c7a30 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-/* Thin custom scrollbar */
+/* Subtle architectural grid backdrop */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(
+    ellipse 75% 55% at 50% 0%,
+    #000 35%,
+    transparent 100%
+  );
+}
+
+/* Fine hairline border helper */
+.hairline {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Glassmorphism panel */
+.glass {
+  background: rgba(21, 21, 25, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Concrete-like surface for image placeholders */
+.surface-concrete {
+  background-color: #16161a;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.04), transparent 45%),
+    radial-gradient(circle at 80% 0%, rgba(200, 162, 76, 0.07), transparent 40%),
+    linear-gradient(135deg, #1a1a1f 0%, #0c0c0f 100%);
+}
+
+::selection {
+  background: rgba(200, 162, 76, 0.3);
+  color: #fff;
+}
+
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #07080d;
+  background: #08080a;
 }
 ::-webkit-scrollbar-thumb {
-  background: #26263a;
+  background: #2a2a31;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #34344e;
+  background: #3a3a44;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
