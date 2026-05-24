@@ -4,7 +4,7 @@ import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
 import Counter from "@/components/Counter";
 import Hero from "@/components/home/Hero";
-import Testimonials from "@/components/Testimonials";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import FAQ from "@/components/FAQ";
 import ContactForm from "@/components/ContactForm";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
@@ -42,15 +42,17 @@ export default function HomePage() {
         <Container>
           <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
             {stats.map((s) => (
-              <Reveal key={s.label} className="text-center">
-                <div className="font-display text-4xl font-extrabold text-gold-gradient sm:text-5xl">
-                  <Counter
-                    to={s.value}
-                    decimals={s.decimals ?? 0}
-                    suffix={s.suffix ?? ""}
-                  />
+              <Reveal key={s.label}>
+                <div className="glass-strong rounded-2xl p-6 text-center">
+                  <div className="font-display text-4xl font-extrabold text-gold-gradient sm:text-5xl">
+                    <Counter
+                      to={s.value}
+                      decimals={s.decimals ?? 0}
+                      suffix={s.suffix ?? ""}
+                    />
+                  </div>
+                  <div className="mt-2 text-sm text-concrete">{s.label}</div>
                 </div>
-                <div className="mt-2 text-sm text-concrete">{s.label}</div>
               </Reveal>
             ))}
           </div>
@@ -69,8 +71,8 @@ export default function HomePage() {
             {services.map((s, i) => (
               <Reveal key={s.slug} delay={(i % 3) * 0.08}>
                 <Link
-                  href={`/services#${s.slug}`}
-                  className="group flex h-full flex-col rounded-2xl border border-white/10 bg-surface/40 p-7 transition-colors hover:border-gold/40 hover:bg-surface"
+                  href={`/services/${s.slug}`}
+                  className="group flex h-full flex-col rounded-2xl border border-white/10 bg-surface/40 p-7 transition-all duration-300 hover:-translate-y-1 hover:border-gold/40 hover:bg-surface hover:shadow-[0_20px_60px_-25px_rgba(200,162,76,0.45)]"
                 >
                   <span className="grid h-12 w-12 place-items-center rounded-xl border border-gold/30 bg-gold/10 text-gold">
                     <Icon name={s.icon} className="h-6 w-6" />
@@ -124,7 +126,7 @@ export default function HomePage() {
                 >
                   <div className="relative aspect-[4/3] overflow-hidden">
                     <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-105">
-                      <Photo variant={p.variant} icon={services[i]?.icon} />
+                      <Photo variant={p.variant} icon={p.icon} />
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                     <div className="absolute inset-x-0 bottom-0 p-5">
@@ -211,12 +213,49 @@ export default function HomePage() {
           <SectionHeading
             center
             eyebrow="Testimonials"
-            title="Rated 4.9/5 by our customers"
-            subtitle="Don't just take our word for it — here's what homeowners across Hertfordshire say."
+            title="Loved by homeowners across Hertfordshire"
+            subtitle="Don't just take our word for it — here's what our customers say about working with us."
           />
           <div className="mt-12">
-            <Testimonials />
+            <TestimonialsSection />
           </div>
+        </Container>
+      </section>
+
+      {/* Cinematic CTA */}
+      <section className="relative overflow-hidden py-24">
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <div className="surface-concrete absolute inset-0 opacity-70" />
+          <div className="absolute left-1/2 top-1/2 h-[26rem] w-[42rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/15 blur-[150px]" />
+          <div className="bg-grid absolute inset-0 opacity-30" />
+          <div className="grain absolute inset-0 opacity-[0.05]" />
+        </div>
+        <Container>
+          <Reveal className="mx-auto max-w-3xl text-center">
+            <h2 className="text-4xl font-extrabold leading-tight text-white sm:text-5xl">
+              Start your transformation today
+            </h2>
+            <p className="mx-auto mt-5 max-w-xl text-lg text-concrete">
+              Free, no-obligation quotes. Join {site.reviewCount}+ homeowners who
+              trusted us with their renovation.
+            </p>
+            <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-gold px-8 py-4 font-semibold text-ink transition-transform hover:scale-[1.03]"
+              >
+                Get a free quote
+                <Icon name="arrow" className="h-4 w-4" />
+              </Link>
+              <a
+                href={site.phoneHref}
+                className="glass inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-8 py-4 font-semibold text-white transition-colors hover:border-gold/50"
+              >
+                <Icon name="phone" className="h-4 w-4 text-gold" />
+                Call {site.phoneDisplay}
+              </a>
+            </div>
+          </Reveal>
         </Container>
       </section>
 

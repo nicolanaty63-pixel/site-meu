@@ -21,22 +21,22 @@ const values = [
   {
     icon: "ruler" as const,
     title: "Attention to detail",
-    desc: "We obsess over the details others miss — clean lines, perfect joints and a flawless finish every time.",
+    desc: "Customers talk about our high quality finish and great workmanship. We obsess over the details others rush — level floors, perfect tile lines and flawless seals.",
   },
   {
     icon: "clock" as const,
     title: "Punctual & reliable",
-    desc: "We turn up when we say we will and keep to the timeline we agree. Your time matters.",
+    desc: "Fast and reliable, every time. We turn up when we say we will, keep to the timeline we agree and keep you updated throughout.",
   },
   {
     icon: "broom" as const,
     title: "Respect for your home",
-    desc: "Dust sheets down, areas protected and a full clean before we leave. We treat your home like our own.",
+    desc: "Clean and tidy every single day — dust sheets down, areas protected and a full clean before we leave. We treat your home like our own.",
   },
   {
     icon: "handshake" as const,
     title: "Friendly communication",
-    desc: "Clear, honest updates throughout — no jargon, no surprises, just straightforward conversation.",
+    desc: "Approachable, professional people who keep you informed throughout — no jargon, no surprises, just clear and honest conversation.",
   },
 ];
 
@@ -72,10 +72,10 @@ export default function AboutPage() {
                 </p>
                 <p>
                   We&apos;re a close-knit team of skilled tradespeople who genuinely
-                  care about the work. That&apos;s why our customers consistently
-                  highlight our punctuality, cleanliness, communication and the
-                  quality of our finish — and why so many come back to us and
-                  recommend us to friends.
+                  care about the work — and we treat every home as if it were our
+                  own. It&apos;s why customers describe us as fast and reliable,
+                  professional and clean and tidy, with a high quality finish and
+                  great workmanship in every job.
                 </p>
                 <p>
                   No shortcuts, no mess left behind, no surprises. Just premium

@@ -35,7 +35,7 @@ export const services: Service[] = [
     title: "Bathroom Renovations",
     short: "Luxury bathrooms designed and built end to end.",
     description:
-      "Complete bathroom renovations from concept to completion — walk-in showers, freestanding baths, underfloor heating, premium tiling and flawless waterproofing.",
+      "Turn a tired bathroom into a calm, spa-like retreat. We design and build complete bathroom renovations — walk-in showers, freestanding baths, premium tiling, underfloor heating and flawless waterproofing. Every join sealed, every tile aligned, every detail considered.",
     features: [
       "Full design & supply service",
       "Wet rooms & walk-in showers",
@@ -50,7 +50,7 @@ export const services: Service[] = [
     title: "Kitchen Renovations",
     short: "Bespoke kitchens fitted to the highest standard.",
     description:
-      "Kitchen renovation specialists delivering bespoke fitted kitchens, worktops, splashbacks and integrated appliances with precise carpentry and clean lines.",
+      "The kitchen is the heart of the home, so it deserves to be done right. As kitchen renovation specialists, we fit bespoke kitchens, worktops, splashbacks and integrated appliances with precise carpentry and clean, modern lines.",
     features: [
       "Bespoke fitted kitchens",
       "Worktops & splashbacks",
@@ -65,7 +65,7 @@ export const services: Service[] = [
     title: "Tiling",
     short: "Precision tiling for floors, walls and wet areas.",
     description:
-      "Expert tiling contractors working with porcelain, ceramic, natural stone and large-format tiles — perfectly aligned, sealed and finished.",
+      "Crisp, perfectly aligned tiling makes all the difference. Our expert tiling contractors work with porcelain, ceramic, natural stone and large-format tiles across floors, walls and wet areas — sealed, grouted and finished to a flawless standard.",
     features: [
       "Floor & wall tiling",
       "Large-format & natural stone",
@@ -80,7 +80,7 @@ export const services: Service[] = [
     title: "Laminate Flooring",
     short: "Hard-wearing laminate, installed seamlessly.",
     description:
-      "Professional laminate flooring installation with proper subfloor preparation, underlay and crisp trims for a durable, premium finish.",
+      "Smart, hard-wearing and superb value. Our laminate flooring installation includes proper subfloor preparation, acoustic underlay, precise cutting and neat trims — so your new floor looks seamless and feels solid underfoot for years.",
     features: [
       "Subfloor preparation",
       "Acoustic underlay",
@@ -95,7 +95,7 @@ export const services: Service[] = [
     title: "Flooring Installation",
     short: "Engineered wood, LVT, vinyl and more.",
     description:
-      "Flooring contractors fitting engineered wood, luxury vinyl tile (LVT), vinyl and solid wood with levelled subfloors and immaculate detailing.",
+      "Beautiful flooring transforms a room, and we install it properly. As flooring contractors we fit engineered and solid wood, luxury vinyl tile (LVT) and vinyl — levelling subfloors, laying with precision and finishing every edge cleanly for floors that last.",
     features: [
       "Engineered & solid wood",
       "Luxury vinyl tile (LVT)",
@@ -110,7 +110,7 @@ export const services: Service[] = [
     title: "Home Refurbishment & Building",
     short: "General building and full home improvements.",
     description:
-      "Complete home refurbishment and general building work — plastering, partitions, joinery, decorating and full project management under one trusted team.",
+      "Planning something bigger? Our home refurbishment and general building service brings everything under one trusted team — plastering, partitions, carpentry, decorating and full project management, with one point of contact and one consistent standard.",
     features: [
       "Full home refurbishment",
       "Plastering & partitions",
@@ -127,67 +127,131 @@ export type Project = {
   category: string;
   location: string;
   summary: string;
-  tags: string[];
+  services: string[];
+  duration: string;
   variant: number;
+  beforeVariant: number;
+  icon: IconName;
   span?: boolean; // larger masonry tile
+  // Optional real photography. Set these to a /public path (e.g.
+  // "/projects/spa-bathroom.webp") or a licensed Unsplash/Pexels URL to replace
+  // the placeholder. Leave undefined to keep the placeholder.
+  image?: string;
+  beforeImage?: string;
+  afterImage?: string;
 };
 
 export const projects: Project[] = [
   {
-    title: "Spa-Style Bathroom",
+    title: "Spa-Style Master Bathroom",
     category: "Bathroom",
-    location: "St Albans",
+    location: "St Albans, Hertfordshire",
     summary:
-      "A complete bathroom transformation with a walk-in rain shower, large-format porcelain and warm underfloor heating.",
-    tags: ["Bathroom", "Tiling", "Underfloor heating"],
+      "A dated family bathroom reimagined as a calm, hotel-style retreat — walk-in rain shower, large-format porcelain and warm underfloor heating.",
+    services: ["Bathroom renovation", "Tiling", "Underfloor heating"],
+    duration: "12 days",
     variant: 0,
+    beforeVariant: 2,
+    icon: "bath",
     span: true,
   },
   {
     title: "Modern Shaker Kitchen",
     category: "Kitchen",
-    location: "Watford",
+    location: "Watford, Hertfordshire",
     summary:
-      "Bespoke shaker units, quartz worktops and a herringbone LVT floor for a bright, family-ready kitchen.",
-    tags: ["Kitchen", "Flooring"],
+      "Bespoke shaker units, quartz worktops and a herringbone floor combine for a bright, hard-working family kitchen.",
+    services: ["Kitchen renovation", "Flooring", "Tiling"],
+    duration: "3 weeks",
     variant: 1,
+    beforeVariant: 3,
+    icon: "kitchen",
   },
   {
-    title: "Herringbone Hallway",
+    title: "Herringbone Oak Hallway",
     category: "Flooring",
     location: "Hemel Hempstead",
     summary:
-      "Engineered oak laid in a classic herringbone pattern with a perfectly levelled subfloor.",
-    tags: ["Flooring", "Engineered wood"],
+      "Engineered oak laid in a classic herringbone pattern over a perfectly levelled subfloor, with crisp trims throughout.",
+    services: ["Flooring installation", "Engineered wood"],
+    duration: "5 days",
     variant: 2,
+    beforeVariant: 4,
+    icon: "floor",
   },
   {
     title: "Natural Stone Wet Room",
     category: "Bathroom",
     location: "Rickmansworth",
     summary:
-      "Fully tanked wet room finished in honed natural stone with a linear drain.",
-    tags: ["Bathroom", "Tiling"],
+      "A fully tanked wet room finished in honed natural stone with a discreet linear drain and frameless glass screen.",
+    services: ["Bathroom renovation", "Tiling", "Waterproofing"],
+    duration: "2 weeks",
     variant: 3,
+    beforeVariant: 0,
+    icon: "bath",
   },
   {
-    title: "Open-Plan Refurbishment",
-    category: "Refurbishment",
+    title: "Open-Plan Ground Floor",
+    category: "Interiors",
     location: "Kings Langley",
     summary:
-      "A full ground-floor refurbishment — partitions removed, replastered, rewired and redecorated throughout.",
-    tags: ["Refurbishment", "Building"],
+      "A complete ground-floor refurbishment — partitions removed, replastered, rewired and redecorated for bright, modern open-plan living.",
+    services: ["Home refurbishment", "Building", "Decorating"],
+    duration: "6 weeks",
     variant: 4,
+    beforeVariant: 5,
+    icon: "build",
     span: true,
   },
   {
-    title: "Feature Tiled Splashback",
+    title: "Zellige Feature Splashback",
     category: "Tiling",
     location: "North London",
     summary:
-      "A statement zellige-style splashback bringing texture and warmth to a contemporary kitchen.",
-    tags: ["Tiling", "Kitchen"],
+      "A statement zellige-style splashback bringing texture, warmth and a handmade finish to a contemporary kitchen.",
+    services: ["Tiling", "Kitchen"],
+    duration: "4 days",
     variant: 5,
+    beforeVariant: 1,
+    icon: "tile",
+  },
+  {
+    title: "Warm Laminate Living Space",
+    category: "Laminate",
+    location: "Watford",
+    summary:
+      "Hard-wearing wood-effect laminate with acoustic underlay and neat skirting — a fast, flawless refresh for a busy living room.",
+    services: ["Laminate flooring", "Skirting & trims"],
+    duration: "4 days",
+    variant: 1,
+    beforeVariant: 2,
+    icon: "plank",
+  },
+  {
+    title: "Minimalist Guest Bathroom",
+    category: "Bathroom",
+    location: "St Albans",
+    summary:
+      "Clean lines and concealed fittings in a compact guest bathroom, finished with large-format tiles and brushed brass.",
+    services: ["Bathroom renovation", "Large-format tiling"],
+    duration: "10 days",
+    variant: 2,
+    beforeVariant: 3,
+    icon: "bath",
+  },
+  {
+    title: "Luxury Kitchen Diner",
+    category: "Kitchen",
+    location: "Berkhamsted",
+    summary:
+      "A sociable kitchen-diner with a large island, porcelain floor tiles and integrated appliances — built for entertaining.",
+    services: ["Kitchen renovation", "Tiling", "Flooring"],
+    duration: "4 weeks",
+    variant: 0,
+    beforeVariant: 4,
+    icon: "kitchen",
+    span: true,
   },
 ];
 
@@ -198,6 +262,7 @@ export type Testimonial = {
   headline: string;
   quote: string;
   job: string;
+  date: string;
 };
 
 export const testimonials: Testimonial[] = [
@@ -207,8 +272,9 @@ export const testimonials: Testimonial[] = [
     rating: 5,
     headline: "Fantastic workmanship",
     quote:
-      "From start to finish the standard was outstanding. The team arrived on time every day, kept everything spotless and the finished bathroom is better than we imagined.",
+      "Fantastic workmanship from start to finish. The team were professional, punctual and left everything clean and tidy every day. The finish is better than we imagined.",
     job: "Bathroom renovation",
+    date: "March 2026",
   },
   {
     name: "James P.",
@@ -216,8 +282,9 @@ export const testimonials: Testimonial[] = [
     rating: 5,
     headline: "Very professional and reliable",
     quote:
-      "Reliable, tidy and genuinely professional. They did exactly what they said they would, when they said they would. I wouldn't hesitate to use them again.",
+      "Fast, reliable and a pleasure to deal with. They did exactly what they promised, when they promised. I wouldn't hesitate to recommend them.",
     job: "Kitchen renovation",
+    date: "February 2026",
   },
   {
     name: "Priya K.",
@@ -225,8 +292,9 @@ export const testimonials: Testimonial[] = [
     rating: 5,
     headline: "Attention to detail was excellent",
     quote:
-      "The attention to detail was excellent — every tile and joint is perfect. You can tell they take real pride in their work.",
+      "The attention to detail was excellent — every tile is perfect. You can tell they take real pride in their work.",
     job: "Tiling & flooring",
+    date: "January 2026",
   },
   {
     name: "David R.",
@@ -234,8 +302,9 @@ export const testimonials: Testimonial[] = [
     rating: 5,
     headline: "Great communication",
     quote:
-      "Brilliant communication throughout. Any questions I had were answered quickly and clearly, and there were no surprises along the way.",
+      "Brilliant communication throughout and a beautiful, high quality finish. Honest, professional and trustworthy from start to finish.",
     job: "Home refurbishment",
+    date: "December 2025",
   },
   {
     name: "Emma L.",
@@ -243,8 +312,9 @@ export const testimonials: Testimonial[] = [
     rating: 5,
     headline: "Clean and tidy",
     quote:
-      "They treated our home with real respect — dust sheets down every day and a full clean before they left. So refreshing to find tradespeople like this.",
+      "So clean and tidy — they treated our home with real respect, dust sheets down every day and a full clean before they left. The new floors look gorgeous.",
     job: "Laminate flooring",
+    date: "November 2025",
   },
   {
     name: "Michael T.",
@@ -252,8 +322,29 @@ export const testimonials: Testimonial[] = [
     rating: 5,
     headline: "Would highly recommend",
     quote:
-      "Friendly, punctual and the quality of the finish is superb. I've already recommended them to two neighbours. Top-class team.",
+      "Great workmanship and genuinely friendly people. Punctual, and the quality of the finish is superb — we've already recommended them to neighbours.",
     job: "Flooring installation",
+    date: "October 2025",
+  },
+  {
+    name: "Grace H.",
+    location: "Berkhamsted",
+    rating: 5,
+    headline: "Punctual and spotless",
+    quote:
+      "Punctual every single morning and incredibly tidy — you'd never have known a major job was happening. The new bathroom is absolutely stunning.",
+    job: "Bathroom renovation",
+    date: "April 2026",
+  },
+  {
+    name: "Tom B.",
+    location: "Watford",
+    rating: 5,
+    headline: "Reliable and great value",
+    quote:
+      "Reliable, professional and great value. They kept us updated daily and the quality of the finish is first class. Couldn't be happier with the result.",
+    job: "Kitchen & tiling",
+    date: "March 2026",
   },
 ];
 
@@ -321,7 +412,7 @@ export type Stat = {
 export const stats: Stat[] = [
   { value: 4.9, decimals: 1, suffix: "/5", label: "Average rating" },
   { value: 100, suffix: "+", label: "Happy customers" },
-  { value: 8, suffix: "+", label: "Years experience" },
+  { value: 15, suffix: "+", label: "Years experience" },
   { value: 100, suffix: "%", label: "Recommended" },
 ];
 

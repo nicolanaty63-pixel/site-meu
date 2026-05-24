@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { nav, site } from "@/lib/site";
 import { services } from "@/lib/data";
+import { legalPages } from "@/lib/legal";
 import Icon from "@/components/ui/Icon";
+import ManageCookiesButton from "@/components/consent/ManageCookiesButton";
+import Logo from "@/components/Logo";
 
 export default function Footer() {
   return (
@@ -9,14 +12,13 @@ export default function Footer() {
       <div className="mx-auto grid max-w-6xl gap-12 px-5 py-16 sm:px-6 md:grid-cols-12">
         {/* Brand */}
         <div className="md:col-span-4">
-          <div className="flex items-center gap-3">
-            <span className="grid h-10 w-10 place-items-center rounded-md border border-gold/40 bg-gradient-to-br from-gold/20 to-transparent font-display text-lg font-bold text-gold">
-              N
-            </span>
-            <span className="font-display text-lg font-bold text-white">
-              {site.name}
-            </span>
-          </div>
+          <Link
+            href="/"
+            className="inline-block"
+            aria-label={`${site.name} home`}
+          >
+            <Logo className="h-16 w-auto" />
+          </Link>
           <p className="mt-5 max-w-xs text-sm leading-relaxed text-concrete">
             {site.tagline} in {site.baseTown}, {site.region}. Bathrooms,
             kitchens, tiling, flooring and complete home refurbishment — done
@@ -42,6 +44,22 @@ export default function Footer() {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link
+                href="/areas"
+                className="text-sm text-concrete transition-colors hover:text-gold"
+              >
+                Areas we cover
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/free-quote"
+                className="text-sm text-concrete transition-colors hover:text-gold"
+              >
+                Free quote
+              </Link>
+            </li>
           </ul>
         </div>
 
@@ -52,7 +70,7 @@ export default function Footer() {
             {services.map((s) => (
               <li key={s.slug}>
                 <Link
-                  href={`/services#${s.slug}`}
+                  href={`/services/${s.slug}`}
                   className="text-sm text-concrete transition-colors hover:text-gold"
                 >
                   {s.title}
@@ -103,13 +121,27 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-5 py-6 text-xs text-concrete-dark sm:flex-row sm:px-6">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 py-6 text-xs text-concrete-dark sm:flex-row sm:px-6">
           <p>
             © {new Date().getFullYear()} {site.legalName}. All rights reserved.
           </p>
-          <p>
-            Builders & renovation specialists in {site.region} · Fully insured
-          </p>
+          <nav
+            aria-label="Legal"
+            className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2"
+          >
+            {legalPages.map((p) => (
+              <Link
+                key={p.href}
+                href={p.href}
+                className="transition-colors hover:text-gold"
+              >
+                {p.label}
+              </Link>
+            ))}
+            <ManageCookiesButton className="transition-colors hover:text-gold">
+              Cookie preferences
+            </ManageCookiesButton>
+          </nav>
         </div>
       </div>
     </footer>

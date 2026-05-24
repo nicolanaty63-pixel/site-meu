@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { services } from "@/lib/data";
 import Icon from "@/components/ui/Icon";
+import FormConsent from "@/components/FormConsent";
 
 // Front-end demo form. To make it live, post `FormData` to an API route,
 // a form service (Formspree/Resend) or wire up the mailto fallback.
@@ -12,6 +13,9 @@ export default function ContactForm() {
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    // Honeypot anti-spam: silently ignore if the hidden field was filled.
+    const hp = e.currentTarget.elements.namedItem("_hp") as HTMLInputElement | null;
+    if (hp?.value) return;
     setSent(true);
   }
 
@@ -91,9 +95,12 @@ export default function ContactForm() {
           className="w-full resize-none rounded-xl border border-white/10 bg-ink px-4 py-3 text-sm text-white placeholder-concrete-dark outline-none transition-colors focus:border-gold/60"
         />
       </div>
+      <div className="mt-5">
+        <FormConsent />
+      </div>
       <button
         type="submit"
-        className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-6 py-3.5 font-semibold text-ink transition-transform hover:scale-[1.01]"
+        className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-6 py-3.5 font-semibold text-ink transition-transform hover:scale-[1.01]"
       >
         Request free quote
         <Icon name="arrow" className="h-4 w-4" />

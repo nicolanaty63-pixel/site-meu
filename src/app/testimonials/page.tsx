@@ -4,10 +4,9 @@ import Container from "@/components/Container";
 import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
 import PageHero from "@/components/PageHero";
-import Testimonials from "@/components/Testimonials";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import Icon from "@/components/ui/Icon";
 import { testimonials } from "@/lib/data";
-import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Testimonials — 4.9/5 from 100+ Customers",
@@ -35,26 +34,10 @@ export default function TestimonialsPage() {
         subtitle="We're proud of our reputation — built one happy customer at a time."
       />
 
-      {/* Rating summary */}
+      {/* Rating + trust badges + carousel */}
       <section className="py-16">
         <Container>
-          <Reveal className="mx-auto flex max-w-md flex-col items-center rounded-2xl border border-white/10 bg-surface/40 p-8 text-center">
-            <div className="font-display text-6xl font-extrabold text-gold-gradient">
-              {site.rating}
-            </div>
-            <Stars n={5} />
-            <p className="mt-3 text-concrete">
-              Based on {site.reviewCount}+ reviews from homeowners across{" "}
-              {site.region}.
-            </p>
-          </Reveal>
-        </Container>
-      </section>
-
-      {/* Carousel */}
-      <section className="pb-8">
-        <Container>
-          <Testimonials />
+          <TestimonialsSection />
         </Container>
       </section>
 

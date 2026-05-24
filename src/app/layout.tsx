@@ -4,6 +4,10 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import ScrollProgress from "@/components/ScrollProgress";
+import ConsentProvider from "@/components/consent/ConsentProvider";
+import CookieBanner from "@/components/consent/CookieBanner";
+import Analytics from "@/components/consent/Analytics";
 import Schema from "@/components/Schema";
 import { site } from "@/lib/site";
 
@@ -76,12 +80,18 @@ export default function RootLayout({
         <div className="pointer-events-none fixed inset-0 -z-10">
           <div className="bg-grid absolute inset-0" />
           <div className="absolute left-1/2 top-[-12rem] h-[32rem] w-[60rem] -translate-x-1/2 rounded-full bg-gold/10 blur-[160px]" />
+          <div className="absolute bottom-[-12rem] right-[-8rem] h-[32rem] w-[32rem] rounded-full bg-navy/50 blur-[150px]" />
         </div>
 
-        <Navbar />
-        <main className="pt-20">{children}</main>
-        <Footer />
-        <WhatsAppButton />
+        <ConsentProvider>
+          <ScrollProgress />
+          <Navbar />
+          <main className="pt-40 sm:pt-48">{children}</main>
+          <Footer />
+          <WhatsAppButton />
+          <CookieBanner />
+          <Analytics />
+        </ConsentProvider>
       </body>
     </html>
   );

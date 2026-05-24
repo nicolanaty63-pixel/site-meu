@@ -32,7 +32,7 @@ export const site = {
   // Reputation
   rating: 4.9,
   reviewCount: 100,
-  yearsExperience: 8,
+  yearsExperience: 15,
   projectsCompleted: 100,
 
   // URLs

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Icon from "@/components/ui/Icon";
 import type { IconName } from "@/lib/data";
 
@@ -11,6 +12,9 @@ const tints = [
 ];
 
 type Props = {
+  /** Real photo path or URL. When set, a real image is shown instead of the placeholder. */
+  src?: string;
+  alt?: string;
   label?: string;
   caption?: string;
   variant?: number;
@@ -20,11 +24,14 @@ type Props = {
 };
 
 /**
- * Tasteful placeholder for project imagery. Designed to look intentional
- * (dark concrete + gold accent) so the layout reads as premium before real
- * photography is dropped in. Swap for <Image/> when assets are available.
+ * Project imagery. If `src` is provided it renders a real photo (next/image,
+ * cover-fit, lazy-loaded). Otherwise it shows a tasteful dark placeholder so
+ * the layout always looks intentional. Drop real photos in /public/projects
+ * and set the `image` fields in lib/data.ts to go live.
  */
 export default function Photo({
+  src,
+  alt,
   label,
   caption,
   variant = 0,
@@ -33,32 +40,42 @@ export default function Photo({
   className = "",
 }: Props) {
   const tint = tints[variant % tints.length];
-  const grayscale = tone === "before" ? "grayscale" : "";
+  // Only desaturate the placeholder for "before"; real photos keep natural colour.
+  const grayscale = !src && tone === "before" ? "grayscale" : "";
 
   return (
     <div
       className={`surface-concrete relative h-full w-full overflow-hidden ${grayscale} ${className}`}
     >
-      <div className={`absolute inset-0 bg-gradient-to-br ${tint}`} />
-      {/* fine architectural lines */}
-      <div className="bg-grid absolute inset-0 opacity-40" />
-      {/* watermark icon */}
-      <div className="absolute inset-0 grid place-items-center">
-        <Icon name={icon} className="h-16 w-16 text-white/10" />
-      </div>
+      {src ? (
+        <Image
+          src={src}
+          alt={alt ?? label ?? "Nicolla Contractors project"}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+        />
+      ) : (
+        <>
+          <div className={`absolute inset-0 bg-gradient-to-br ${tint}`} />
+          <div className="bg-grid absolute inset-0 opacity-40" />
+          <div className="absolute inset-0 grid place-items-center">
+            <Icon name={icon} className="h-16 w-16 text-white/10" />
+          </div>
+        </>
+      )}
+
       {tone !== "default" && (
-        <span className="absolute left-3 top-3 rounded-full bg-black/50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white/90 backdrop-blur">
+        <span className="absolute left-3 top-3 z-10 rounded-full bg-black/50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white/90 backdrop-blur">
           {tone}
         </span>
       )}
       {(label || caption) && (
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+        <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/70 to-transparent p-4">
           {label && (
             <div className="text-sm font-semibold text-white">{label}</div>
           )}
-          {caption && (
-            <div className="text-xs text-concrete">{caption}</div>
-          )}
+          {caption && <div className="text-xs text-concrete">{caption}</div>}
         </div>
       )}
     </div>
