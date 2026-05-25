@@ -133,6 +133,7 @@ export type Project = {
   beforeVariant: number;
   icon: IconName;
   span?: boolean; // larger masonry tile
+  wideCard?: boolean; // render the gallery card as 16:9 (whole room) instead of the span/portrait crop
   // Optional real photography. Set these to a /public path (e.g.
   // "/projects/spa-bathroom.webp") or a licensed Unsplash/Pexels URL to replace
   // the placeholder. Leave undefined to keep the placeholder.
@@ -153,7 +154,13 @@ export const projects: Project[] = [
     variant: 0,
     beforeVariant: 2,
     icon: "bath",
-    span: true,
+    // Full 16:9 card so the whole room shows uncropped (this project only).
+    wideCard: true,
+    image: "/projects/spa-bathroom-after.webp",
+    afterImage: "/projects/spa-bathroom-after.webp",
+    // BEFORE: generate the "same room, pre-renovation" photo (see brief),
+    // run `node scripts/optimize-projects.mjs`, then uncomment this line:
+    // beforeImage: "/projects/spa-bathroom-before.webp",
   },
   {
     title: "Modern Shaker Kitchen",

@@ -94,18 +94,29 @@ export default function ProjectGallery({
       {/* Masonry grid */}
       <div className="columns-1 gap-6 sm:columns-2 lg:columns-3 [&>*]:mb-6">
         {filtered.map((p, i) => (
-          <motion.button
+          <button
             key={p.title}
             onClick={() => setIndex(i)}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.5, delay: (i % 3) * 0.05 }}
             className="group block w-full break-inside-avoid overflow-hidden rounded-2xl border border-white/10 bg-surface/40 text-left transition-all duration-300 hover:-translate-y-1.5 hover:border-gold/40 hover:shadow-[0_30px_80px_-30px_rgba(200,162,76,0.5)]"
           >
+            {/* The entrance reveal lives on this inner wrapper, never on the
+                column item itself. An inline transform on a CSS multi-column
+                child breaks masonry — cards clip, overlap, leave gaps, or get
+                stranded hidden — so the <button> that flows into the columns
+                must stay transform-free. */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: (i % 3) * 0.05 }}
+            >
             <div
               className={`relative overflow-hidden ${
-                p.span ? "aspect-[4/5]" : "aspect-[4/3]"
+                p.wideCard
+                  ? "aspect-video"
+                  : p.span
+                    ? "aspect-[4/5]"
+                    : "aspect-[4/3]"
               }`}
             >
               <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
@@ -153,7 +164,8 @@ export default function ProjectGallery({
                 </span>
               </div>
             </div>
-          </motion.button>
+            </motion.div>
+          </button>
         ))}
       </div>
 
