@@ -7,6 +7,8 @@ import PageHero from "@/components/PageHero";
 import Counter from "@/components/Counter";
 import Photo from "@/components/ui/Photo";
 import Icon from "@/components/ui/Icon";
+import ParallaxImage from "@/components/motion/ParallaxImage";
+import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import { stats } from "@/lib/data";
 import { site } from "@/lib/site";
 
@@ -49,33 +51,92 @@ export default function AboutPage() {
         subtitle={`${site.name} is a construction and renovation company in ${site.baseTown}, ${site.region}, delivering high-quality workmanship across the region.`}
       />
 
-      {/* Story */}
-      <section className="py-20">
+      {/* Story — editorial craft feature */}
+      <section className="relative overflow-hidden py-24">
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute left-[-6%] top-1/4 h-[26rem] w-[26rem] rounded-full bg-gold/[0.06] blur-[150px]" />
+        </div>
         <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-2">
-            <Reveal>
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10">
-                <Photo variant={4} icon="build" caption="Craftsmanship you can trust" />
+          <Stagger className="grid items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
+            {/* Editorial image — single tall portrait, layered + colour-graded */}
+            <StaggerItem variant="tile" className="relative">
+              {/* Layered ambient glow */}
+              <div className="pointer-events-none absolute -inset-4 -z-10">
+                <div className="absolute bottom-0 left-0 h-2/3 w-2/3 rounded-full bg-gold/10 blur-3xl" />
+                <div className="absolute right-0 top-0 h-1/2 w-1/2 rounded-full bg-navy/40 blur-3xl" />
               </div>
-            </Reveal>
-            <div>
-              <SectionHeading
-                eyebrow="Our story"
-                title="Craftsmanship, honesty and pride in every job"
-              />
-              <div className="mt-5 space-y-4 leading-relaxed text-concrete">
+              {/* Offset matte frame for depth (desktop) */}
+              <div className="pointer-events-none absolute inset-0 hidden translate-x-5 translate-y-5 rounded-[2rem] border border-gold/15 lg:block" />
+
+              <figure className="group relative aspect-[4/5] overflow-hidden rounded-[1.75rem] border border-white/10 shadow-[0_44px_100px_-45px_rgba(0,0,0,0.95)]">
+                <ParallaxImage amount={12}>
+                  <div className="h-full w-full transition-transform duration-[1300ms] ease-out group-hover:scale-105">
+                    <Photo
+                      src="/about/about-craft.webp"
+                      alt="Hand-laid herringbone parquet flooring — precision joinery in progress"
+                      sizes="(max-width: 1023px) 100vw, 560px"
+                    />
+                  </div>
+                </ParallaxImage>
+
+                {/* Editorial depth — the warm grade itself is applied uniformly
+                    by <Photo> (shared brand tone); this adds navy/ink falloff */}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/5 to-navy/25" />
+                <div className="vignette pointer-events-none absolute inset-0" />
+                <div className="grain pointer-events-none absolute inset-0 opacity-[0.06]" />
+
+                {/* Architectural photo caption */}
+                <figcaption className="absolute bottom-5 left-5 flex items-center gap-3">
+                  <span className="h-9 w-px bg-gold/70" />
+                  <span className="leading-tight">
+                    <span className="block text-[11px] font-semibold uppercase tracking-[0.22em] text-gold">
+                      In the workshop
+                    </span>
+                    <span className="block text-sm font-medium text-white/90">
+                      Herringbone parquet, laid by hand
+                    </span>
+                  </span>
+                </figcaption>
+              </figure>
+
+              {/* Floating credential plate — text-led, offset bottom-right */}
+              <div className="glass-strong absolute -bottom-5 -right-3 z-20 hidden items-center gap-3 rounded-2xl px-5 py-3.5 shadow-xl sm:flex lg:-right-5">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-gold/30 bg-gold/10 text-gold">
+                  <Icon name="ruler" className="h-5 w-5" />
+                </span>
+                <span className="leading-tight">
+                  <span className="block text-sm font-semibold text-white">
+                    Precision, by hand
+                  </span>
+                  <span className="block text-xs text-concrete">
+                    Every join considered
+                  </span>
+                </span>
+              </div>
+            </StaggerItem>
+
+            {/* Story copy */}
+            <StaggerItem className="lg:pl-2">
+              <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+                <span className="h-px w-6 bg-gold/60" />
+                Our story
+              </span>
+              <h2 className="mt-4 text-3xl font-bold leading-[1.12] text-white sm:text-4xl lg:text-[2.6rem]">
+                Craftsmanship, honesty and pride in every job
+              </h2>
+              <p className="mt-6 text-lg leading-relaxed text-concrete">
+                For over {site.yearsExperience} years, Nicolla Contractors has
+                helped homeowners across {site.region} and North London transform
+                their spaces — from spa-style bathrooms and bespoke kitchens to
+                flawless tiling, flooring and full refurbishments.
+              </p>
+              <div className="mt-4 space-y-4 leading-relaxed text-concrete">
                 <p>
-                  For over {site.yearsExperience} years, Nicolla Contractors has
-                  helped homeowners across {site.region} and North London
-                  transform their spaces — from spa-style bathrooms and bespoke
-                  kitchens to flawless tiling, flooring and full refurbishments.
-                </p>
-                <p>
-                  We&apos;re a close-knit team of skilled tradespeople who genuinely
-                  care about the work — and we treat every home as if it were our
-                  own. It&apos;s why customers describe us as fast and reliable,
-                  professional and clean and tidy, with a high quality finish and
-                  great workmanship in every job.
+                  We&apos;re a close-knit team of skilled tradespeople who
+                  genuinely care about the work — and we treat every home as if it
+                  were our own. It&apos;s why customers describe us as fast and
+                  reliable, professional and clean and tidy, with a high quality
+                  finish in every job.
                 </p>
                 <p>
                   No shortcuts, no mess left behind, no surprises. Just premium
@@ -84,13 +145,16 @@ export default function AboutPage() {
               </div>
               <Link
                 href="/contact"
-                className="mt-8 inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 font-semibold text-ink transition-transform hover:scale-[1.03]"
+                className="btn-sheen group mt-8 inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 font-semibold text-ink shadow-[0_10px_40px_-12px_rgba(200,162,76,0.6)] transition-transform hover:scale-[1.03]"
               >
                 Work with us
-                <Icon name="arrow" className="h-4 w-4" />
+                <Icon
+                  name="arrow"
+                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                />
               </Link>
-            </div>
-          </div>
+            </StaggerItem>
+          </Stagger>
         </Container>
       </section>
 

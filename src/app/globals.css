@@ -40,7 +40,10 @@ body {
   color: #c2c6d6;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  font-synthesis-weight: none; /* no faux-bold — keeps display type crisp */
+  -webkit-tap-highlight-color: transparent; /* clean taps on mobile */
 }
 
 @layer base {
@@ -50,14 +53,31 @@ body {
   h4 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
+    line-height: 1.12;
     text-wrap: balance;
+  }
+  /* Optical tracking scale — larger display type reads tighter & more confident */
+  h1 {
+    letter-spacing: -0.035em;
+  }
+  h2 {
+    letter-spacing: -0.028em;
   }
   p {
     text-wrap: pretty;
+    line-height: 1.7; /* comfortable reading rhythm; Tailwind leading-* overrides */
   }
   /* Offset anchored sections for the sticky navbar */
   section[id] {
-    scroll-margin-top: 13rem;
+    scroll-margin-top: 14rem;
+  }
+
+  /* Clean, keyboard-friendly focus ring across the site (mouse clicks unaffected;
+     form fields keep their own outline-none + border styles) */
+  :where(a, button, [role="button"], summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 8px;
   }
 }
 
@@ -174,6 +194,137 @@ body {
   text-shadow: 0 2px 50px rgba(0, 0, 0, 0.55);
 }
 
+/* Animated gold shimmer — for the hero headline accent only */
+@keyframes goldShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: -200% 50%;
+  }
+}
+.text-gold-shimmer {
+  background: linear-gradient(
+    100deg,
+    #9c7a30 0%,
+    #e7cd8c 25%,
+    #fff6df 50%,
+    #e7cd8c 75%,
+    #9c7a30 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: goldShimmer 7s linear infinite;
+}
+
+/* Premium light sweep across buttons / chips on hover */
+.btn-sheen {
+  position: relative;
+  overflow: hidden;
+}
+.btn-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 70%
+  );
+  transform: translateX(-130%);
+  transition: transform 0.85s cubic-bezier(0.21, 0.47, 0.32, 0.98);
+  pointer-events: none;
+}
+.btn-sheen:hover::after {
+  transform: translateX(130%);
+}
+
+/* Slow ambient float for floating elements / background orbs */
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0);
+  }
+}
+.animate-floaty {
+  animation: floaty 9s ease-in-out infinite;
+}
+@keyframes driftA {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(4%, 6%, 0) scale(1.08);
+  }
+}
+@keyframes driftB {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-5%, -4%, 0) scale(1.05);
+  }
+}
+.animate-drift-a {
+  animation: driftA 22s ease-in-out infinite;
+}
+.animate-drift-b {
+  animation: driftB 26s ease-in-out infinite;
+}
+
+/* Cursor-following spotlight for premium cards */
+.spotlight {
+  --mx: 50%;
+  --my: 0%;
+}
+.spotlight-glow {
+  background: radial-gradient(
+    240px circle at var(--mx) var(--my),
+    rgba(200, 162, 76, 0.18),
+    transparent 62%
+  );
+}
+
+/* Cinematic vignette overlay */
+.vignette {
+  background: radial-gradient(
+    ellipse 80% 70% at 50% 38%,
+    transparent 55%,
+    rgba(5, 7, 14, 0.55) 100%
+  );
+}
+
+/* ---- Unified photographic colour grade ----
+   Every real photo (Hero, About, Services and any future project shots)
+   renders through <Photo>, which applies this calm, slightly contrast-lifted
+   grade plus a soft gold wash — so all imagery shares one cohesive, premium
+   brand tone regardless of the original lighting. */
+.img-grade {
+  filter: saturate(0.9) contrast(1.04) brightness(1.01);
+}
+.img-grade-wash {
+  background-color: rgba(200, 162, 76, 0.15);
+  mix-blend-mode: soft-light;
+}
+
+/* Smooth section seam — soft gradient instead of a hard cut */
+.section-seam {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(10, 13, 24, 0.6) 50%,
+    transparent
+  );
+}
+
 /* Legal / policy document typography */
 .legal {
   color: #c4c4cc;
@@ -243,7 +394,14 @@ body {
     scroll-behavior: auto;
   }
   .hero-kenburns,
-  .animate-marquee {
+  .animate-marquee,
+  .text-gold-shimmer,
+  .animate-floaty,
+  .animate-drift-a,
+  .animate-drift-b {
     animation: none !important;
+  }
+  .btn-sheen::after {
+    display: none;
   }
 }

@@ -21,6 +21,10 @@ type Props = {
   icon?: IconName;
   tone?: "default" | "before" | "after";
   className?: string;
+  /** Responsive sizes hint for next/image (improves sharpness on large tiles). */
+  sizes?: string;
+  /** Eager-load + preload for above-the-fold LCP imagery. */
+  priority?: boolean;
 };
 
 /**
@@ -38,6 +42,8 @@ export default function Photo({
   icon = "build",
   tone = "default",
   className = "",
+  sizes = "(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw",
+  priority = false,
 }: Props) {
   const tint = tints[variant % tints.length];
   // Only desaturate the placeholder for "before"; real photos keep natural colour.
@@ -48,13 +54,18 @@ export default function Photo({
       className={`surface-concrete relative h-full w-full overflow-hidden ${grayscale} ${className}`}
     >
       {src ? (
-        <Image
-          src={src}
-          alt={alt ?? label ?? "Nicolla Contractors project"}
-          fill
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-        />
+        <>
+          <Image
+            src={src}
+            alt={alt ?? label ?? "Nicolla Contractors project"}
+            fill
+            priority={priority}
+            className="img-grade object-cover"
+            sizes={sizes}
+          />
+          {/* Unified warm brand wash — keeps every photo on one premium tone */}
+          <div className="img-grade-wash pointer-events-none absolute inset-0" />
+        </>
       ) : (
         <>
           <div className={`absolute inset-0 bg-gradient-to-br ${tint}`} />

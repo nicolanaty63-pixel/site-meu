@@ -15,6 +15,16 @@ export const metadata: Metadata = {
   alternates: { canonical: "/services" },
 };
 
+// Real photography per service (same assets as the homepage Services grid).
+// Slugs without an entry (e.g. laminate-flooring) keep the existing placeholder.
+const serviceImages: Record<string, string> = {
+  "bathroom-renovations": "/lisa-anna-yhodTxZQQxw-unsplash.jpeg",
+  "kitchen-renovations": "/franco-debartolo-ORzG4HrA9rI-unsplash.jpeg",
+  tiling: "/tilingjj.jpeg",
+  "flooring-installation": "/tile-merchant-ireland-Wblr6Q2Vr70-unsplash.jpeg",
+  "home-refurbishment": "/brett-jordan-yica25Tg73w-unsplash.jpeg",
+};
+
 export default function ServicesPage() {
   return (
     <>
@@ -37,7 +47,12 @@ export default function ServicesPage() {
                 >
                   <Reveal className={reversed ? "lg:order-2" : ""}>
                     <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10">
-                      <Photo variant={i} icon={s.icon} caption={s.title} />
+                      <Photo
+                        src={serviceImages[s.slug]}
+                        variant={i}
+                        icon={s.icon}
+                        caption={s.title}
+                      />
                     </div>
                   </Reveal>
                   <Reveal delay={0.08} className={reversed ? "lg:order-1" : ""}>

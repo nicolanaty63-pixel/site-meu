@@ -86,7 +86,7 @@ export default function RootLayout({
         <ConsentProvider>
           <ScrollProgress />
           <Navbar />
-          <main className="pt-40 sm:pt-48">{children}</main>
+          <main className="pt-44 sm:pt-52">{children}</main>
           <Footer />
           <WhatsAppButton />
           <CookieBanner />
