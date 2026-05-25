@@ -13,10 +13,12 @@ export default function Template({ children }: { children: React.ReactNode }) {
   const reduce = useReducedMotion();
   if (reduce) return <>{children}</>;
 
+  // Opacity-only: no transform on the page wrapper, so text is never rasterized
+  // through a transformed ancestor (which softens it on high-DPI mobile).
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.5, ease: EASE_OUT }}
     >
       {children}

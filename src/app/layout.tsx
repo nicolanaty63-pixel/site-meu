@@ -85,8 +85,10 @@ export default function RootLayout({
       <body className="relative min-h-screen overflow-x-hidden bg-ink">
         <Schema />
 
-        {/* Ambient background */}
-        <div className="pointer-events-none fixed inset-0 -z-10">
+        {/* Ambient background (clipped so the wide blobs never cause
+            horizontal scroll on mobile — fixed children aren't clipped by
+            body overflow) */}
+        <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
           <div className="bg-grid absolute inset-0" />
           <div className="absolute left-1/2 top-[-12rem] h-[32rem] w-[60rem] -translate-x-1/2 rounded-full bg-gold/10 blur-[160px]" />
           <div className="absolute bottom-[-12rem] right-[-8rem] h-[32rem] w-[32rem] rounded-full bg-navy/50 blur-[150px]" />
@@ -95,7 +97,7 @@ export default function RootLayout({
         <ConsentProvider>
           <ScrollProgress />
           <Navbar />
-          <main className="pt-44 sm:pt-52">{children}</main>
+          <main className="pt-28 sm:pt-52">{children}</main>
           <Footer />
           <WhatsAppButton />
           <CookieBanner />

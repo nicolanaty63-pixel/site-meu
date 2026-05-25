@@ -7,6 +7,7 @@ import {
   useSpring,
   useReducedMotion,
 } from "framer-motion";
+import { useIsMobile } from "@/components/motion/useIsMobile";
 
 /**
  * Subtle "magnetic" pull toward the cursor — a hallmark of high-end agency
@@ -28,12 +29,16 @@ export default function Magnetic({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
+  const isMobile = useIsMobile();
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const x = useSpring(mx, { stiffness: 220, damping: 18, mass: 0.4 });
   const y = useSpring(my, { stiffness: 220, damping: 18, mass: 0.4 });
 
-  if (reduce) return <div className={className}>{children}</div>;
+  // On touch / reduced-motion there's no cursor to follow, and a persistent
+  // identity transform can soften button text on high-DPI screens — so render
+  // a plain wrapper instead.
+  if (reduce || isMobile) return <div className={className}>{children}</div>;
 
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = ref.current;

@@ -33,6 +33,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden; /* guard against any horizontal scroll on mobile */
 }
 
 body {
@@ -67,9 +68,14 @@ body {
     text-wrap: pretty;
     line-height: 1.7; /* comfortable reading rhythm; Tailwind leading-* overrides */
   }
-  /* Offset anchored sections for the sticky navbar */
+  /* Offset anchored sections for the fixed navbar (matches its responsive height) */
   section[id] {
-    scroll-margin-top: 14rem;
+    scroll-margin-top: 7.5rem;
+  }
+  @media (min-width: 640px) {
+    section[id] {
+      scroll-margin-top: 14rem;
+    }
   }
 
   /* Clean, keyboard-friendly focus ring across the site (mouse clicks unaffected;

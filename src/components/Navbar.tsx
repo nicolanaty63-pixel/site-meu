@@ -34,14 +34,14 @@ export default function Navbar() {
           : "border-b border-transparent bg-transparent"
       }`}
     >
-      <nav className="mx-auto flex h-44 max-w-6xl items-center justify-between px-5 sm:h-52 sm:px-6">
+      <nav className="mx-auto flex h-28 max-w-6xl items-center justify-between px-5 sm:h-52 sm:px-6">
         <Link
           href="/"
           onClick={() => setOpen(false)}
           className="flex items-center"
           aria-label={`${site.name} home`}
         >
-          <Logo className="h-40 w-auto sm:h-48" priority />
+          <Logo className="h-20 w-auto sm:h-48" priority />
         </Link>
 
         {/* Desktop links */}

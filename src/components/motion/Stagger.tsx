@@ -3,7 +3,6 @@
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
 import { EASE_OUT, DURATION } from "@/components/motion/tokens";
-import { useIsMobile } from "@/components/motion/useIsMobile";
 
 /** Parent: orchestrates a gentle stagger when scrolled into view. */
 export const containerV: Variants = {
@@ -11,20 +10,21 @@ export const containerV: Variants = {
   show: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } },
 };
 
-const itemV = (y: number): Variants => ({
-  hidden: { opacity: 0, y },
+// Single, consistent variants — every state resolves to an identity resting
+// state (y:0, scale:1) with NO filter, so no property gets orphaned/stuck.
+const itemV: Variants = {
+  hidden: { opacity: 0, y: 26 },
   show: { opacity: 1, y: 0, transition: { duration: DURATION.base, ease: EASE_OUT } },
-});
-
-const tileV = (y: number): Variants => ({
-  hidden: { opacity: 0, y, scale: 0.96 },
+};
+const tileV: Variants = {
+  hidden: { opacity: 0, y: 30, scale: 0.97 },
   show: {
     opacity: 1,
     y: 0,
     scale: 1,
     transition: { duration: DURATION.base, ease: EASE_OUT },
   },
-});
+};
 
 export function Stagger({
   children,
@@ -61,14 +61,10 @@ export function StaggerItem({
   variant?: "item" | "tile";
 }) {
   const reduce = useReducedMotion();
-  const isMobile = useIsMobile();
   if (reduce) return <div className={className}>{children}</div>;
 
-  const y = isMobile ? 16 : variant === "tile" ? 34 : 28;
-  const variants = variant === "tile" ? tileV(y) : itemV(y);
-
   return (
-    <motion.div className={className} variants={variants}>
+    <motion.div className={className} variants={variant === "tile" ? tileV : itemV}>
       {children}
     </motion.div>
   );

@@ -14,10 +14,7 @@ export default function SectionHeading({
   light?: boolean;
 }) {
   return (
-    <Reveal
-      blur
-      className={center ? "mx-auto max-w-2xl text-center" : "max-w-2xl"}
-    >
+    <Reveal className={center ? "mx-auto max-w-2xl text-center" : "max-w-2xl"}>
       {eyebrow && (
         <span
           className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] ${

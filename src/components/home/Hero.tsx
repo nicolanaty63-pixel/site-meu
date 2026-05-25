@@ -61,7 +61,7 @@ export default function Hero() {
   const copyStyle = reduce || isMobile ? undefined : { y: copyY, opacity: copyOpacity };
 
   return (
-    <section ref={ref} className="relative -mt-44 overflow-hidden sm:-mt-52">
+    <section ref={ref} className="relative -mt-28 overflow-hidden sm:-mt-52">
       {/* Ambient backdrop — slow-drifting light for living depth */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-charcoal/50 to-ink" />
@@ -70,7 +70,7 @@ export default function Hero() {
         <div className="animate-drift-b absolute right-[-6%] top-0 h-[30rem] w-[30rem] rounded-full bg-navy/40 blur-[150px]" />
       </div>
 
-      <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 pb-16 pt-44 sm:px-6 sm:pb-24 sm:pt-52 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
+      <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 pb-16 pt-28 sm:px-6 sm:pb-24 sm:pt-52 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
         {/* LEFT — copy */}
         <motion.div
           variants={container}

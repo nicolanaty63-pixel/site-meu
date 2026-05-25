@@ -221,7 +221,7 @@ export default function HomePage() {
               title="The transformation speaks for itself"
               subtitle="Drag the slider to see the difference our team makes. Tired, dated spaces become bright, premium rooms built to last."
             />
-            <Reveal scale blur className="relative">
+            <Reveal scale className="relative">
               <div className="pointer-events-none absolute -inset-6 -z-10 rounded-[2.5rem] bg-gold/10 blur-3xl" />
               <BeforeAfterSlider
                 before={
@@ -298,7 +298,7 @@ export default function HomePage() {
           <div className="vignette absolute inset-0" />
         </div>
         <Container>
-          <Reveal blur scale className="mx-auto max-w-3xl text-center">
+          <Reveal scale className="mx-auto max-w-3xl text-center">
             <h2 className="text-4xl font-extrabold leading-tight text-white sm:text-5xl">
               Start your transformation today
             </h2>

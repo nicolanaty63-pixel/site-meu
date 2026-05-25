@@ -30,7 +30,7 @@ const chips = [
 
 export default function QuoteHero() {
   return (
-    <section className="relative -mt-44 overflow-hidden pb-16 pt-48 sm:-mt-52 sm:pt-60">
+    <section className="relative -mt-28 overflow-hidden pb-16 pt-32 sm:-mt-52 sm:pt-60">
       {/* Cinematic backdrop */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="surface-concrete absolute inset-0" />
