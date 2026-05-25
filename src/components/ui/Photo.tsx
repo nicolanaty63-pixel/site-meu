@@ -25,6 +25,8 @@ type Props = {
   sizes?: string;
   /** Eager-load + preload for above-the-fold LCP imagery. */
   priority?: boolean;
+  /** next/image re-encode quality (default 75). Raise for hero/showcase photos. */
+  quality?: number;
 };
 
 /**
@@ -44,6 +46,7 @@ export default function Photo({
   className = "",
   sizes = "(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw",
   priority = false,
+  quality,
 }: Props) {
   const tint = tints[variant % tints.length];
   // Only desaturate the placeholder for "before"; real photos keep natural colour.
@@ -60,6 +63,7 @@ export default function Photo({
             alt={alt ?? label ?? "Nicolla Contractors project"}
             fill
             priority={priority}
+            quality={quality}
             className="img-grade object-cover"
             sizes={sizes}
           />

@@ -2,6 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
+    // AVIF first (smaller + crisper than WebP) with a WebP fallback, and
+    // allow the higher re-encode quality used on showcase photography
+    // (Next 15 requires non-default quality values to be allow-listed here).
+    formats: ["image/avif", "image/webp"],
+    qualities: [75, 90],
     // Allow licensed stock CDNs so you can use a hosted image URL directly in
     // lib/data.ts (e.g. an Unsplash/Pexels photo) without downloading it.
     remotePatterns: [

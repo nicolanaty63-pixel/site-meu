@@ -35,7 +35,14 @@ export default function ProjectCard({
       <div className="relative aspect-[4/3] overflow-hidden">
         <ParallaxImage amount={10}>
           <div className="h-full w-full transition-transform duration-[1100ms] ease-out group-hover:scale-110">
-            <Photo src={image} variant={variant} icon={icon} alt={title} />
+            <Photo
+              src={image}
+              variant={variant}
+              icon={icon}
+              alt={title}
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 380px"
+              quality={90}
+            />
           </div>
         </ParallaxImage>
 

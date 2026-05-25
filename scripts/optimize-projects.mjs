@@ -12,13 +12,15 @@ const OUT = "C:/Users/merie/site-meu/public/projects";
 mkdirSync(OUT, { recursive: true });
 
 // Spa-Style Master Bathroom (span card -> 4:5; modal slider -> 16:9 aspect-video).
+// 2560×1440 (16:9) at high quality so next/image has a crisp retina-grade
+// source for the full-width modal slider; the <Photo> grade adds brand tone.
 const jobs = [
   // Slider AFTER + gallery card both use this 16:9 frame (whole room, uncropped).
-  { in: "alex-tyson-HoLDkpTD4LU-unsplash.jpg", out: "spa-bathroom-after.webp", w: 1920, h: 1080 },
+  { in: "alex-tyson-HoLDkpTD4LU-unsplash.jpg", out: "spa-bathroom-after.webp", w: 2560, h: 1440 },
   // Slider BEFORE — generate the "same room, pre-renovation" photo externally
   // (see the img2img brief), save the source into Downloads with this exact
   // name, then re-run `node scripts/optimize-projects.mjs`.
-  { in: "spa-bathroom-before-src.jpg", out: "spa-bathroom-before.webp", w: 1920, h: 1080 },
+  { in: "spa-bathroom-before-src.jpg", out: "spa-bathroom-before.webp", w: 2560, h: 1440 },
 ];
 
 for (const job of jobs) {
@@ -31,8 +33,8 @@ for (const job of jobs) {
   await sharp(src)
     .rotate() // respect EXIF orientation
     .resize({ width: job.w, height: job.h, fit: "cover", position: "centre" })
-    .modulate({ saturation: 0.95 }) // keep cohesive with the other photos
-    .webp({ quality: 82 })
+    .sharpen({ sigma: 0.6 }) // counter downscale softening — keeps edges crisp
+    .webp({ quality: 92 })
     .toFile(join(OUT, job.out));
   const info = await sharp(join(OUT, job.out)).metadata();
   console.log(`${job.out}  ${meta.width}x${meta.height} -> ${info.width}x${info.height}`);

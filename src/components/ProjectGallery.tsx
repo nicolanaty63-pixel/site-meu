@@ -120,7 +120,14 @@ export default function ProjectGallery({
               }`}
             >
               <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
-                <Photo variant={p.variant} icon={p.icon} src={p.image} alt={p.title} />
+                <Photo
+                  variant={p.variant}
+                  icon={p.icon}
+                  src={p.image}
+                  alt={p.title}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 420px"
+                  quality={90}
+                />
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
               <span className="absolute left-4 top-4 rounded-full bg-black/50 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-gold backdrop-blur">
@@ -199,6 +206,8 @@ export default function ProjectGallery({
                       icon={active.icon}
                       src={active.beforeImage}
                       alt={`${active.title} — before`}
+                      sizes="(max-width: 1024px) 100vw, 1024px"
+                      quality={90}
                     />
                   }
                   after={
@@ -208,6 +217,8 @@ export default function ProjectGallery({
                       icon={active.icon}
                       src={active.afterImage}
                       alt={`${active.title} — after`}
+                      sizes="(max-width: 1024px) 100vw, 1024px"
+                      quality={90}
                     />
                   }
                 />
