@@ -54,11 +54,20 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: "Nicolla Contractors Ltd | Premium Builders & Renovation",
     description: site.description,
+    images: [
+      {
+        url: "/og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Nicolla Contractors Ltd — premium building & renovation in Hertfordshire",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Nicolla Contractors Ltd | Premium Builders & Renovation",
     description: site.description,
+    images: ["/og.jpg"],
   },
   robots: {
     index: true,
