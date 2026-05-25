@@ -196,32 +196,48 @@ export default function ProjectGallery({
             >
               {/* Before / after comparison */}
               <div className="relative">
-                <BeforeAfterSlider
-                  key={active.title}
-                  className="!aspect-video !rounded-none !border-0"
-                  before={
+                {active.afterImage && !active.beforeImage ? (
+                  // A finished photo but no before yet: present it as a single
+                  // premium hero (no slider). Auto-reverts to the before/after
+                  // slider the moment a real beforeImage is added.
+                  <div className="relative aspect-video w-full overflow-hidden">
                     <Photo
-                      tone="before"
-                      variant={active.beforeVariant}
-                      icon={active.icon}
-                      src={active.beforeImage}
-                      alt={`${active.title} — before`}
-                      sizes="(max-width: 1024px) 100vw, 1024px"
-                      quality={90}
-                    />
-                  }
-                  after={
-                    <Photo
-                      tone="after"
                       variant={active.variant}
                       icon={active.icon}
                       src={active.afterImage}
-                      alt={`${active.title} — after`}
+                      alt={active.title}
                       sizes="(max-width: 1024px) 100vw, 1024px"
                       quality={90}
                     />
-                  }
-                />
+                  </div>
+                ) : (
+                  <BeforeAfterSlider
+                    key={active.title}
+                    className="!aspect-video !rounded-none !border-0"
+                    before={
+                      <Photo
+                        tone="before"
+                        variant={active.beforeVariant}
+                        icon={active.icon}
+                        src={active.beforeImage}
+                        alt={`${active.title} — before`}
+                        sizes="(max-width: 1024px) 100vw, 1024px"
+                        quality={90}
+                      />
+                    }
+                    after={
+                      <Photo
+                        tone="after"
+                        variant={active.variant}
+                        icon={active.icon}
+                        src={active.afterImage}
+                        alt={`${active.title} — after`}
+                        sizes="(max-width: 1024px) 100vw, 1024px"
+                        quality={90}
+                      />
+                    }
+                  />
+                )}
 
                 <button
                   onClick={close}
@@ -251,7 +267,9 @@ export default function ProjectGallery({
                 )}
 
                 <span className="pointer-events-none absolute bottom-3 left-1/2 z-30 -translate-x-1/2 rounded-full bg-black/50 px-3 py-1 text-xs text-white backdrop-blur">
-                  Drag to compare · {index! + 1} / {filtered.length}
+                  {active.afterImage && !active.beforeImage
+                    ? `${index! + 1} / ${filtered.length}`
+                    : `Drag to compare · ${index! + 1} / ${filtered.length}`}
                 </span>
               </div>
 
