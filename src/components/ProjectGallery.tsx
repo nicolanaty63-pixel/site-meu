@@ -198,15 +198,27 @@ export default function ProjectGallery({
               <div className="relative">
                 {active.afterImage && !active.beforeImage ? (
                   // A finished photo but no before yet: present it as a single
-                  // premium hero (no slider). Auto-reverts to the before/after
-                  // slider the moment a real beforeImage is added.
-                  <div className="relative aspect-video w-full overflow-hidden">
+                  // premium hero (no slider). Landscape fills a 16:9 frame; a
+                  // portrait photo (span) shows as a centred 4:5 editorial frame
+                  // so its focal point is never cropped. Auto-reverts to the
+                  // before/after slider the moment a real beforeImage is added.
+                  <div
+                    className={`relative w-full overflow-hidden ${
+                      active.span
+                        ? "mx-auto aspect-[4/5] max-w-md"
+                        : "aspect-video"
+                    }`}
+                  >
                     <Photo
                       variant={active.variant}
                       icon={active.icon}
                       src={active.afterImage}
                       alt={active.title}
-                      sizes="(max-width: 1024px) 100vw, 1024px"
+                      sizes={
+                        active.span
+                          ? "(max-width: 768px) 100vw, 448px"
+                          : "(max-width: 1024px) 100vw, 1024px"
+                      }
                       quality={90}
                     />
                   </div>

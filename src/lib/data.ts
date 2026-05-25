@@ -221,6 +221,10 @@ export const projects: Project[] = [
     variant: 2,
     beforeVariant: 3,
     icon: "bath",
+    // Portrait photo -> 4:5 span tile + centred portrait hero (this project only).
+    span: true,
+    image: "/projects/guest-bathroom-after.webp",
+    afterImage: "/projects/guest-bathroom-after.webp",
   },
   {
     title: "Luxury Kitchen Diner",

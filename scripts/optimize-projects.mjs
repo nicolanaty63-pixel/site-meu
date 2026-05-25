@@ -15,8 +15,11 @@ mkdirSync(OUT, { recursive: true });
 // 2560×1440 (16:9) at high quality so next/image has a crisp retina-grade
 // source for the full-width modal slider; the <Photo> grade adds brand tone.
 const jobs = [
-  // Slider AFTER + gallery card both use this 16:9 frame (whole room, uncropped).
+  // Spa-Style Master Bathroom — landscape source -> 16:9 (card + modal hero).
   { in: "alex-tyson-HoLDkpTD4LU-unsplash.jpg", out: "spa-bathroom-after.webp", w: 2560, h: 1440 },
+  // Minimalist Guest Bathroom — portrait source kept as a 4:5 editorial frame
+  // (span card + centred portrait hero) so the focal point isn't cropped.
+  { in: "point3d-commercial-imaging-ltd-krQbRzuJke0-unsplash.jpg", out: "guest-bathroom-after.webp", w: 1600, h: 2000 },
   // Slider BEFORE — generate the "same room, pre-renovation" photo externally
   // (see the img2img brief), save the source into Downloads with this exact
   // name, then re-run `node scripts/optimize-projects.mjs`.
