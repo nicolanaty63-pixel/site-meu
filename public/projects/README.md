@@ -28,15 +28,13 @@ those CDNs are already whitelisted in `next.config.mjs`.
   **same position, lens and height** so the slider lines up.
 - Natural colour, no heavy filters (see `PHOTOGRAPHY-BRIEF.md`).
 
-## Suggested filenames (match the 9 portfolio projects)
+## Suggested filenames (match the 7 portfolio projects)
 
 | Project | Card | Before / After |
 |---|---|---|
 | Spa-Style Master Bathroom | `spa-bathroom.webp` | `spa-bathroom-before.webp` / `-after.webp` |
 | Modern Shaker Kitchen | `shaker-kitchen.webp` | `shaker-kitchen-before/-after.webp` |
 | Herringbone Oak Hallway | `herringbone-hallway.webp` | `herringbone-hallway-before/-after.webp` |
-| Natural Stone Wet Room | `stone-wet-room.webp` | `stone-wet-room-before/-after.webp` |
-| Open-Plan Ground Floor | `open-plan.webp` | `open-plan-before/-after.webp` |
 | Zellige Feature Splashback | `zellige-splashback.webp` | `zellige-splashback-before/-after.webp` |
 | Warm Laminate Living Space | `laminate-living.webp` | `laminate-living-before/-after.webp` |
 | Minimalist Guest Bathroom | `guest-bathroom.webp` | `guest-bathroom-before/-after.webp` |

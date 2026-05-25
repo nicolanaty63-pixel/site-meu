@@ -180,31 +180,6 @@ export const projects: Project[] = [
     icon: "floor",
   },
   {
-    title: "Natural Stone Wet Room",
-    category: "Bathroom",
-    location: "Rickmansworth",
-    summary:
-      "A fully tanked wet room finished in honed natural stone with a discreet linear drain and frameless glass screen.",
-    services: ["Bathroom renovation", "Tiling", "Waterproofing"],
-    duration: "2 weeks",
-    variant: 3,
-    beforeVariant: 0,
-    icon: "bath",
-  },
-  {
-    title: "Open-Plan Ground Floor",
-    category: "Interiors",
-    location: "Kings Langley",
-    summary:
-      "A complete ground-floor refurbishment — partitions removed, replastered, rewired and redecorated for bright, modern open-plan living.",
-    services: ["Home refurbishment", "Building", "Decorating"],
-    duration: "6 weeks",
-    variant: 4,
-    beforeVariant: 5,
-    icon: "build",
-    span: true,
-  },
-  {
     title: "Zellige Feature Splashback",
     category: "Tiling",
     location: "North London",
