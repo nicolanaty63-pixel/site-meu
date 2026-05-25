@@ -17,13 +17,16 @@ export default function Schema() {
         email: site.email,
         priceRange: "££",
         image: `${site.url}/og.jpg`,
+        logo: `${site.url}/logo-nicolla-mark.png`,
         address: {
           "@type": "PostalAddress",
           addressLocality: site.baseTown,
           addressRegion: site.region,
           addressCountry: "GB",
         },
-        areaServed: site.serves.map((a) => ({ "@type": "City", name: a })),
+        areaServed: [...new Set([...site.serviceRegions, ...site.serves])].map(
+          (a) => ({ "@type": "Place", name: a }),
+        ),
         aggregateRating: {
           "@type": "AggregateRating",
           ratingValue: site.rating,

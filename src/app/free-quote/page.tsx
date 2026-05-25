@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Container from "@/components/Container";
 import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
@@ -14,12 +14,12 @@ import Icon from "@/components/ui/Icon";
 import { services, process, stats } from "@/lib/data";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Free Renovation Quote — Bathrooms, Kitchens, Tiling & Flooring",
   description:
     "Get a free, no-obligation renovation quote from Nicolla Contractors Ltd. Premium bathrooms, kitchens, tiling & flooring across Hertfordshire & North London. Rated 4.9/5 — we reply within 24 hours.",
-  alternates: { canonical: "/free-quote" },
-};
+  path: "/free-quote",
+});
 
 const beforeAfters = [
   { icon: "bath" as const, before: 2, after: 0, label: "Bathroom renovation" },

@@ -12,6 +12,7 @@ import Icon from "@/components/ui/Icon";
 import { services } from "@/lib/data";
 import { areas } from "@/lib/areas";
 import { site } from "@/lib/site";
+import { pageMeta } from "@/lib/seo";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -25,11 +26,11 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
   const s = getService(slug);
   if (!s) return {};
-  return {
-    title: `${s.title} — Hertfordshire & North London`,
-    description: `${s.description} Trusted ${s.keyword}, rated ${site.rating}/5 by ${site.reviewCount}+ homeowners. Free quotes across ${site.region} & North London.`,
-    alternates: { canonical: `/services/${s.slug}` },
-  };
+  return pageMeta({
+    title: `${s.title} — London, North London & Hertfordshire`,
+    description: `${s.description} Trusted ${s.keyword}, rated ${site.rating}/5 by ${site.reviewCount}+ homeowners. Free quotes across London, North London & ${site.region}.`,
+    path: `/services/${s.slug}`,
+  });
 }
 
 const benefits = [
@@ -53,7 +54,9 @@ export default async function ServicePage({ params }: Params) {
         name: s.title,
         serviceType: s.keyword,
         description: s.description,
-        areaServed: site.serves.map((a) => ({ "@type": "City", name: a })),
+        areaServed: [...new Set([...site.serviceRegions, ...site.serves])].map(
+          (a) => ({ "@type": "Place", name: a }),
+        ),
         provider: {
           "@type": "GeneralContractor",
           name: site.name,

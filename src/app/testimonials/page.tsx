@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import Container from "@/components/Container";
 import Reveal from "@/components/Reveal";
@@ -8,12 +8,12 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import Icon from "@/components/ui/Icon";
 import { testimonials } from "@/lib/data";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Testimonials — 4.9/5 from 100+ Customers",
   description:
     "Read reviews for Nicolla Contractors Ltd. Homeowners across Hertfordshire praise our professionalism, punctuality, attention to detail and high-quality workmanship.",
-  alternates: { canonical: "/testimonials" },
-};
+  path: "/testimonials",
+});
 
 function Stars({ n }: { n: number }) {
   return (

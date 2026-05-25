@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import Container from "@/components/Container";
 import Reveal from "@/components/Reveal";
@@ -12,12 +12,12 @@ import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import { stats } from "@/lib/data";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "About Us — Trusted Builders in Hertfordshire",
   description:
     "Learn about Nicolla Contractors Ltd, a premium home refurbishment company in Kings Langley, Hertfordshire. Reliable, professional builders rated 4.9/5 by 100+ customers.",
-  alternates: { canonical: "/about" },
-};
+  path: "/about",
+});
 
 const values = [
   {

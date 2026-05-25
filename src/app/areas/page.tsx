@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import Container from "@/components/Container";
 import Reveal from "@/components/Reveal";
@@ -7,12 +7,12 @@ import Icon from "@/components/ui/Icon";
 import { areas } from "@/lib/areas";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Areas We Cover — Builders in Hertfordshire & North London",
+export const metadata = pageMeta({
+  title: "Areas We Cover — Builders in London, North London & Hertfordshire",
   description:
-    "Nicolla Contractors provides bathroom, kitchen, tiling and flooring renovations across Hertfordshire and North London, including Watford, St Albans, Hemel Hempstead and more.",
-  alternates: { canonical: "/areas" },
-};
+    "Nicolla Contractors provides bathroom renovation, kitchen fitting, tiling and home refurbishment across London, North London and Hertfordshire — including Watford, St Albans, Hemel Hempstead and more.",
+  path: "/areas",
+});
 
 export default function AreasPage() {
   return (

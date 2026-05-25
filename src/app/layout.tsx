@@ -33,6 +33,9 @@ export const metadata: Metadata = {
   },
   description: site.description,
   keywords: [
+    "bathroom renovation London",
+    "kitchen fitting North London",
+    "home refurbishment Hertfordshire",
     "builders near me",
     "bathroom renovation UK",
     "flooring contractors",
@@ -43,6 +46,7 @@ export const metadata: Metadata = {
     "builders Hertfordshire",
     "renovation Kings Langley",
     "builders Watford",
+    "builders North London",
   ],
   authors: [{ name: site.name }],
   creator: site.name,

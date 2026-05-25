@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Container from "@/components/Container";
 import Reveal from "@/components/Reveal";
 import PageHero from "@/components/PageHero";
@@ -6,12 +6,12 @@ import ContactForm from "@/components/ContactForm";
 import Icon from "@/components/ui/Icon";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Contact — Free Quotes for Builders in Hertfordshire",
   description:
     "Contact Nicolla Contractors Ltd for a free, no-obligation quote. Bathroom, kitchen, tiling, flooring and refurbishment specialists serving Hertfordshire and North London.",
-  alternates: { canonical: "/contact" },
-};
+  path: "/contact",
+});
 
 const details = [
   { icon: "phone" as const, label: "Call us", value: site.phoneDisplay, href: site.phoneHref },

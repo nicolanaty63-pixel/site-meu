@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import LegalShell from "@/components/legal/LegalShell";
 import { legal } from "@/lib/legal";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "GDPR Data Processing Notice",
   description:
     "A concise UK GDPR data processing notice from Nicolla Contractors Ltd: controller details, purposes, lawful bases, recipients, retention, transfers and your rights.",
-  alternates: { canonical: "/gdpr" },
-};
+  path: "/gdpr",
+});
 
 export default function GdprPage() {
   return (

@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import LegalShell from "@/components/legal/LegalShell";
 import ManageCookiesButton from "@/components/consent/ManageCookiesButton";
 import { legal } from "@/lib/legal";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Cookie Policy",
   description:
     "How Nicolla Contractors Ltd uses cookies, the categories we use, and how to manage your consent under PECR and UK GDPR.",
-  alternates: { canonical: "/cookie-policy" },
-};
+  path: "/cookie-policy",
+});
 
 export default function CookiePolicyPage() {
   return (

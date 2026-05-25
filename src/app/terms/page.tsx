@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import LegalShell from "@/components/legal/LegalShell";
 import { legal } from "@/lib/legal";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Terms & Conditions",
   description:
     "The terms governing use of the Nicolla Contractors Ltd website and our quotes and services, including liability, payment, IP and governing law (England & Wales).",
-  alternates: { canonical: "/terms" },
-};
+  path: "/terms",
+});
 
 export default function TermsPage() {
   return (

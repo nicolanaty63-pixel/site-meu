@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import Container from "@/components/Container";
 import Reveal from "@/components/Reveal";
@@ -8,12 +8,12 @@ import Icon from "@/components/ui/Icon";
 import { services } from "@/lib/data";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Services — Bathrooms, Kitchens, Tiling & Flooring",
   description:
-    "Bathroom renovations, kitchen renovations, tiling, laminate and flooring installation, and home refurbishment in Hertfordshire & North London. Flooring contractors and tiling specialists rated 4.9/5.",
-  alternates: { canonical: "/services" },
-};
+    "Bathroom renovation, kitchen fitting, precision tiling and flooring installation, plus full home refurbishment across London, North London and Hertfordshire. Fully-insured contractors rated 4.9/5.",
+  path: "/services",
+});
 
 // Real photography per service (same assets as the homepage Services grid).
 // Slugs without an entry (e.g. laminate-flooring) keep the existing placeholder.

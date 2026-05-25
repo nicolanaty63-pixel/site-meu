@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import Container from "@/components/Container";
 import Reveal from "@/components/Reveal";
@@ -9,12 +9,12 @@ import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import Photo from "@/components/ui/Photo";
 import Icon from "@/components/ui/Icon";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Projects — Our Portfolio of Renovations",
   description:
     "Browse recent bathroom renovations, kitchen renovations, tiling and flooring projects by Nicolla Contractors across Hertfordshire and North London. Before & after transformations.",
-  alternates: { canonical: "/projects" },
-};
+  path: "/projects",
+});
 
 const beforeAfters = [
   { icon: "bath" as const, before: 2, after: 1, label: "Bathroom renovation" },

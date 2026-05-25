@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import LegalShell from "@/components/legal/LegalShell";
 import { legal } from "@/lib/legal";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Privacy Policy",
   description:
     "How Nicolla Contractors Ltd collects, uses and protects your personal data under UK GDPR, your rights, and how to contact us or the ICO.",
-  alternates: { canonical: "/privacy-policy" },
-};
+  path: "/privacy-policy",
+});
 
 export default function PrivacyPolicyPage() {
   return (

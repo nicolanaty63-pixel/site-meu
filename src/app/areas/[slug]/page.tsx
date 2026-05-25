@@ -10,6 +10,7 @@ import Icon from "@/components/ui/Icon";
 import { areas, getArea } from "@/lib/areas";
 import { services } from "@/lib/data";
 import { site } from "@/lib/site";
+import { pageMeta } from "@/lib/seo";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -21,11 +22,11 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
   const area = getArea(slug);
   if (!area) return {};
-  return {
+  return pageMeta({
     title: `Builders in ${area.name} — Bathrooms, Kitchens, Tiling & Flooring`,
     description: `Trusted builders & renovation specialists in ${area.name}, ${area.county}. Bathroom & kitchen renovations, tiling and flooring installation. Rated ${site.rating}/5 — free quotes.`,
-    alternates: { canonical: `/areas/${area.slug}` },
-  };
+    path: `/areas/${area.slug}`,
+  });
 }
 
 export default async function AreaPage({ params }: Params) {

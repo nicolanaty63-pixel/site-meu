@@ -8,7 +8,7 @@ export const site = {
   legalName: "Nicolla Contractors Ltd",
   tagline: "Premium Building & Renovation",
   description:
-    "Nicolla Contractors Ltd is a premium construction and renovation company in Kings Langley, Hertfordshire. We specialise in bathroom and kitchen renovations, tiling, laminate and flooring installation, and complete home refurbishment — delivered with meticulous attention to detail.",
+    "Nicolla Contractors Ltd is a premium construction and renovation company based in Kings Langley, Hertfordshire, serving London, North London and across Hertfordshire. We specialise in bathroom renovation, kitchen fitting, tiling, flooring installation and complete home refurbishment — delivered with meticulous attention to detail.",
 
   // Contact (placeholders — replace before launch)
   phoneDisplay: "07700 900123",
@@ -35,8 +35,11 @@ export const site = {
   yearsExperience: 15,
   projectsCompleted: 100,
 
-  // URLs
-  url: "https://www.nicollacontractors.co.uk",
+  // URLs — primary canonical domain is the non-www apex (www redirects to it).
+  url: "https://nicollacontractors.co.uk",
+
+  // Broader service regions for local SEO + structured data (areaServed).
+  serviceRegions: ["London", "North London", "Hertfordshire"],
 
   hours: "Mon–Sat, 8:00am – 6:00pm",
 } as const;
