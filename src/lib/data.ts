@@ -173,6 +173,12 @@ export const projects: Project[] = [
     variant: 1,
     beforeVariant: 3,
     icon: "kitchen",
+    // Landscape after-photo (greige shaker run, marble splashback, quartz
+    // waterfall island) — 16:9 wideCard matches the source composition and
+    // keeps the pantry → range → fridge symmetry intact.
+    wideCard: true,
+    image: "/projects/shaker-kitchen-after.webp",
+    afterImage: "/projects/shaker-kitchen-after.webp",
   },
   {
     title: "Herringbone Oak Hallway",

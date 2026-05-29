@@ -30,6 +30,11 @@ const jobs = [
   // bar stools centre/right, herringbone oak floor; centre crop preserves the
   // full dining → island → kitchen sweep.
   { in: "alex-tyson-U-0-AgPDpHk-unsplash.jpg", out: "kitchen-diner-after.webp", w: 2560, h: 1440 },
+  // Modern Shaker Kitchen — landscape source -> 16:9 (wideCard + modal).
+  // Greige shaker cabinets with glass-front uppers, stainless range + hood,
+  // marble splashback, white quartz waterfall island; centre crop keeps the
+  // tall pantry → range → fridge symmetry intact.
+  { in: "asr-design-studio-CwnPmtA2NHc-unsplash.jpg", out: "shaker-kitchen-after.webp", w: 2560, h: 1440 },
   // Slider BEFORE — generate the "same room, pre-renovation" photo externally
   // (see the img2img brief), save the source into Downloads with this exact
   // name, then re-run `node scripts/optimize-projects.mjs`.
