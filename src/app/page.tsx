@@ -230,6 +230,9 @@ export default function HomePage() {
                     variant={2}
                     icon="bath"
                     caption="Dated & tired"
+                    src="/before.jpg"
+                    sizes="(max-width: 1023px) 100vw, 50vw"
+                    quality={90}
                   />
                 }
                 after={
@@ -238,6 +241,9 @@ export default function HomePage() {
                     variant={1}
                     icon="bath"
                     caption="Premium finish"
+                    src="/after.jpg"
+                    sizes="(max-width: 1023px) 100vw, 50vw"
+                    quality={90}
                   />
                 }
               />
