@@ -18,6 +18,36 @@ export default function Schema() {
         priceRange: "££",
         image: `${site.url}/og.jpg`,
         logo: `${site.url}/logo-nicolla-mark.png`,
+        // Topical expertise — strengthens the entity's semantic relevance for
+        // the trade niches the business actually delivers (vs. inferred from
+        // page content alone). Each item is a search-meaningful subtopic
+        // covered substantively in service pages and FAQs.
+        knowsAbout: [
+          "Bathroom renovation",
+          "Walk-in showers",
+          "Wet rooms",
+          "Waterproof tanking",
+          "Underfloor heating",
+          "Kitchen renovation",
+          "Bespoke kitchen fitting",
+          "Quartz worktops",
+          "Splashback installation",
+          "Porcelain tiling",
+          "Natural stone tiling",
+          "Large-format tile installation",
+          "Zellige feature walls",
+          "Engineered wood flooring",
+          "Solid wood flooring",
+          "Luxury vinyl tile (LVT)",
+          "Laminate flooring installation",
+          "Herringbone parquet",
+          "Self-levelling subfloors",
+          "Home refurbishment",
+          "Full house renovation",
+          "Plastering and partitions",
+          "Carpentry and joinery",
+          "Skirting and trims",
+        ],
         address: {
           "@type": "PostalAddress",
           addressLocality: site.baseTown,

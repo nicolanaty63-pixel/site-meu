@@ -27,6 +27,14 @@ export type Service = {
   features: string[];
   icon: IconName;
   keyword: string;
+  /** Slugs of semantically related services — drives the cross-cluster
+   *  "RelatedServices" block on /services/[slug] and signals the internal
+   *  authority graph to crawlers. */
+  related?: string[];
+  /** Service-specific FAQs. When present, both the visible FAQ block and the
+   *  FAQPage JSON-LD on the service page use these. Falls back to the
+   *  general `faqs` array below when omitted. */
+  faqs?: { q: string; a: string }[];
 };
 
 export const services: Service[] = [
@@ -44,6 +52,29 @@ export const services: Service[] = [
     ],
     icon: "bath",
     keyword: "bathroom renovation UK",
+    related: ["tiling", "flooring-installation", "home-refurbishment"],
+    faqs: [
+      {
+        q: "How long does a typical bathroom renovation take?",
+        a: "Most full bathroom renovations take 1–2 weeks once we're on site, depending on layout changes, tile choice and any underfloor heating. We agree the timeline up front and update you every step.",
+      },
+      {
+        q: "Do you handle the plumbing and electrics in-house?",
+        a: "Yes. We coordinate all wet trades and certified electricians as part of one team, so there's a single point of contact and no scheduling gaps between trades. Gas Safe and Part P certificates are issued at handover.",
+      },
+      {
+        q: "Can you fit a walk-in shower in a small bathroom?",
+        a: "In most layouts, yes. We've designed walk-in showers into Victorian terrace ensuites and compact family bathrooms across Watford, St Albans and Kings Langley — the right glass, hardware and drainage make the room feel bigger, not smaller.",
+      },
+      {
+        q: "What waterproofing do you use?",
+        a: "All wet areas are fully tanked behind the tiles using primer, a waterproof tanking membrane and silicone-cured corners — so leaks behind tiling never become a problem. Tanking is invisible once tiled, but it's the difference between a 1-year and a 20-year bathroom.",
+      },
+      {
+        q: "Is underfloor heating worth fitting?",
+        a: "On stone or porcelain floors, yes — it transforms how the room feels and is affordable on a small footprint. Electric mat works for retrofit, wet underfloor heating where there's a manifold nearby. We'll recommend what fits your project.",
+      },
+    ],
   },
   {
     slug: "kitchen-renovations",
@@ -59,6 +90,29 @@ export const services: Service[] = [
     ],
     icon: "kitchen",
     keyword: "kitchen renovation specialists",
+    related: ["tiling", "flooring-installation", "home-refurbishment"],
+    faqs: [
+      {
+        q: "How long does a kitchen renovation take?",
+        a: "A typical fitted kitchen is 2–3 weeks on site, depending on whether walls are moving and how bespoke the units are. Quartz worktops are templated after the carcasses are installed and fitted a week or so later, so we allow for the supplier's lead time when agreeing the schedule.",
+      },
+      {
+        q: "Do you supply the kitchen units or fit ones we've bought?",
+        a: "Both. We work with trade kitchen ranges, the major high-street brands (Howdens, B&Q, IKEA, Magnet) and bespoke makers, and we'll happily fit a kitchen you've sourced yourself. We'll flag anything that won't work in your space before it ships.",
+      },
+      {
+        q: "Can you move the kitchen to a different room?",
+        a: "Yes. We've turned dining rooms into kitchen-diners, knocked through to gardens, and re-routed gas, water, waste and electrics to suit. We handle the building work, certification and finishing so it lands as one coherent space.",
+      },
+      {
+        q: "What worktop materials do you fit?",
+        a: "Quartz (most popular for durability and finish), granite, solid surface (Corian-style), porcelain and solid wood. We template after the units are installed for an exact fit; veined slabs are dry-laid and reviewed with you before final cuts.",
+      },
+      {
+        q: "Will you connect the appliances?",
+        a: "Yes. Gas hobs (by a Gas Safe-registered engineer), induction hobs, integrated ovens, dishwashers, washing machines, fridges and extractor hoods — all certified and signed off. Manuals and warranties are bundled at handover.",
+      },
+    ],
   },
   {
     slug: "tiling",
@@ -74,6 +128,29 @@ export const services: Service[] = [
     ],
     icon: "tile",
     keyword: "tiling contractors",
+    related: ["bathroom-renovations", "kitchen-renovations", "home-refurbishment"],
+    faqs: [
+      {
+        q: "Do you tile floors or walls only?",
+        a: "Both. Floors, walls, splashbacks, wet rooms, feature walls — we tile from porcelain and ceramic through to natural stone, zellige and large-format slabs. Most of our work is full bathrooms and kitchens, but we also do single-wall feature jobs.",
+      },
+      {
+        q: "Can you tile over existing tiles?",
+        a: "Sometimes. The surface needs to be flat, well-bonded and primed correctly. On a sound substrate, tiling over is fine and saves the cost of stripping; if there's any hollowness or movement, we strip back and start clean. We'll inspect and tell you honestly.",
+      },
+      {
+        q: "What about large-format tiles and slabs?",
+        a: "Large-format (600×1200mm+) and slab tiling is our specialty. They need precise levelling on the substrate, the right adhesive system (a back-buttered S1 or S2 deformable), careful cutting on a wet saw or rail-cutter, and the right hands. The finish is unmatched.",
+      },
+      {
+        q: "How long does tiling typically take?",
+        a: "A standard bathroom takes 3–5 days to tile, grout and seal. Floor areas depend on tile size and pattern — herringbone or chevron lays take roughly 1.5× a straight lay. Adhesive and grout need time to cure before the room is fully back in use.",
+      },
+      {
+        q: "Do you grout and seal the tiles too?",
+        a: "Always. We grout with the colour you specify, seal natural stone with the correct impregnator, and silicone-finish all internal corners and worktop joins. Sealed grout and stone stays clean far longer; we'll explain how to look after it.",
+      },
+    ],
   },
   {
     slug: "laminate-flooring",
@@ -89,6 +166,29 @@ export const services: Service[] = [
     ],
     icon: "plank",
     keyword: "laminate flooring installation",
+    related: ["flooring-installation", "home-refurbishment", "tiling"],
+    faqs: [
+      {
+        q: "What's the difference between laminate, LVT and engineered wood?",
+        a: "Laminate is a hard-wearing photographic surface on an HDF core — best value, brilliant in living rooms and hallways. LVT is a vinyl-based plank, warmer underfoot, the right choice for kitchens and family bathrooms. Engineered wood is real timber veneer on a stable core — most premium feel underfoot. We fit all three and explain the trade-offs honestly.",
+      },
+      {
+        q: "Will laminate work in a kitchen or bathroom?",
+        a: "AC5-rated laminate with sealed click joints can work in a kitchen — we'll spec a moisture-rated product if so. We don't recommend laminate in bathrooms; LVT or porcelain tile is a far better fit for wet areas and lasts much longer.",
+      },
+      {
+        q: "Do I need acoustic underlay?",
+        a: "Yes — we always lay quality acoustic underlay (3–5mm). It reduces noise downstairs, smooths small subfloor imperfections, and the floor feels noticeably better underfoot. The cheaper underlays make a real difference you'll regret skipping.",
+      },
+      {
+        q: "How long does laminate flooring last?",
+        a: "A quality AC4–AC5 board, properly installed over a level subfloor with the right underlay, will last 10–20+ years in a busy household. Keep it dry, use felt pads on furniture, and avoid dragging anything heavy across it.",
+      },
+      {
+        q: "Do you remove the old floor first?",
+        a: "Yes. We lift the existing covering, dispose of it cleanly, then prep the subfloor — sweep, check for level, apply self-levelling compound if needed — before laying underlay and the new floor. The prep stage is what makes the finished floor feel solid.",
+      },
+    ],
   },
   {
     slug: "flooring-installation",
@@ -104,6 +204,29 @@ export const services: Service[] = [
     ],
     icon: "floor",
     keyword: "flooring contractors",
+    related: ["laminate-flooring", "tiling", "home-refurbishment"],
+    faqs: [
+      {
+        q: "What flooring types do you install?",
+        a: "Engineered and solid wood, luxury vinyl tile (LVT), vinyl plank and laminate. We focus on hard flooring; for carpet we work with a trusted carpet fitter and coordinate the schedule so the rooms hand over together.",
+      },
+      {
+        q: "Can you lay herringbone or chevron patterns?",
+        a: "Yes — herringbone parquet and chevron lays are some of our favourite jobs. The finished result looks spectacular but the lay takes about 1.5× longer than a straight-plank lay and the subfloor has to be very precisely level. Worth it.",
+      },
+      {
+        q: "Do you level the subfloor first?",
+        a: "Always check, and if it's out of spec we self-level with the correct compound. A wavy or stepped subfloor will telegraph through any floor finish — fixing it first is non-negotiable for a premium feel underfoot.",
+      },
+      {
+        q: "Will you fit skirting, scotia and threshold trims?",
+        a: "Yes. New skirting, scotia, threshold strips and door trims as needed — colour-matched to the floor or to your existing decor. We never leave gappy edges or exposed expansion gaps; the trim work is what makes the floor look professionally fitted.",
+      },
+      {
+        q: "Can you install over underfloor heating?",
+        a: "Yes — engineered wood and LVT both work brilliantly over UFH. We use stable products with the right thermal rating, follow the manufacturer's acclimatisation period, and run the heating to spec during commissioning.",
+      },
+    ],
   },
   {
     slug: "home-refurbishment",
@@ -119,8 +242,50 @@ export const services: Service[] = [
     ],
     icon: "build",
     keyword: "home refurbishment company",
+    related: ["bathroom-renovations", "kitchen-renovations", "flooring-installation"],
+    faqs: [
+      {
+        q: "What does a full home refurbishment include?",
+        a: "Anything from a single-room rip-out-and-rebuild to a whole-house refurb: structural openings, plastering, electrics, plumbing, decorating, kitchen, bathrooms, flooring and final clean — all managed under one programme with one project manager.",
+      },
+      {
+        q: "Can you do extensions, or only internal work?",
+        a: "Our core is internal refurbishment and fit-out. For new-build extensions we work alongside a structural engineer and a main contractor and take on the internal works including 1st and 2nd fix. We're honest about what we do best and where we partner.",
+      },
+      {
+        q: "Do you handle building regs and certificates?",
+        a: "Yes. Electrical Part P certificates, Gas Safe sign-off, building control liaison and structural sign-off where needed — we arrange certification through the relevant body and hand the paperwork over at the end of the job.",
+      },
+      {
+        q: "How long does a typical full refurb take?",
+        a: "Depends on scope. A flat refurb is typically 6–10 weeks; a full Victorian terrace refurb can run 12–20+ weeks. We agree a phased schedule with milestones up front, so you can see exactly when each room hands over.",
+      },
+      {
+        q: "Can we live in the house during the work?",
+        a: "For single-room work, usually yes. For a full refurb without a working kitchen or bathroom, most clients move out for the heavy phase. We keep the site clean, dust-sheeted and secure throughout regardless.",
+      },
+    ],
   },
 ];
+
+/**
+ * Resolve a project's free-text service string (e.g. "Bathroom renovation",
+ * "Large-format tiling", "Skirting & trims") to the slug of the matching
+ * service page, or null if no clean mapping exists. Used by ProjectGallery to
+ * make the service tags inside the modal clickable, strengthening the
+ * project ↔ service internal authority graph.
+ */
+export function serviceSlugFor(label: string): string | null {
+  const l = label.toLowerCase();
+  if (l.includes("bathroom")) return "bathroom-renovations";
+  if (l.includes("kitchen")) return "kitchen-renovations";
+  if (l.includes("laminate")) return "laminate-flooring";
+  if (l.includes("tiling") || l.includes("tile")) return "tiling";
+  if (l.includes("flooring") || l.includes("wood") || l.includes("herringbone"))
+    return "flooring-installation";
+  if (l.includes("refurb") || l.includes("building")) return "home-refurbishment";
+  return null;
+}
 
 export type Project = {
   title: string;

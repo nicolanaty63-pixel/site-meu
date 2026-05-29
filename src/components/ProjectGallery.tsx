@@ -2,7 +2,12 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { projects as allProjects, type Project } from "@/lib/data";
+import Link from "next/link";
+import {
+  projects as allProjects,
+  serviceSlugFor,
+  type Project,
+} from "@/lib/data";
 import Photo from "@/components/ui/Photo";
 import Icon from "@/components/ui/Icon";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
@@ -326,14 +331,24 @@ export default function ProjectGallery({
                       Services used
                     </div>
                     <div className="mt-2 flex flex-wrap gap-1.5">
-                      {active.services.map((s) => (
-                        <span
-                          key={s}
-                          className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] text-concrete"
-                        >
-                          {s}
-                        </span>
-                      ))}
+                      {active.services.map((s) => {
+                        const slug = serviceSlugFor(s);
+                        const cls =
+                          "rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] text-concrete";
+                        return slug ? (
+                          <Link
+                            key={s}
+                            href={`/services/${slug}`}
+                            className={`${cls} transition-colors hover:border-gold/40 hover:text-white`}
+                          >
+                            {s}
+                          </Link>
+                        ) : (
+                          <span key={s} className={cls}>
+                            {s}
+                          </span>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>

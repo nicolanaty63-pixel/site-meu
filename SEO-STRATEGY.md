@@ -159,7 +159,62 @@ Priority + changeFrequency reflect commercial intent and content velocity:
 
 ---
 
-## 7. Roadmap (Phase 2+, require approval before shipping)
+## 7. Topical authority architecture (shipped)
+
+The cluster system is built on three layers of the existing graph — **no
+new thin routes were created.** Authority compounds on the pillars we
+already publish.
+
+```
+                  ┌──────────────────────────────────────┐
+                  │  Homepage  ·  GeneralContractor      │
+                  │  knowsAbout: [24 trade subtopics]    │
+                  └──────────────────────────────────────┘
+                                     │
+   ┌──────────┬──────────┬───────────┼──────────┬──────────┬──────────┐
+   ▼          ▼          ▼           ▼          ▼          ▼          ▼
+[Bath]   [Kitchen]   [Tiling]   [Laminate]  [Flooring]  [Refurb]   [About]
+   │          │          │           │          │          │
+   │ ─ 5 service-specific FAQs (FAQPage JSON-LD per page)
+   │ ─ areaServed: 10 City entities + 3 broader Places
+   │ ─ Service schema with provider GeneralContractor
+   │ ─ BreadcrumbList + visible Breadcrumbs UI
+   │ ─ Descriptive area anchors ("Bathroom Renovations in Watford" × 10)
+   │ ─ RelatedServices cluster links (curated 2–3 per pillar)
+   │
+   └─→ /areas/[slug] × 10 (Hertfordshire + North London)
+              │ ─ GeneralContractor schema scoped to the area
+              │ ─ Service grid with strong anchors back to pillars
+              │ ─ Nearby-area crosslinks
+              ▼
+        /projects (CollectionPage + ItemList of 7 CreativeWork)
+              │ ─ Project modal exposes service tags as deep links
+              │   into the relevant pillar (resolved by serviceSlugFor()).
+```
+
+**Per-service cluster signals now live:**
+
+| Pillar | Cluster FAQs | Related services | Inbound deep-linking surfaces |
+|---|---|---|---|
+| Bathroom Renovations | 5 | Tiling, Flooring Installation, Home Refurb | Area pages × 10, Project modal, Schema knowsAbout |
+| Kitchen Renovations | 5 | Tiling, Flooring Installation, Home Refurb | Area pages × 10, Project modal, Schema knowsAbout |
+| Tiling | 5 | Bathroom, Kitchen, Home Refurb | Area pages × 10, Project modal, Schema knowsAbout |
+| Laminate Flooring | 5 | Flooring Installation, Home Refurb, Tiling | Area pages × 10, Project modal, Schema knowsAbout |
+| Flooring Installation | 5 | Laminate, Tiling, Home Refurb | Area pages × 10, Project modal, Schema knowsAbout |
+| Home Refurbishment | 5 | Bathroom, Kitchen, Flooring | Area pages × 10, Project modal, Schema knowsAbout |
+
+**30 substantive Q&A pairs** are now in the FAQPage graph (was 6 generic
+pairs duplicated across all six service pages — same FAQs everywhere is a
+near-duplicate-content signal Google can flatten; service-specific
+strengthens each pillar independently).
+
+**`knowsAbout`** declares 24 trade subtopics on the homepage
+`GeneralContractor` entity — direct semantic relevance signal for queries
+that don't include the brand or service-page title.
+
+---
+
+## 8. Roadmap (Phase 3+, require approval before shipping)
 
 - **Per-project pages (`/projects/[slug]`):** requires bespoke per-project
   body content (problem → process → photo set → outcome). Without that,
@@ -183,7 +238,7 @@ Priority + changeFrequency reflect commercial intent and content velocity:
 
 ---
 
-## 8. Anti-patterns (do not introduce)
+## 9. Anti-patterns (do not introduce)
 
 - Doorway pages (service × area thin variants)
 - Keyword-stuffed H1s / meta descriptions

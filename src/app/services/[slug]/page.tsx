@@ -8,6 +8,7 @@ import PageHero from "@/components/PageHero";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import FAQ from "@/components/FAQ";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import RelatedServices from "@/components/RelatedServices";
 import Photo from "@/components/ui/Photo";
 import Icon from "@/components/ui/Icon";
 import { services, faqs } from "@/lib/data";
@@ -93,10 +94,12 @@ export default async function ServicePage({ params }: Params) {
       },
       // FAQPage schema makes the FAQs eligible for rich results. Same FAQs
       // are rendered visibly below; schema must match visible content.
+      // Service-specific FAQs (s.faqs) win over the general site faqs[] —
+      // deeper topical coverage per service strengthens the cluster signal.
       {
         "@type": "FAQPage",
         "@id": `${site.url}/services/${s.slug}/#faq`,
-        mainEntity: faqs.map((f) => ({
+        mainEntity: (s.faqs ?? faqs).map((f) => ({
           "@type": "Question",
           name: f.q,
           acceptedAnswer: { "@type": "Answer", text: f.a },
@@ -222,10 +225,15 @@ export default async function ServicePage({ params }: Params) {
         <Container>
           <SectionHeading center eyebrow="FAQ" title="Common questions" />
           <div className="mt-12">
-            <FAQ />
+            <FAQ items={s.faqs} />
           </div>
         </Container>
       </section>
+
+      {/* Related services — internal cluster graph */}
+      {s.related && s.related.length > 0 && (
+        <RelatedServices fromSlug={s.slug} relatedSlugs={s.related} />
+      )}
 
       {/* CTA */}
       <section className="pb-20">
