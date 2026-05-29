@@ -99,7 +99,7 @@ export default function QuoteForm() {
             name="service"
             required
             defaultValue=""
-            className="w-full rounded-xl border border-white/10 bg-ink px-4 py-3 text-sm text-white outline-none transition-colors focus:border-gold/60"
+            className="w-full rounded-xl border border-white/10 bg-ink px-4 py-3 text-base text-white outline-none transition-colors focus:border-gold/60"
           >
             <option value="" disabled>
               Select a service…
@@ -121,7 +121,7 @@ export default function QuoteForm() {
             name="message"
             rows={3}
             placeholder="Tell us a little about your project and timescale…"
-            className="w-full resize-none rounded-xl border border-white/10 bg-ink px-4 py-3 text-sm text-white placeholder-concrete-dark outline-none transition-colors focus:border-gold/60"
+            className="w-full resize-none rounded-xl border border-white/10 bg-ink px-4 py-3 text-base text-white placeholder-concrete-dark outline-none transition-colors focus:border-gold/60"
           />
         </div>
         <FormConsent />
@@ -163,7 +163,7 @@ function Field({
         type={type}
         required={required}
         placeholder={placeholder}
-        className="w-full rounded-xl border border-white/10 bg-ink px-4 py-3 text-sm text-white placeholder-concrete-dark outline-none transition-colors focus:border-gold/60"
+        className="w-full rounded-xl border border-white/10 bg-ink px-4 py-3 text-base text-white placeholder-concrete-dark outline-none transition-colors focus:border-gold/60"
       />
     </div>
   );

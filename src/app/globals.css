@@ -375,8 +375,16 @@ body {
   color: #e8e8ec;
   font-weight: 600;
 }
+/* Tables in legal copy were overflowing the page container on phones (cells
+   force ~370px min-width, container is ~335px). Block-level wrap + horizontal
+   scroll keeps the table fully readable on small screens without breaking the
+   layout. tr/td inside still render as table-row/-cell. */
 .legal table {
+  display: block;
   width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   border-collapse: collapse;
   margin: 1.25rem 0;
   font-size: 0.875rem;

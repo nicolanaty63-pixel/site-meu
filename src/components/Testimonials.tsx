@@ -112,25 +112,38 @@ export default function Testimonials({
       {/* Controls */}
       <div className="mt-6 flex items-center justify-center gap-4">
         <button
+          type="button"
           onClick={() => paginate(-1)}
           aria-label="Previous testimonial"
           className="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-white transition-colors hover:border-gold hover:text-gold"
         >
           <Icon name="arrow" className="h-4 w-4 rotate-180" />
         </button>
-        <div className="flex gap-2">
+        <div className="flex">
           {items.map((_, i) => (
             <button
               key={i}
+              type="button"
               onClick={() => goTo(i)}
               aria-label={`Go to testimonial ${i + 1}`}
-              className={`h-2 rounded-full transition-all ${
-                i === index ? "w-6 bg-gold" : "w-2 bg-white/20 hover:bg-white/40"
-              }`}
-            />
+              // Larger hit area for finger-friendly tapping on mobile (h-9 w-9
+              // = 36px exceeds the 32px minimum); the visible pill stays at
+              // its original 8px height with the active/inactive widths.
+              className="group inline-flex h-9 w-9 items-center justify-center"
+            >
+              <span
+                aria-hidden
+                className={`block h-2 rounded-full transition-all ${
+                  i === index
+                    ? "w-6 bg-gold"
+                    : "w-2 bg-white/20 group-hover:bg-white/40"
+                }`}
+              />
+            </button>
           ))}
         </div>
         <button
+          type="button"
           onClick={() => paginate(1)}
           aria-label="Next testimonial"
           className="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-white transition-colors hover:border-gold hover:text-gold"
