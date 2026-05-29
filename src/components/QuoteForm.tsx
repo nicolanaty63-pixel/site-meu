@@ -74,7 +74,7 @@ export default function QuoteForm() {
             label="Phone"
             name="phone"
             type="tel"
-            placeholder="07700 900123"
+            placeholder="07848 484088"
           />
         </div>
         <div className="grid gap-4 sm:grid-cols-2">

@@ -24,6 +24,20 @@ const nextConfig = {
         destination: "https://nicollacontractors.co.uk/:path*",
         permanent: true,
       },
+      // Legacy "/pages/*" URLs from a previous site iteration still surface in
+      // Google's index. 301 them to the App Router equivalent so any old
+      // backlinks / cached search results land on the correct page rather
+      // than a 404 — Google then folds the old URL into the new one.
+      {
+        source: "/pages/projects",
+        destination: "/projects",
+        permanent: true,
+      },
+      {
+        source: "/pages/:slug*",
+        destination: "/:slug*",
+        permanent: true,
+      },
     ];
   },
 };
