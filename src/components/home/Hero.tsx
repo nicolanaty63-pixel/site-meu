@@ -163,7 +163,11 @@ export default function Hero() {
                 </div>
               </ParallaxImage>
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/10 to-ink/20" />
-              <span className="absolute bottom-5 left-5 text-xs font-semibold uppercase tracking-wider text-gold">
+              {/* On lg+ the "100+ Homeowners served" stat card overhangs the
+                  collage's bottom-left — move the label to the top-left there
+                  so it never collides. Below lg, the stat is hidden, so the
+                  original bottom-left placement still reads as intended. */}
+              <span className="absolute bottom-5 left-5 text-xs font-semibold uppercase tracking-wider text-gold lg:bottom-auto lg:top-5">
                 Kitchen &amp; dining
               </span>
             </motion.div>
