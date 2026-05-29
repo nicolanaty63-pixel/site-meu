@@ -29,3 +29,8 @@ next-env.d.ts
 
 # vercel
 .vercel
+
+# Audit / verify script artefacts (screenshots, json reports). The verify-*
+# scripts themselves are committed in scripts/ for re-runnable diagnostics;
+# their output isn't.
+/verify-out/
