@@ -38,6 +38,6 @@ those CDNs are already whitelisted in `next.config.mjs`.
 | Zellige Feature Splashback | `zellige-splashback.webp` | `zellige-splashback-before/-after.webp` |
 | Warm Laminate Living Space | `laminate-living.webp` | `laminate-living-before/-after.webp` |
 | Minimalist Guest Bathroom | `guest-bathroom.webp` | `guest-bathroom-before/-after.webp` |
-| Luxury Kitchen Diner | `kitchen-diner.webp` | `kitchen-diner-before/-after.webp` |
+| Luxury Kitchen & Dining Space | `kitchen-diner.webp` | `kitchen-diner-before/-after.webp` |
 
 Always add descriptive `alt` text via the project `title` (handled automatically).

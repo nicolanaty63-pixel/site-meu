@@ -232,7 +232,7 @@ export const projects: Project[] = [
     afterImage: "/projects/guest-bathroom-after.webp",
   },
   {
-    title: "Luxury Kitchen Diner",
+    title: "Luxury Kitchen & Dining Space",
     category: "Kitchen",
     location: "Berkhamsted",
     summary:
@@ -242,7 +242,12 @@ export const projects: Project[] = [
     variant: 0,
     beforeVariant: 4,
     icon: "kitchen",
-    span: true,
+    // Landscape after-photo (walnut island, dining extension, porcelain floor) —
+    // 16:9 wideCard matches the source composition; the previous span:true 4:5
+    // would have cropped either the fridge or the dining side.
+    wideCard: true,
+    image: "/projects/kitchen-diner-after.webp",
+    afterImage: "/projects/kitchen-diner-after.webp",
   },
 ];
 

@@ -25,6 +25,11 @@ const jobs = [
   // Open-plan living/dining/kitchen with the wood-effect laminate as the hero
   // surface; centre crop keeps the sofa-to-dining sweep intact.
   { in: "alex-tyson-VUfe8alBlUo-unsplash.jpg", out: "laminate-living-after.webp", w: 2560, h: 1440 },
+  // Luxury Kitchen & Dining Space — landscape source -> 16:9 (wideCard + modal).
+  // Open-plan kitchen-diner: round dining table left, marble-waterfall island with
+  // bar stools centre/right, herringbone oak floor; centre crop preserves the
+  // full dining → island → kitchen sweep.
+  { in: "alex-tyson-U-0-AgPDpHk-unsplash.jpg", out: "kitchen-diner-after.webp", w: 2560, h: 1440 },
   // Slider BEFORE — generate the "same room, pre-renovation" photo externally
   // (see the img2img brief), save the source into Downloads with this exact
   // name, then re-run `node scripts/optimize-projects.mjs`.
