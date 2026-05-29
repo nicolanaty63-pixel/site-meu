@@ -18,12 +18,18 @@ export const site = {
   baseTown: "Kings Langley",
   region: "Hertfordshire",
   country: "United Kingdom",
+  // Single source of truth — JSON-LD areaServed, footer copy, and area-pill
+  // lists all derive from this. Keep in sync with src/lib/areas.ts.
   serves: [
     "Kings Langley",
     "Watford",
-    "Hemel Hempstead",
     "St Albans",
+    "Hemel Hempstead",
     "Rickmansworth",
+    "Berkhamsted",
+    "Bushey",
+    "Harpenden",
+    "Radlett",
     "North London",
   ],
 

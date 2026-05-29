@@ -8,6 +8,8 @@ import ProjectGallery from "@/components/ProjectGallery";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import Photo from "@/components/ui/Photo";
 import Icon from "@/components/ui/Icon";
+import { projects } from "@/lib/data";
+import { site } from "@/lib/site";
 
 export const metadata = pageMeta({
   title: "Projects — Our Portfolio of Renovations",
@@ -15,6 +17,57 @@ export const metadata = pageMeta({
     "Browse recent bathroom renovations, kitchen renovations, tiling and flooring projects by Nicolla Contractors across Hertfordshire and North London. Before & after transformations.",
   path: "/projects",
 });
+
+// CollectionPage + ItemList — gives Google a structured view of the portfolio,
+// each project surfaced as a CreativeWork referencing its image and location.
+const projectsLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": `${site.url}/projects/#collection`,
+      url: `${site.url}/projects`,
+      name: "Renovation projects by Nicolla Contractors",
+      description:
+        "Bathroom, kitchen, tiling and flooring projects completed across Hertfordshire and North London.",
+      isPartOf: { "@id": `${site.url}/#website` },
+      about: { "@id": `${site.url}/#business` },
+    },
+    {
+      "@type": "ItemList",
+      "@id": `${site.url}/projects/#itemlist`,
+      itemListOrder: "https://schema.org/ItemListOrderDescending",
+      numberOfItems: projects.length,
+      itemListElement: projects.map((p, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        item: {
+          "@type": "CreativeWork",
+          name: p.title,
+          description: p.summary,
+          locationCreated: { "@type": "Place", name: p.location },
+          keywords: p.services.join(", "),
+          creator: { "@id": `${site.url}/#business` },
+          ...(p.afterImage && {
+            image: `${site.url}${p.afterImage}`,
+          }),
+        },
+      })),
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: site.url },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Projects",
+          item: `${site.url}/projects`,
+        },
+      ],
+    },
+  ],
+};
 
 const beforeAfters = [
   { icon: "bath" as const, before: 2, after: 1, label: "Bathroom renovation" },
@@ -24,6 +77,11 @@ const beforeAfters = [
 export default function ProjectsPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectsLd) }}
+      />
+
       <PageHero
         eyebrow="Portfolio"
         title="Projects we're proud of"

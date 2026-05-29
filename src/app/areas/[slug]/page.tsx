@@ -6,6 +6,7 @@ import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
 import PageHero from "@/components/PageHero";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Icon from "@/components/ui/Icon";
 import { areas, getArea } from "@/lib/areas";
 import { services } from "@/lib/data";
@@ -90,6 +91,14 @@ export default async function AreaPage({ params }: Params) {
         eyebrow={`${area.county} · Local builders`}
         title={`Builders & Renovation in ${area.name}`}
         subtitle={area.intro}
+      />
+
+      <Breadcrumbs
+        items={[
+          { href: "/", label: "Home" },
+          { href: "/areas", label: "Areas" },
+          { label: area.name },
+        ]}
       />
 
       {/* Local intro + CTA */}

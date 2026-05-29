@@ -7,9 +7,10 @@ import SectionHeading from "@/components/SectionHeading";
 import PageHero from "@/components/PageHero";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import FAQ from "@/components/FAQ";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Photo from "@/components/ui/Photo";
 import Icon from "@/components/ui/Icon";
-import { services } from "@/lib/data";
+import { services, faqs } from "@/lib/data";
 import { areas } from "@/lib/areas";
 import { site } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
@@ -54,9 +55,12 @@ export default async function ServicePage({ params }: Params) {
         name: s.title,
         serviceType: s.keyword,
         description: s.description,
-        areaServed: [...new Set([...site.serviceRegions, ...site.serves])].map(
-          (a) => ({ "@type": "Place", name: a }),
-        ),
+        // City-level areaServed (every area page is a real route) plus the
+        // broader regions for top-of-funnel "[service] London" queries.
+        areaServed: [
+          ...areas.map((a) => ({ "@type": "City", name: a.name })),
+          ...site.serviceRegions.map((r) => ({ "@type": "Place", name: r })),
+        ],
         provider: {
           "@type": "GeneralContractor",
           name: site.name,
@@ -87,6 +91,17 @@ export default async function ServicePage({ params }: Params) {
           },
         ],
       },
+      // FAQPage schema makes the FAQs eligible for rich results. Same FAQs
+      // are rendered visibly below; schema must match visible content.
+      {
+        "@type": "FAQPage",
+        "@id": `${site.url}/services/${s.slug}/#faq`,
+        mainEntity: faqs.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      },
     ],
   };
 
@@ -98,6 +113,14 @@ export default async function ServicePage({ params }: Params) {
       />
 
       <PageHero eyebrow="Service" title={s.title} subtitle={s.description} />
+
+      <Breadcrumbs
+        items={[
+          { href: "/", label: "Home" },
+          { href: "/services", label: "Services" },
+          { label: s.title },
+        ]}
+      />
 
       {/* Overview */}
       <section className="py-16">
@@ -182,9 +205,12 @@ export default async function ServicePage({ params }: Params) {
               <Link
                 key={a.slug}
                 href={`/areas/${a.slug}`}
+                // Descriptive anchor text helps Google connect this service
+                // with each area as a relevant local result. Mirrors the
+                // strong-anchor pattern already used on /areas/[slug].
                 className="rounded-full border border-white/15 px-4 py-2 text-sm text-concrete transition-colors hover:border-gold/50 hover:text-white"
               >
-                {a.name}
+                {s.title} in {a.name}
               </Link>
             ))}
           </div>

@@ -58,6 +58,30 @@ export const areas: Area[] = [
     nearby: ["Hemel Hempstead", "Kings Langley", "Watford"],
   },
   {
+    slug: "bushey",
+    name: "Bushey",
+    county: "Hertfordshire",
+    intro:
+      "Trusted builders in Bushey delivering premium bathroom and kitchen renovations, precision tiling and flooring installation. Tidy, punctual and finished to the highest standard — rated 4.9/5.",
+    nearby: ["Watford", "Radlett", "Rickmansworth"],
+  },
+  {
+    slug: "harpenden",
+    name: "Harpenden",
+    county: "Hertfordshire",
+    intro:
+      "Premium renovation specialists in Harpenden. Bespoke kitchens, spa-style bathrooms, large-format tiling and engineered flooring — delivered cleanly, on schedule, and built to last.",
+    nearby: ["St Albans", "Hemel Hempstead", "Radlett"],
+  },
+  {
+    slug: "radlett",
+    name: "Radlett",
+    county: "Hertfordshire",
+    intro:
+      "Luxury home renovations in Radlett — bathrooms, kitchens, tiling, flooring and full refurbishments. Honest advice, clean work and a flawless premium finish, rated 4.9/5 by Hertfordshire homeowners.",
+    nearby: ["Bushey", "St Albans", "Harpenden"],
+  },
+  {
     slug: "north-london",
     name: "North London",
     county: "London",
