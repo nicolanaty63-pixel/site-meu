@@ -209,6 +209,11 @@ export const projects: Project[] = [
     variant: 1,
     beforeVariant: 2,
     icon: "plank",
+    // Landscape after-photo — matches the Spa-Style 16:9 wideCard treatment so
+    // the full open-plan sweep (sofa → kitchen → dining) reads uncropped.
+    wideCard: true,
+    image: "/projects/laminate-living-after.webp",
+    afterImage: "/projects/laminate-living-after.webp",
   },
   {
     title: "Minimalist Guest Bathroom",

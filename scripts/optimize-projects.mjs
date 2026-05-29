@@ -1,6 +1,7 @@
 import sharp from "sharp";
 import { mkdirSync, existsSync } from "node:fs";
-import { join } from "node:path";
+import { join, resolve, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 
 // Project gallery imagery for Nicolla Contractors.
 // Same cover-crop / WebP treatment as the hero/about/services scripts so every
@@ -8,7 +9,7 @@ import { join } from "node:path";
 // global warm grade on top). Missing sources are skipped, so you can re-run
 // this after dropping in a newly generated photo without errors.
 const SRC = "C:/Users/merie/Downloads";
-const OUT = "C:/Users/merie/site-meu/public/projects";
+const OUT = resolve(dirname(fileURLToPath(import.meta.url)), "../public/projects");
 mkdirSync(OUT, { recursive: true });
 
 // Spa-Style Master Bathroom (span card -> 4:5; modal slider -> 16:9 aspect-video).
@@ -20,6 +21,10 @@ const jobs = [
   // Minimalist Guest Bathroom — portrait source kept as a 4:5 editorial frame
   // (span card + centred portrait hero) so the focal point isn't cropped.
   { in: "point3d-commercial-imaging-ltd-krQbRzuJke0-unsplash.jpg", out: "guest-bathroom-after.webp", w: 1600, h: 2000 },
+  // Warm Laminate Living Space — landscape source -> 16:9 (wideCard + modal).
+  // Open-plan living/dining/kitchen with the wood-effect laminate as the hero
+  // surface; centre crop keeps the sofa-to-dining sweep intact.
+  { in: "alex-tyson-VUfe8alBlUo-unsplash.jpg", out: "laminate-living-after.webp", w: 2560, h: 1440 },
   // Slider BEFORE — generate the "same room, pre-renovation" photo externally
   // (see the img2img brief), save the source into Downloads with this exact
   // name, then re-run `node scripts/optimize-projects.mjs`.
