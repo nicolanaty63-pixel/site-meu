@@ -224,12 +224,12 @@ export default function HomePage() {
             <Reveal scale className="relative">
               <div className="pointer-events-none absolute -inset-6 -z-10 rounded-[2.5rem] bg-gold/10 blur-3xl" />
               <BeforeAfterSlider
+                beforeCaption="Dated & tired"
+                afterCaption="Premium finish"
                 before={
                   <Photo
-                    tone="before"
                     variant={2}
                     icon="bath"
-                    caption="Dated & tired"
                     src="/before.jpg"
                     sizes="(max-width: 1023px) 100vw, 50vw"
                     quality={90}
@@ -237,10 +237,8 @@ export default function HomePage() {
                 }
                 after={
                   <Photo
-                    tone="after"
                     variant={1}
                     icon="bath"
-                    caption="Premium finish"
                     src="/after.jpg"
                     sizes="(max-width: 1023px) 100vw, 50vw"
                     quality={90}

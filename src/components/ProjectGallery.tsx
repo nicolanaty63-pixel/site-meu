@@ -228,7 +228,6 @@ export default function ProjectGallery({
                     className="!aspect-video !rounded-none !border-0"
                     before={
                       <Photo
-                        tone="before"
                         variant={active.beforeVariant}
                         icon={active.icon}
                         src={active.beforeImage}
@@ -239,7 +238,6 @@ export default function ProjectGallery({
                     }
                     after={
                       <Photo
-                        tone="after"
                         variant={active.variant}
                         icon={active.icon}
                         src={active.afterImage}
