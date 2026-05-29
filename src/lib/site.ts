@@ -1,6 +1,4 @@
 // Central business info (NAP) — reused across the site and in SEO schema.
-// NOTE: phone/email are safe placeholders (Ofcom reserved 07700 900xxx range).
-// Replace with the real contact details before going live.
 
 export const site = {
   name: "Nicolla Contractors Ltd",
@@ -10,10 +8,10 @@ export const site = {
   description:
     "Nicolla Contractors Ltd is a premium construction and renovation company based in Kings Langley, Hertfordshire, serving London, North London and across Hertfordshire. We specialise in bathroom renovation, kitchen fitting, tiling, flooring installation and complete home refurbishment — delivered with meticulous attention to detail.",
 
-  // Contact (placeholders — replace before launch)
-  phoneDisplay: "07700 900123",
-  phoneHref: "tel:+447700900123",
-  whatsapp: "447700900123",
+  // Contact
+  phoneDisplay: "07848 484088",
+  phoneHref: "tel:+447848484088",
+  whatsapp: "447848484088",
   email: "info@nicollacontractors.co.uk",
 
   // Location & service area
