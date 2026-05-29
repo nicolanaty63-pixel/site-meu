@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { site } from "@/lib/site";
 import { services } from "@/lib/data";
 import { areas } from "@/lib/areas";
+import { guides } from "@/lib/guides";
 
 // Sitemap priority + changeFrequency reflect commercial intent: conversion
 // pages (quote, contact, services landing) signal as the strongest, service
@@ -23,12 +24,15 @@ const ROUTES: Array<{
   { path: "/projects", priority: 0.8, changeFrequency: "weekly" },
   { path: "/testimonials", priority: 0.7, changeFrequency: "weekly" },
   { path: "/areas", priority: 0.8, changeFrequency: "monthly" },
+  // Informational cluster supporting the pillars
+  { path: "/guides", priority: 0.7, changeFrequency: "monthly" },
   // Brand
   { path: "/about", priority: 0.6, changeFrequency: "monthly" },
 ];
 
 const SERVICE_PRIORITY = 0.8; // per-service detail = high commercial intent
 const AREA_PRIORITY = 0.7; // per-area detail = high local intent
+const GUIDE_PRIORITY = 0.7; // cost guides — high informational + supports pillars
 const LEGAL_PRIORITY = 0.3;
 const LEGAL_PATHS = [
   "/privacy-policy",
@@ -61,6 +65,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: AREA_PRIORITY,
   }));
 
+  const guidePages = guides.map((g) => ({
+    url: `${site.url}/guides/${g.slug}`,
+    // Use the guide's own lastUpdated so Google sees real revisions.
+    lastModified: new Date(g.lastUpdated),
+    changeFrequency: "monthly" as ChangeFreq,
+    priority: GUIDE_PRIORITY,
+  }));
+
   const legalPages = LEGAL_PATHS.map((path) => ({
     url: `${site.url}${path}`,
     lastModified,
@@ -68,5 +80,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: LEGAL_PRIORITY,
   }));
 
-  return [...core, ...servicePages, ...areaPages, ...legalPages];
+  return [...core, ...servicePages, ...areaPages, ...guidePages, ...legalPages];
 }

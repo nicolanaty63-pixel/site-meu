@@ -214,7 +214,47 @@ that don't include the brand or service-page title.
 
 ---
 
-## 8. Roadmap (Phase 3+, require approval before shipping)
+## 8. Cost-guide informational cluster (shipped Phase 3)
+
+A dedicated `/guides/[slug]` cluster targets early-buying-intent
+informational queries (e.g. *bathroom renovation cost UK*,
+*kitchen renovation cost UK*) that don't convert directly but feed
+authority into the commercial pillars at `/services/[slug]`.
+
+**Guides published (5, ~800–1200 words each):**
+
+| Guide | Pillar fed |
+|---|---|
+| `/guides/bathroom-renovation-cost-uk` | `/services/bathroom-renovations` |
+| `/guides/kitchen-renovation-cost-uk` | `/services/kitchen-renovations` |
+| `/guides/tiling-cost-uk` | `/services/tiling` |
+| `/guides/flooring-installation-cost-uk` | `/services/flooring-installation` |
+| `/guides/home-refurbishment-cost-uk` | `/services/home-refurbishment` |
+
+**Authority signals per guide:**
+
+- `Article` JSON-LD with `author`, `publisher`, `datePublished`, `dateModified`,
+  `mainEntityOfPage`, `about` (the linked Service entity), `inLanguage: en-GB`
+- `FAQPage` JSON-LD with 5 guide-specific Q&A pairs
+- `BreadcrumbList` JSON-LD + visible `Breadcrumbs` UI
+- Real price tables (UK 2026 market ranges, explicitly hedged as indicative)
+- Cross-link back to the matching `/services/[slug]` pillar at the end of the body
+- Cross-links to all sibling guides
+
+**Service pillar gains contextual CTA** ("Curious about pricing first? See
+bathroom renovation cost guide") under the free-quote button — single,
+non-spammy inbound link from the commercial page to its informational sibling.
+
+**Sitemap:** guides at priority 0.7, monthly changeFrequency, lastmod from
+the guide entry's own `lastUpdated` field.
+
+**Anti-pattern avoided:** *no per-area cost guides* (e.g.
+`bathroom-renovation-cost-watford`). That's the classic doorway pattern —
+covered explicitly in §9.
+
+---
+
+## 9. Roadmap (Phase 4+, require approval before shipping)
 
 - **Per-project pages (`/projects/[slug]`):** requires bespoke per-project
   body content (problem → process → photo set → outcome). Without that,
@@ -238,7 +278,7 @@ that don't include the brand or service-page title.
 
 ---
 
-## 9. Anti-patterns (do not introduce)
+## 10. Anti-patterns (do not introduce)
 
 - Doorway pages (service × area thin variants)
 - Keyword-stuffed H1s / meta descriptions

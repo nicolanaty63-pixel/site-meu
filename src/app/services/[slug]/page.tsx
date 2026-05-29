@@ -13,6 +13,7 @@ import Photo from "@/components/ui/Photo";
 import Icon from "@/components/ui/Icon";
 import { services, faqs } from "@/lib/data";
 import { areas } from "@/lib/areas";
+import { guides } from "@/lib/guides";
 import { site } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
 
@@ -161,6 +162,22 @@ export default async function ServicePage({ params }: Params) {
                 Get a free {s.title.toLowerCase()} quote
                 <Icon name="arrow" className="h-4 w-4" />
               </Link>
+              {(() => {
+                const guide = guides.find((g) => g.serviceSlug === s.slug);
+                if (!guide) return null;
+                return (
+                  <p className="mt-4 text-sm text-concrete">
+                    Curious about pricing first?{" "}
+                    <Link
+                      href={`/guides/${guide.slug}`}
+                      className="font-medium text-gold underline underline-offset-4 hover:text-gold-light"
+                    >
+                      {guide.ctaLabel}
+                    </Link>
+                    .
+                  </p>
+                );
+              })()}
             </Reveal>
           </div>
         </Container>
