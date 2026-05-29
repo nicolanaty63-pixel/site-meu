@@ -14,8 +14,10 @@ import Image from "next/image";
 export const LOGO_SRC = "/logo-nicolla-mark.png";
 
 // Intrinsic dimensions of the artwork (used for aspect ratio).
-const LOGO_WIDTH = 362;
-const LOGO_HEIGHT = 367;
+// Source PNG is capped at 384px on the long edge (see scripts/resize-logo.mjs)
+// which is the retina target for the largest navbar display (h-48 = 192px).
+const LOGO_WIDTH = 379;
+const LOGO_HEIGHT = 384;
 
 export default function Logo({
   className = "h-9 w-auto",
@@ -31,7 +33,9 @@ export default function Logo({
       width={LOGO_WIDTH}
       height={LOGO_HEIGHT}
       priority={priority}
-      unoptimized
+      // sizes drives the srcset next/image generates; explicit pixel-density
+      // hints keep the logo from over-serving on small navbar/footer renders.
+      sizes="(min-width: 640px) 192px, 96px"
       className={className}
     />
   );
