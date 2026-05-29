@@ -29,15 +29,22 @@ export default function PrivacyPolicyPage() {
         <li>
           <strong>Company:</strong> {legal.companyName}
         </li>
-        <li>
-          <strong>Company registration number:</strong> {legal.companyNumber}
-        </li>
-        <li>
-          <strong>Registered office:</strong> {legal.registeredOffice}
-        </li>
-        <li>
-          <strong>ICO registration reference:</strong> {legal.icoRegistration}
-        </li>
+        {legal.companyNumber && (
+          <li>
+            <strong>Company registration number:</strong> {legal.companyNumber}
+          </li>
+        )}
+        {legal.registeredOffice && (
+          <li>
+            <strong>Registered office:</strong> {legal.registeredOffice}
+          </li>
+        )}
+        {legal.icoRegistration && (
+          <li>
+            <strong>ICO registration reference:</strong>{" "}
+            {legal.icoRegistration}
+          </li>
+        )}
         <li>
           <strong>Privacy contact:</strong>{" "}
           <a href={`mailto:${legal.privacyEmail}`}>{legal.privacyEmail}</a>
