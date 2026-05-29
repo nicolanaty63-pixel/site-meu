@@ -73,7 +73,7 @@ export default function AboutPage() {
                   <div className="h-full w-full transition-transform duration-[1300ms] ease-out group-hover:scale-105">
                     <Photo
                       src="/about/about-craft.webp"
-                      alt="Hand-laid herringbone parquet flooring — precision joinery in progress"
+                      alt="Bespoke bathroom renovation — Carrara marble vanity with brushed-brass widespread tap and gold-framed mirror"
                       sizes="(max-width: 1023px) 100vw, 560px"
                     />
                   </div>
@@ -90,10 +90,10 @@ export default function AboutPage() {
                   <span className="h-9 w-px bg-gold/70" />
                   <span className="leading-tight">
                     <span className="block text-[11px] font-semibold uppercase tracking-[0.22em] text-gold">
-                      In the workshop
+                      Bespoke bathroom
                     </span>
                     <span className="block text-sm font-medium text-white/90">
-                      Herringbone parquet, laid by hand
+                      Carrara marble, brushed-brass detail
                     </span>
                   </span>
                 </figcaption>
