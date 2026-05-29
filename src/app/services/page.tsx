@@ -16,11 +16,12 @@ export const metadata = pageMeta({
 });
 
 // Real photography per service (same assets as the homepage Services grid).
-// Slugs without an entry (e.g. laminate-flooring) keep the existing placeholder.
+// Slugs without an entry fall back to the placeholder <Photo> tile.
 const serviceImages: Record<string, string> = {
   "bathroom-renovations": "/lisa-anna-yhodTxZQQxw-unsplash.jpeg",
   "kitchen-renovations": "/franco-debartolo-ORzG4HrA9rI-unsplash.jpeg",
   tiling: "/tilingjj.jpeg",
+  "laminate-flooring": "/claire-rendall-b6kAwr1i0Iw-unsplash.jpg",
   "flooring-installation": "/tile-merchant-ireland-Wblr6Q2Vr70-unsplash.jpeg",
   "home-refurbishment": "/brett-jordan-yica25Tg73w-unsplash.jpeg",
 };
