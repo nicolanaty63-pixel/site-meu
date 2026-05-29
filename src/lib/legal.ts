@@ -1,30 +1,44 @@
 import { site } from "@/lib/site";
 
-// Central legal/company details. Replace ALL bracketed placeholders with the
-// company's real registered information before publishing. Have a solicitor
-// review the legal pages for your specific circumstances.
+// Central legal/company details. The optional fields are intentionally left
+// `undefined` until the real value is confirmed — every consumer renders them
+// conditionally, so bracket-placeholder strings can never leak into HTML or
+// JSON-LD. When the real value is available, set it here and it surfaces
+// automatically on every legal page that references it.
 
-export const legal = {
+type Legal = {
+  companyName: string;
+  /** Companies House registered number — set when filed. */
+  companyNumber?: string;
+  /** Registered office address, formatted as one line. Set when confirmed. */
+  registeredOffice?: string;
+  /** ICO Data Protection register reference. Set when registered. */
+  icoRegistration?: string;
+  /** VAT number, if registered. */
+  vatNumber?: string;
+  privacyEmail: string;
+  contactEmail: string;
+  phone: string;
+  phoneHref: string;
+  lastUpdated: string;
+  governingLaw: string;
+};
+
+export const legal: Legal = {
   companyName: site.legalName,
-  // Companies House registered number
-  companyNumber: "[COMPANY NUMBER — e.g. 12345678]",
-  // Registered office address (as filed at Companies House)
-  registeredOffice:
-    "[Registered office address], Kings Langley, Hertfordshire [POSTCODE], United Kingdom",
-  // ICO Data Protection register reference (if registered)
-  icoRegistration: "[ICO REGISTRATION REFERENCE — e.g. ZA123456]",
-  vatNumber: "[VAT NUMBER if registered — e.g. GB123456789]",
+  companyNumber: undefined,
+  registeredOffice: undefined,
+  icoRegistration: undefined,
+  vatNumber: undefined,
 
-  // Contact points
   privacyEmail: "privacy@nicollacontractors.co.uk",
   contactEmail: site.email,
   phone: site.phoneDisplay,
   phoneHref: site.phoneHref,
 
-  // Maintenance
   lastUpdated: "24 May 2026",
   governingLaw: "England & Wales",
-} as const;
+};
 
 export const legalPages = [
   { href: "/privacy-policy", label: "Privacy Policy" },

@@ -50,10 +50,22 @@ export default function Schema() {
         ],
         address: {
           "@type": "PostalAddress",
+          ...(site.streetAddress && { streetAddress: site.streetAddress }),
           addressLocality: site.baseTown,
           addressRegion: site.region,
+          ...(site.postalCode && { postalCode: site.postalCode }),
           addressCountry: "GB",
         },
+        // Conditionally surfaced — both are completely absent from the JSON-LD
+        // until real data is supplied in src/lib/site.ts. See BUSINESS-DATA.md.
+        ...(site.geo && {
+          geo: {
+            "@type": "GeoCoordinates",
+            latitude: site.geo.latitude,
+            longitude: site.geo.longitude,
+          },
+        }),
+        ...(site.sameAs && site.sameAs.length > 0 && { sameAs: site.sameAs }),
         areaServed: [...new Set([...site.serviceRegions, ...site.serves])].map(
           (a) => ({ "@type": "Place", name: a }),
         ),

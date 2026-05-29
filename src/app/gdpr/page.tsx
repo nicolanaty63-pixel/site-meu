@@ -18,9 +18,12 @@ export default function GdprPage() {
     >
       <h2>Data controller</h2>
       <p>
-        {legal.companyName} (company number {legal.companyNumber}), registered
-        office {legal.registeredOffice}. ICO registration:{" "}
-        {legal.icoRegistration}. Data protection contact:{" "}
+        {legal.companyName}
+        {legal.companyNumber && <> (company number {legal.companyNumber})</>}
+        {legal.registeredOffice && <>, registered office {legal.registeredOffice}</>}
+        .
+        {legal.icoRegistration && <> ICO registration: {legal.icoRegistration}.</>}{" "}
+        Data protection contact:{" "}
         <a href={`mailto:${legal.privacyEmail}`}>{legal.privacyEmail}</a>.
       </p>
 

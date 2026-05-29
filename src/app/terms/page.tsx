@@ -18,9 +18,10 @@ export default function TermsPage() {
     >
       <h2>1. About us</h2>
       <p>
-        This website is operated by {legal.companyName} (company number{" "}
-        {legal.companyNumber}), registered office {legal.registeredOffice}. To
-        contact us, email{" "}
+        This website is operated by {legal.companyName}
+        {legal.companyNumber && <> (company number {legal.companyNumber})</>}
+        {legal.registeredOffice && <>, registered office {legal.registeredOffice}</>}
+        . To contact us, email{" "}
         <a href={`mailto:${legal.contactEmail}`}>{legal.contactEmail}</a> or call{" "}
         <a href={legal.phoneHref}>{legal.phone}</a>.
       </p>

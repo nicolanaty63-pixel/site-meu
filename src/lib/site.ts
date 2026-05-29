@@ -18,6 +18,19 @@ export const site = {
   baseTown: "Kings Langley",
   region: "Hertfordshire",
   country: "United Kingdom",
+  // Optional NAP / GBP-aligned fields. Schema.tsx conditionally surfaces each
+  // of these in the GeneralContractor JSON-LD ONLY when defined here — leave
+  // undefined rather than inventing values. Source of truth for what's
+  // missing and what unlocks what is BUSINESS-DATA.md at the repo root.
+  /** First line of registered office address — e.g. "10 High Street". */
+  streetAddress: undefined as string | undefined,
+  /** UK postcode of registered office — e.g. "WD4 8AB". */
+  postalCode: undefined as string | undefined,
+  /** Geo coordinates of registered office or service centre. */
+  geo: undefined as { latitude: number; longitude: number } | undefined,
+  /** External profile URLs (GBP, MyBuilder, Facebook, Instagram, LinkedIn).
+   *  Each adds a sameAs link from the entity for knowledge-graph signal. */
+  sameAs: undefined as string[] | undefined,
   // Single source of truth — JSON-LD areaServed, footer copy, and area-pill
   // lists all derive from this. Keep in sync with src/lib/areas.ts.
   serves: [
