@@ -216,7 +216,7 @@ export default async function ServicePage({ params }: Params) {
       </section>
 
       {/* Areas */}
-      <section className="py-12">
+      <section className="py-16">
         <Container className="text-center">
           <h2 className="text-xl font-semibold text-white">
             {s.title} across our areas

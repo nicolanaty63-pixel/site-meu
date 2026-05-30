@@ -66,7 +66,9 @@ export default function RelatedProjectsFor({
                     src={p.afterImage || p.image}
                     alt={`${p.title} — case study preview`}
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
-                    quality={85}
+                    // next.config.mjs allowlists [75, 90] only — non-allowlisted
+                    // values fail silently and the image never loads.
+                    quality={90}
                   />
                   <span className="absolute left-3 top-3 rounded-full bg-black/50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-gold backdrop-blur">
                     {p.category}

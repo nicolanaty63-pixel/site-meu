@@ -55,7 +55,7 @@ export default function FreeQuotePage() {
       <QuoteHero />
 
       {/* Stats */}
-      <section className="py-14">
+      <section className="py-16">
         <Container>
           <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
             {stats.map((s) => (
@@ -200,7 +200,7 @@ export default function FreeQuotePage() {
       </section>
 
       {/* Urgency CTA */}
-      <section className="py-12">
+      <section className="py-16">
         <Container>
           <Reveal>
             <div className="relative overflow-hidden rounded-3xl border border-gold/20 bg-gradient-to-br from-gold/15 via-charcoal to-charcoal px-6 py-12 text-center sm:px-10">
@@ -291,7 +291,7 @@ export default function FreeQuotePage() {
       </section>
 
       {/* Final CTA */}
-      <section className="pb-24">
+      <section className="pb-20">
         <Container>
           <Reveal className="text-center">
             <h2 className="mx-auto max-w-2xl text-3xl font-extrabold text-white sm:text-4xl">
