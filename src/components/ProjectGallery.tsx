@@ -353,13 +353,26 @@ export default function ProjectGallery({
                   </div>
                 </div>
 
-                <a
-                  href="/contact"
-                  className="mt-7 inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-semibold text-ink transition-transform hover:scale-[1.03]"
-                >
-                  Start a project like this
-                  <Icon name="arrow" className="h-4 w-4" />
-                </a>
+                <div className="mt-7 flex flex-wrap items-center gap-3">
+                  {/* When the project has a dedicated case-study page, lead
+                      with that — it's the deeper conversion surface. */}
+                  {active.slug && active.detail && (
+                    <Link
+                      href={`/projects/${active.slug}`}
+                      className="inline-flex items-center gap-2 rounded-full border border-gold/40 px-6 py-3 text-sm font-semibold text-gold transition-colors hover:bg-gold hover:text-ink"
+                    >
+                      View full case study
+                      <Icon name="arrow" className="h-4 w-4" />
+                    </Link>
+                  )}
+                  <a
+                    href="/contact"
+                    className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-semibold text-ink transition-transform hover:scale-[1.03]"
+                  >
+                    Start a project like this
+                    <Icon name="arrow" className="h-4 w-4" />
+                  </a>
+                </div>
               </div>
             </motion.div>
           </motion.div>

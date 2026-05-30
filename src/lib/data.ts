@@ -287,6 +287,28 @@ export function serviceSlugFor(label: string): string | null {
   return null;
 }
 
+/** Long-form case-study content for projects substantial enough to deserve
+ *  a dedicated /projects/[slug] page. When omitted, the project stays in
+ *  the gallery modal only — the "prefer 10 strong pages over 50 weak ones"
+ *  rule. Every field is unique per project; no shared boilerplate. */
+export type ProjectDetail = {
+  metaTitle: string;
+  metaDescription: string;
+  /** 1–2 sentence pull-quote that opens the case study, shown right under
+   *  the hero image. Should read as editorial, not marketing. */
+  intro: string;
+  /** What the job actually covered, in trade-voice. */
+  scope: string[];
+  /** Real technical challenges the trade had to solve on this project. */
+  challenges: string[];
+  /** On-site programme broken into phases. */
+  process: Array<{ phase: string; detail: string }>;
+  /** Visible materials + finishes specified for this room. */
+  materials: string[];
+  /** The qualitative outcome — what the space now is vs. what it was. */
+  outcome: string;
+};
+
 export type Project = {
   title: string;
   category: string;
@@ -305,6 +327,11 @@ export type Project = {
   image?: string;
   beforeImage?: string;
   afterImage?: string;
+  /** When set, this project gets a dedicated /projects/[slug] case-study
+   *  page. Detail must also be present — type isn't enforced but the route
+   *  filter requires both. */
+  slug?: string;
+  detail?: ProjectDetail;
 };
 
 export const projects: Project[] = [
@@ -326,6 +353,65 @@ export const projects: Project[] = [
     // BEFORE: generate the "same room, pre-renovation" photo (see brief),
     // run `node scripts/optimize-projects.mjs`, then uncomment this line:
     // beforeImage: "/projects/spa-bathroom-before.webp",
+    slug: "spa-style-master-bathroom-st-albans",
+    detail: {
+      metaTitle:
+        "Spa-Style Master Bathroom Renovation in St Albans — Case Study",
+      metaDescription:
+        "A 12-day master bathroom renovation in St Albans, Hertfordshire — walk-in rain shower, large-format porcelain, freestanding bath and underfloor heating. Real case study by Nicolla Contractors.",
+      intro:
+        "A dated 1980s suite stripped back to brick and rebuilt as a calm, hotel-style retreat. Twelve days on site, finished as a single coherent room rather than a set of fittings stacked together.",
+      scope: [
+        "Full strip-out of the existing suite, removal of the airing-cupboard partition wall and disposal of all redundant fittings.",
+        "Repositioned soil pipe and re-routed cold/hot feeds to suit the new layout (freestanding bath on the long wall, walk-in shower at the end).",
+        "Full waterproof tanking system applied over the new floor build-up before tiling.",
+        "Electric underfloor heating mat embedded under porcelain throughout, controlled by a programmable thermostat.",
+        "Large-format porcelain tiling to all walls and floor, including the shower zone, with silicone-finished internal corners.",
+        "Brushed-brass brassware set installed and commissioned — concealed shower mixer, basin tap and bath filler.",
+      ],
+      challenges: [
+        "Original suspended timber floor needed strengthening in two joist bays before the freestanding bath could be sited — the new bath is heavier than the old built-in.",
+        "Veined large-format porcelain was dry-laid in the workshop and on site before any cuts to keep the vein direction running across the room as one continuous sweep.",
+        "Recessed wall niche in the shower had to be set out before tanking — it lines up exactly with the central tile course rather than sitting where the studs happened to land.",
+      ],
+      process: [
+        {
+          phase: "Days 1–2 · Strip-out + protection",
+          detail:
+            "Existing suite removed, partition wall taken down, dust sheets and door protection in place. Skip on the drive, debris cleared each day.",
+        },
+        {
+          phase: "Days 3–5 · First fix",
+          detail:
+            "Soil pipe rerouted, hot/cold feeds repositioned for the new layout, electrical first-fix for the underfloor heating, mirror lighting and extractor.",
+        },
+        {
+          phase: "Days 6–7 · Floor build-up + tanking",
+          detail:
+            "Joist strengthening for the freestanding bath, plywood overlay, primer and Schlüter-system tanking on walls and floor, underfloor heating mat laid into self-leveller.",
+        },
+        {
+          phase: "Days 8–11 · Tiling",
+          detail:
+            "Walls then floor in the large-format porcelain. Dry-laid for vein matching, cut on a rail-cutter, set with S2 adhesive. Grouted on day 11, silicone the next morning.",
+        },
+        {
+          phase: "Day 12 · Second fix + handover",
+          detail:
+            "Brassware fitted and commissioned, glass shower screen installed, bath filled and tested, full clean, walkthrough with the homeowners.",
+        },
+      ],
+      materials: [
+        "Large-format porcelain — 600×1200, matte greige, walls and floor",
+        "Freestanding stone-composite bath",
+        "Walk-in glass shower screen with chrome bracing",
+        "Brushed-brass shower mixer + basin tap + bath filler (matched set)",
+        "Electric underfloor heating mat with programmable thermostat",
+        "Schlüter-system waterproof tanking membrane",
+      ],
+      outcome:
+        "What was a tired family bathroom now reads as a hotel suite — single material running across walls and floor, calm tone, warm underfloor, and a walk-in shower that fits the proportions of the room rather than being squeezed into a corner. The homeowners moved back in on day 13.",
+    },
   },
   {
     title: "Modern Shaker Kitchen",
@@ -344,6 +430,66 @@ export const projects: Project[] = [
     wideCard: true,
     image: "/projects/shaker-kitchen-after.webp",
     afterImage: "/projects/shaker-kitchen-after.webp",
+    slug: "modern-shaker-kitchen-watford",
+    detail: {
+      metaTitle:
+        "Modern Shaker Kitchen Renovation in Watford — Case Study",
+      metaDescription:
+        "A 3-week Watford kitchen renovation — greige shaker units with chrome bar pulls, full-slab quartz worktops, marble splashback and a stainless French-door fridge. Real Nicolla Contractors case study.",
+      intro:
+        "A 1930s semi where the kitchen had been broadly the same since the 1990s. Three weeks on site, replaced with a quiet greige shaker run, a quartz waterfall island and a marble splashback that lifts the whole room.",
+      scope: [
+        "Full strip-out of the existing kitchen including units, worktops, splashback tiles and old vinyl flooring.",
+        "Plaster repairs and a skim coat where the original tiling had been hacked off.",
+        "Electrical first-fix for the new appliance positions plus relocated socket runs above the worktop.",
+        "Gas-Safe re-certification of the hob connection after the unit was repositioned.",
+        "Bespoke shaker carcasses fitted with chrome bar pulls, including a tall pantry tower flanking the range.",
+        "Full-slab quartz worktop templated after the carcasses were in and fitted a week later.",
+        "Marble splashback behind the range, mitred to wrap the corner cleanly.",
+      ],
+      challenges: [
+        "The original walls were noticeably out of square — every plinth, worktop end and pantry filler was cut bespoke on site rather than supplied to a standard length.",
+        "The existing hob feed sat in a position that wouldn't suit the new layout — re-routed and re-certified by a Gas Safe engineer rather than left in place.",
+        "Quartz could only be templated after the carcasses were physically installed, which forced a one-week gap mid-programme. We used the gap to fit the splashback and decorate the room, so the kitchen wasn't sat idle.",
+      ],
+      process: [
+        {
+          phase: "Days 1–3 · Strip-out + plaster",
+          detail:
+            "Old kitchen removed in a single day; plaster repairs where the existing tiling came off; floor protection laid for the rest of the programme.",
+        },
+        {
+          phase: "Days 4–6 · First fix",
+          detail:
+            "Electrical first-fix for new socket positions, plumbing for the new sink position, gas re-routing and Gas Safe re-cert booked.",
+        },
+        {
+          phase: "Days 7–10 · Units in",
+          detail:
+            "Bespoke shaker carcasses delivered and fitted in sequence — base units first, then tall units flanking the range, doors and drawers hung last.",
+        },
+        {
+          phase: "Days 11–14 · Quartz template + splashback",
+          detail:
+            "Quartz templated end of week two; splashback fitted while the slab was being machined; room redecorated.",
+        },
+        {
+          phase: "Days 15–18 · Quartz fit + appliances + handover",
+          detail:
+            "Worktop fitted, sink and hob commissioned, appliances integrated and tested, full clean, walkthrough.",
+        },
+      ],
+      materials: [
+        "Bespoke shaker doors in matte greige with chrome bar pulls",
+        "Full-slab quartz worktop, island waterfall ends",
+        "Veined marble splashback behind the range, mitred returns",
+        "Stainless steel French-door fridge",
+        "Brushed-brass mixer tap with separate filtered-water spout",
+        "Integrated dishwasher and double oven",
+      ],
+      outcome:
+        "A bright, hard-working family kitchen that finally fits the shape of the room. The original layout is broadly retained, but every cabinet end and worktop edge has been cut to fit — so nothing reads as off-the-shelf despite using a standard trade-brand carcass system.",
+    },
   },
   {
     title: "Herringbone Oak Hallway",
@@ -385,6 +531,59 @@ export const projects: Project[] = [
     wideCard: true,
     image: "/projects/laminate-living-after.webp",
     afterImage: "/projects/laminate-living-after.webp",
+    slug: "warm-laminate-living-space-watford",
+    detail: {
+      metaTitle:
+        "Warm Laminate Living Space — Watford Open-Plan Floor Refresh",
+      metaDescription:
+        "An open-plan Watford ground floor with new wood-effect AC4 laminate, acoustic underlay and neat scotia trims — fitted in 4 days. Real Nicolla Contractors case study.",
+      intro:
+        "An open-plan living-dining-kitchen ground floor where the carpet had taken a battering. Four days on site, replaced with a single AC4 wood-effect laminate flowing from front door to back without a threshold break.",
+      scope: [
+        "Lift and dispose of existing carpet and underlay across the open-plan ground floor.",
+        "Subfloor inspection, sweep, and self-levelling compound where needed to bring the surface within manufacturer tolerance.",
+        "Lay 4mm acoustic underlay throughout.",
+        "Straight-plank lay of AC4 wood-effect laminate from the entrance hall through living, dining and kitchen zones — no threshold break between rooms.",
+        "Scotia fitted to existing skirting, colour-matched to the floor.",
+        "New oak threshold strips at the doorways to bathroom and stairs.",
+      ],
+      challenges: [
+        "The original chipboard subfloor stepped about 12mm at the kitchen threshold — needed self-levelling compound, not just a transition strip, to keep the run continuous.",
+        "Existing skirting was painted in place and the homeowner didn't want to repaint, so we fitted slimline scotia colour-matched to the floor rather than lifting and refitting skirting.",
+        "Awkward cut around five radiator pipe positions and the freestanding wood-burner hearth — each one templated with a pipe-rose tool for a tight fit.",
+      ],
+      process: [
+        {
+          phase: "Day 1 · Strip + prep",
+          detail:
+            "Carpet lifted and disposed of, gripper rods removed, subfloor swept, self-levelling compound applied at the kitchen threshold step.",
+        },
+        {
+          phase: "Day 2 · Underlay + start of lay",
+          detail:
+            "Acoustic underlay rolled and joined, first courses set out from the longest wall, straight-plank lay started.",
+        },
+        {
+          phase: "Day 3 · Finish lay",
+          detail:
+            "Cut around radiator pipes, fireplace hearth and door frames. Final courses scribed at the opposite wall. Expansion gap maintained at every edge.",
+        },
+        {
+          phase: "Day 4 · Trims + handover",
+          detail:
+            "Scotia fitted to existing skirting, oak threshold strips at the bathroom and stair doorways, hoover, walkthrough.",
+        },
+      ],
+      materials: [
+        "AC4-rated wood-effect laminate (oak look), 8mm",
+        "4mm acoustic underlay with foil moisture barrier",
+        "Colour-matched scotia (PVC) for skirting cover",
+        "Solid oak threshold strips at doorways",
+        "Expansion-gap spacers maintained on every edge",
+      ],
+      outcome:
+        "A single hard-wearing floor running from the front door to the back, with no threshold break between rooms. The kitchen and the living area now read as one space instead of two zones divided by a transition strip. Fast turnaround, minimal disruption, finished cleanly.",
+    },
   },
   {
     title: "Minimalist Guest Bathroom",
@@ -401,6 +600,67 @@ export const projects: Project[] = [
     span: true,
     image: "/projects/guest-bathroom-after.webp",
     afterImage: "/projects/guest-bathroom-after.webp",
+    slug: "minimalist-guest-bathroom-st-albans",
+    detail: {
+      metaTitle:
+        "Minimalist Guest Bathroom Renovation in St Albans — Case Study",
+      metaDescription:
+        "A 10-day compact guest bathroom renovation in St Albans — walk-in shower, large-format porcelain, brushed-brass concealed fittings, frameless glass. Real Nicolla Contractors case study.",
+      intro:
+        "A compact guest bathroom that needed to feel much bigger than its footprint suggested. Ten days on site, finished as a minimalist room with concealed plumbing, large-format porcelain and a frameless glass screen.",
+      scope: [
+        "Full strip-out of the existing en-suite including suite, tiling and old extraction.",
+        "Concealed cistern frame and back-to-wall toilet specified to recover 15cm of usable depth.",
+        "Repositioned shower waste with proper falls in the new screed.",
+        "Full waterproof tanking system to all wet areas before tiling.",
+        "Large-format porcelain to all walls and floor.",
+        "Brushed-brass concealed shower mixer, basin tap and waste.",
+        "Frameless 8mm glass shower screen on a hinged pivot.",
+        "Recessed wall niche in the shower with integrated LED strip.",
+      ],
+      challenges: [
+        "Tight footprint — the concealed cistern frame took 15cm off the available depth, which forced the doorway to be re-hung swinging outward rather than inward.",
+        "Brushed-brass spec needed the correct primer base on the substrate to keep the finish from spotting under hard water.",
+        "Single-skin external wall on the shower side needed an additional insulation board behind the tanking to stop cold-bridge condensation.",
+      ],
+      process: [
+        {
+          phase: "Days 1–2 · Strip-out",
+          detail:
+            "Existing suite removed, tiles hacked off, old extractor removed, doorway re-hung on its new swing direction.",
+        },
+        {
+          phase: "Days 3–4 · First fix",
+          detail:
+            "Shower waste repositioned and falls created in screed, electrical first-fix for the niche LED + extractor, concealed cistern frame fitted.",
+        },
+        {
+          phase: "Days 5–6 · Tanking + insulation",
+          detail:
+            "Insulation board added to the single-skin wall, full waterproof tanking system applied to walls and floor, niche set out.",
+        },
+        {
+          phase: "Days 6–9 · Tiling",
+          detail:
+            "Walls and floor in large-format porcelain. Tight cuts around the cistern and niche. Grouted and silicone-finished on day 9.",
+        },
+        {
+          phase: "Day 10 · Second fix + handover",
+          detail:
+            "Brushed-brass mixer commissioned, frameless shower screen fitted, basin and toilet plumbed, niche LED tested, walkthrough and clean.",
+        },
+      ],
+      materials: [
+        "600×600 large-format porcelain, walls and floor",
+        "Concealed-cistern WC frame + back-to-wall pan",
+        "Brushed-brass concealed thermostatic shower mixer + waste set",
+        "Frameless 8mm hinged glass shower screen",
+        "Recessed wall niche with warm-white LED strip",
+        "Insulation board behind the single-skin external-wall tanking",
+      ],
+      outcome:
+        "A compact guest bathroom that punches well above its size. Concealed services, single material across walls and floor, no visible visual clutter — the room feels deliberate rather than tight.",
+    },
   },
   {
     title: "Luxury Kitchen & Dining Space",
@@ -419,6 +679,68 @@ export const projects: Project[] = [
     wideCard: true,
     image: "/projects/kitchen-diner-after.webp",
     afterImage: "/projects/kitchen-diner-after.webp",
+    slug: "luxury-kitchen-dining-space-berkhamsted",
+    detail: {
+      metaTitle:
+        "Luxury Kitchen & Dining Space in Berkhamsted — Case Study",
+      metaDescription:
+        "A 4-week kitchen-diner build in Berkhamsted — structural opening, marble-waterfall island with dining extension, light oak cabinetry and herringbone engineered flooring. Real Nicolla Contractors case study.",
+      intro:
+        "A separate kitchen and dining room turned into one sociable open-plan kitchen-diner. Four weeks on site, structural opening included, finished as a single coherent room with a marble waterfall island flowing into a dining extension.",
+      scope: [
+        "Structural opening between the original kitchen and the dining room — RSJ installed, supported, plastered.",
+        "Full strip-out of both rooms and removal of the old internal partition.",
+        "Services first-fix coordinated across the new open footprint — gas, water, waste and electrics.",
+        "Light oak cabinetry with vertical fluted detailing on the island return.",
+        "Full-slab marble worktop, waterfall ends, dining extension run continuous with the island.",
+        "Herringbone engineered oak flooring across the whole new open-plan space.",
+        "Premium integrated appliance package (induction hob, downdraft extractor, double oven, integrated fridge-freezer, integrated dishwasher).",
+      ],
+      challenges: [
+        "Structural opening required a structural-engineer design + Building Control sign-off — programmed for the first week of the job before any joinery arrived on site.",
+        "Walnut bespoke run had a 10-week off-site joinery lead time — sequenced against the on-site programme so units arrived the week structural work finished.",
+        "Marble slab selection done in person at the slab yard to choose the vein direction — book-matched across the island top and the waterfall ends.",
+        "Downdraft extractor on the island needed a duct run cast into the screed before the floor was laid.",
+      ],
+      process: [
+        {
+          phase: "Week 1 · Structural opening + strip-out",
+          detail:
+            "Steel installed in the new opening, supported, plastered. Both rooms stripped, partition wall removed. Services capped.",
+        },
+        {
+          phase: "Week 1–2 · First fix",
+          detail:
+            "Gas, water and waste re-routed for the new island position, downdraft duct run laid in screed, electrical first-fix for the new open space.",
+        },
+        {
+          phase: "Week 3 · Units fitted",
+          detail:
+            "Walnut bespoke carcasses delivered and fitted in sequence. Island assembled in position around the downdraft chassis. Doors hung last.",
+        },
+        {
+          phase: "Late week 3 – week 4 · Marble template + fit",
+          detail:
+            "Marble templated end of week three after units were in. Slab machined off-site for the bookmatched vein. Fitted on site week four — waterfall ends, dining extension run continuous with the worktop.",
+        },
+        {
+          phase: "End of week 4 · Flooring + handover",
+          detail:
+            "Herringbone engineered oak laid across the new open space, scotia and threshold strips, appliances integrated and commissioned, full clean and handover.",
+        },
+      ],
+      materials: [
+        "Light oak bespoke cabinetry with fluted island return",
+        "Full-slab marble worktop, book-matched, waterfall ends, dining extension run",
+        "Herringbone engineered oak flooring across the open footprint",
+        "Induction hob with island downdraft extractor",
+        "Integrated double oven, fridge-freezer and dishwasher",
+        "Brushed-brass mixer tap (matched to the brassware on the prep sink)",
+        "Internal RSJ for the new open structural opening",
+      ],
+      outcome:
+        "What was two cramped, dated rooms is now a single open-plan kitchen-diner where the family hosts every weekend. The downdraft extractor keeps the island sightline clean from the dining end of the room. Marble worktop and the dining extension read as one continuous slab.",
+    },
   },
 ];
 

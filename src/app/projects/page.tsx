@@ -43,6 +43,12 @@ const projectsLd = {
         position: i + 1,
         item: {
           "@type": "CreativeWork",
+          // Reference the dedicated case-study page via @id when present so
+          // crawlers connect this list item to the full project page.
+          ...(p.slug && p.detail && {
+            "@id": `${site.url}/projects/${p.slug}/#project`,
+            url: `${site.url}/projects/${p.slug}`,
+          }),
           name: p.title,
           description: p.summary,
           locationCreated: { "@type": "Place", name: p.location },

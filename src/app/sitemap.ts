@@ -3,6 +3,7 @@ import { site } from "@/lib/site";
 import { services } from "@/lib/data";
 import { areas } from "@/lib/areas";
 import { guides } from "@/lib/guides";
+import { projects } from "@/lib/data";
 
 // Sitemap priority + changeFrequency reflect commercial intent: conversion
 // pages (quote, contact, services landing) signal as the strongest, service
@@ -33,6 +34,7 @@ const ROUTES: Array<{
 const SERVICE_PRIORITY = 0.8; // per-service detail = high commercial intent
 const AREA_PRIORITY = 0.7; // per-area detail = high local intent
 const GUIDE_PRIORITY = 0.7; // cost guides — high informational + supports pillars
+const PROJECT_PRIORITY = 0.7; // per-project case studies (substantial trust assets)
 const LEGAL_PRIORITY = 0.3;
 const LEGAL_PATHS = [
   "/privacy-policy",
@@ -73,6 +75,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: GUIDE_PRIORITY,
   }));
 
+  // Only projects with a slug AND detail block become routes — see
+  // src/app/projects/[slug]/page.tsx. Filter mirrors generateStaticParams.
+  const projectPages = projects
+    .filter((p) => p.slug && p.detail)
+    .map((p) => ({
+      url: `${site.url}/projects/${p.slug}`,
+      lastModified,
+      changeFrequency: "monthly" as ChangeFreq,
+      priority: PROJECT_PRIORITY,
+    }));
+
   const legalPages = LEGAL_PATHS.map((path) => ({
     url: `${site.url}${path}`,
     lastModified,
@@ -80,5 +93,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: LEGAL_PRIORITY,
   }));
 
-  return [...core, ...servicePages, ...areaPages, ...guidePages, ...legalPages];
+  return [
+    ...core,
+    ...servicePages,
+    ...areaPages,
+    ...guidePages,
+    ...projectPages,
+    ...legalPages,
+  ];
 }

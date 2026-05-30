@@ -254,7 +254,65 @@ covered explicitly in §9.
 
 ---
 
-## 9. Roadmap (Phase 4+, require approval before shipping)
+## 9. Project case-study pages (shipped Phase 3, Step 6)
+
+5 projects with real photography and substantive scope now have dedicated
+case-study routes at `/projects/[slug]`. The 2 projects without real
+photos or substantive material **deliberately stay modal-only** — the
+"prefer 10 strong pages over 50 weak ones" rule.
+
+| Project | Page | Modal only |
+|---|---|---|
+| Spa-Style Master Bathroom | `/projects/spa-style-master-bathroom-st-albans` | — |
+| Modern Shaker Kitchen | `/projects/modern-shaker-kitchen-watford` | — |
+| Warm Laminate Living Space | `/projects/warm-laminate-living-space-watford` | — |
+| Minimalist Guest Bathroom | `/projects/minimalist-guest-bathroom-st-albans` | — |
+| Luxury Kitchen & Dining Space | `/projects/luxury-kitchen-dining-space-berkhamsted` | — |
+| Herringbone Oak Hallway | — | ✓ (no real photo) |
+| Zellige Feature Splashback | — | ✓ (no real photo) |
+
+**Each case-study page contains** (all hand-written per project — no shared
+boilerplate, no AI filler):
+
+- Intro paragraph (project-specific editorial pull-quote)
+- At-a-glance card: location · on-site duration · services used (deep
+  links to the matching `/services/[slug]` pillars)
+- Hero photo at the natural aspect for the project (16:9 wide or 4:5
+  portrait depending on the photo composition)
+- **Scope of work** — 6–7 trade-voice items, specific to the project
+- **Challenges we solved** — 3 real technical challenges + how we solved them
+- **Process &amp; execution** — 5-phase on-site programme with day/week banding
+- **Materials &amp; finishes** — 5–7 visible material specs
+- **Outcome** — qualitative result paragraph
+- **Services used** (related-services cluster card grid, deep-linked to pillars)
+- **Other transformations** (related projects in the same category)
+- CTA → `/free-quote`
+
+**JSON-LD per case-study page:**
+
+- `CreativeWork` (name, description, image, locationCreated, creator,
+  keywords, `about` → matching Service entities, `inLanguage: en-GB`)
+- `BreadcrumbList` (Home › Projects › [Project Name])
+- The CreativeWork `@id` matches the `ItemList` entries on `/projects` so
+  the graph is self-consistent.
+
+**Modal upgrade:** when a project has a `slug + detail`, the gallery
+modal gains a "View full case study →" outlined button next to the
+existing "Start a project like this" primary CTA. Projects without a
+slug keep the existing modal-only flow.
+
+**Sitemap:** project pages at priority 0.7, monthly changeFrequency.
+
+**Anti-patterns avoided this step:**
+
+- ❌ Boilerplate per-project copy (every page is hand-written)
+- ❌ Fabricated client names, exact prices, fake testimonials
+- ❌ Pages for projects without real photography (would be thin)
+- ❌ Splitting one project across multiple pages
+
+---
+
+## 10. Roadmap (Phase 4+, require approval before shipping)
 
 - **Per-project pages (`/projects/[slug]`):** requires bespoke per-project
   body content (problem → process → photo set → outcome). Without that,
@@ -278,7 +336,7 @@ covered explicitly in §9.
 
 ---
 
-## 10. Anti-patterns (do not introduce)
+## 11. Anti-patterns (do not introduce)
 
 - Doorway pages (service × area thin variants)
 - Keyword-stuffed H1s / meta descriptions
