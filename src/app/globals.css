@@ -421,26 +421,38 @@ body {
 }
 
 /* Mobile + tablet perf gate.
-   The drift animations transform `scale` on heavily blurred (150–170px)
-   ambient elements — every animation frame the GPU has to re-rasterize
-   the blur at the new scale. On a real iOS / Android GPU that's the
-   single biggest cause of "feels laggy while scrolling" because the
-   compositor is already busy with the scroll repaint.
+   Three classes of mobile-paint antipatterns disabled below the lg
+   breakpoint. Desktop keeps the full premium treatment because the
+   desktop GPU absorbs the cost; mobile/tablet GPUs do not.
 
-   Desktop GPUs handle it without trouble, so we keep the full
-   atmosphere there. Below lg (1024px) we kill the continuous
-   animations so the GPU only paints scroll, not scroll + 3 infinite
-   blurred-element transforms. The blurred elements still render at
-   their static base position — the ambient mood is preserved, just
-   not moving.
+   ── Continuous blur-element animations ─────────────────────────────
+   animate-drift-* transform `scale` + `translate` on elements that
+   carry blur-[150–170px]. Every animation frame the GPU has to
+   re-rasterize the blur at the new scale (blur is computed in pixel
+   space, scale invalidates the cached blur texture). Three of these
+   run concurrently with whatever the scroll repaint is doing.
+   text-gold-shimmer is a cheaper background-position cycle but
+   continuous + above the fold, so it joins the same gate.
 
-   text-gold-shimmer (hero title background-position) is cheaper but
-   also continuous and above the fold, so it joins the same gate. */
+   ── mix-blend-mode on every photo ──────────────────────────────────
+   .img-grade-wash applies `mix-blend-mode: soft-light` to a coloured
+   overlay over every <Photo>. Soft-light is one of the most expensive
+   blend modes — it requires the GPU to fetch the backdrop pixels,
+   apply the per-channel formula, and re-composite for every photo,
+   every paint. On photo-heavy pages (home, projects, services) the
+   compositor work scales with photo count. Below lg we drop just the
+   blend mode, keep the warm overlay colour at a low opacity so the
+   gold brand tone is still visibly applied — just via plain alpha
+   composite, which is essentially free. */
 @media (max-width: 1023px) {
   .animate-drift-a,
   .animate-drift-b,
   .animate-floaty,
   .text-gold-shimmer {
     animation: none !important;
+  }
+  .img-grade-wash {
+    mix-blend-mode: normal;
+    background-color: rgba(200, 162, 76, 0.05);
   }
 }
