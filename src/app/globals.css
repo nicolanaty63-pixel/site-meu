@@ -419,3 +419,28 @@ body {
     display: none;
   }
 }
+
+/* Mobile + tablet perf gate.
+   The drift animations transform `scale` on heavily blurred (150–170px)
+   ambient elements — every animation frame the GPU has to re-rasterize
+   the blur at the new scale. On a real iOS / Android GPU that's the
+   single biggest cause of "feels laggy while scrolling" because the
+   compositor is already busy with the scroll repaint.
+
+   Desktop GPUs handle it without trouble, so we keep the full
+   atmosphere there. Below lg (1024px) we kill the continuous
+   animations so the GPU only paints scroll, not scroll + 3 infinite
+   blurred-element transforms. The blurred elements still render at
+   their static base position — the ambient mood is preserved, just
+   not moving.
+
+   text-gold-shimmer (hero title background-position) is cheaper but
+   also continuous and above the fold, so it joins the same gate. */
+@media (max-width: 1023px) {
+  .animate-drift-a,
+  .animate-drift-b,
+  .animate-floaty,
+  .text-gold-shimmer {
+    animation: none !important;
+  }
+}
