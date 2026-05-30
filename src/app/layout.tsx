@@ -91,11 +91,24 @@ export default function RootLayout({
 
         {/* Ambient background (clipped so the wide blobs never cause
             horizontal scroll on mobile — fixed children aren't clipped by
-            body overflow) */}
-        <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+            body overflow).
+
+            Two perf-critical bits:
+            - transform-gpu / translate3d promotes the fixed layer to its
+              own compositor surface so the blurred blobs don't get
+              re-rasterized on every scroll frame.
+            - Blur radii are smaller on mobile (smaller blur texture =
+              cheaper GPU rasterization) and ramp up at sm: where devices
+              tend to have more GPU headroom. Visual brand atmosphere is
+              preserved at every viewport; the smaller mobile blur is
+              imperceptible against a 32rem-wide blob. */}
+        <div
+          className="pointer-events-none fixed inset-0 -z-10 transform-gpu overflow-hidden"
+          style={{ transform: "translate3d(0, 0, 0)" }}
+        >
           <div className="bg-grid absolute inset-0" />
-          <div className="absolute left-1/2 top-[-12rem] h-[32rem] w-[60rem] -translate-x-1/2 rounded-full bg-gold/10 blur-[160px]" />
-          <div className="absolute bottom-[-12rem] right-[-8rem] h-[32rem] w-[32rem] rounded-full bg-navy/50 blur-[150px]" />
+          <div className="absolute left-1/2 top-[-12rem] h-[32rem] w-[60rem] -translate-x-1/2 rounded-full bg-gold/10 blur-[80px] sm:blur-[160px]" />
+          <div className="absolute bottom-[-12rem] right-[-8rem] h-[32rem] w-[32rem] rounded-full bg-navy/50 blur-[80px] sm:blur-[150px]" />
         </div>
 
         <ConsentProvider>

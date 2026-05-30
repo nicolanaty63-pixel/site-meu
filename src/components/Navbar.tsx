@@ -28,9 +28,15 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+      // backdrop-blur-md (12px) instead of -xl (24px): halves the per-frame
+      // compositor cost of the sticky-when-scrolled glass effect, which is
+      // one of the canonical causes of scroll lag on mobile Safari / Chrome.
+      // bg-ink/80 underneath means the visual change is barely perceptible.
+      // transform-gpu promotes the header into its own compositor layer so
+      // the bg/border transition doesn't re-rasterize the area underneath.
+      className={`fixed inset-x-0 top-0 z-50 transform-gpu transition-all duration-300 ${
         scrolled || open
-          ? "border-b border-white/10 bg-ink/80 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.6)] backdrop-blur-xl"
+          ? "border-b border-white/10 bg-ink/80 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.6)] backdrop-blur-md"
           : "border-b border-transparent bg-transparent"
       }`}
     >
