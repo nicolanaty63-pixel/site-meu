@@ -81,13 +81,22 @@ export default function ServicesPage() {
                           </li>
                         ))}
                       </ul>
-                      <Link
-                        href="/contact"
-                        className="mt-7 inline-flex items-center gap-2 rounded-full border border-gold/40 px-5 py-2.5 text-sm font-semibold text-gold transition-colors hover:bg-gold hover:text-ink"
-                      >
-                        Enquire about {s.title.toLowerCase()}
-                        <Icon name="arrow" className="h-4 w-4" />
-                      </Link>
+                      <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
+                        <Link
+                          href={`/services/${s.slug}`}
+                          className="inline-flex items-center gap-2 rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-ink transition-transform hover:scale-[1.03]"
+                        >
+                          More on {s.title.toLowerCase()}
+                          <Icon name="arrow" className="h-4 w-4" />
+                        </Link>
+                        <Link
+                          href="/contact"
+                          className="inline-flex items-center gap-2 text-sm font-semibold text-gold transition-colors hover:text-gold-light"
+                        >
+                          Enquire about {s.title.toLowerCase()}
+                          <Icon name="arrow" className="h-4 w-4" />
+                        </Link>
+                      </div>
                     </div>
                   </Reveal>
                 </div>

@@ -54,6 +54,14 @@ export default function Footer() {
             </li>
             <li>
               <Link
+                href="/guides"
+                className="text-sm text-concrete transition-colors hover:text-gold"
+              >
+                Cost guides
+              </Link>
+            </li>
+            <li>
+              <Link
                 href="/free-quote"
                 className="text-sm text-concrete transition-colors hover:text-gold"
               >

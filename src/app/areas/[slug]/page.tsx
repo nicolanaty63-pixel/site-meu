@@ -7,6 +7,7 @@ import SectionHeading from "@/components/SectionHeading";
 import PageHero from "@/components/PageHero";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import RelatedProjectsFor from "@/components/RelatedProjectsFor";
 import Icon from "@/components/ui/Icon";
 import { areas, getArea } from "@/lib/areas";
 import { services } from "@/lib/data";
@@ -170,6 +171,14 @@ export default async function AreaPage({ params }: Params) {
           </div>
         </Container>
       </section>
+
+      {/* Recent case-studies in this area — silent when no matches, so areas
+          without a published case study don't render an empty section. */}
+      <RelatedProjectsFor
+        filter={{ kind: "area", name: area.name }}
+        heading={`Recent projects in ${area.name}`}
+        eyebrow="Local work"
+      />
 
       {/* Social proof */}
       <section className="py-16">

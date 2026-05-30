@@ -9,6 +9,7 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import FAQ from "@/components/FAQ";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import RelatedServices from "@/components/RelatedServices";
+import RelatedProjectsFor from "@/components/RelatedProjectsFor";
 import Photo from "@/components/ui/Photo";
 import Icon from "@/components/ui/Icon";
 import { services, faqs } from "@/lib/data";
@@ -246,6 +247,14 @@ export default async function ServicePage({ params }: Params) {
           </div>
         </Container>
       </section>
+
+      {/* Recent case-studies for this service — only renders when there are
+          matching projects with slug + detail; silent otherwise. */}
+      <RelatedProjectsFor
+        filter={{ kind: "service", slug: s.slug }}
+        heading={`Recent ${s.title.toLowerCase()} projects`}
+        eyebrow="See our work"
+      />
 
       {/* Related services — internal cluster graph */}
       {s.related && s.related.length > 0 && (
