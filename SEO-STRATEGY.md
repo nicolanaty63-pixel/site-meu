@@ -228,7 +228,7 @@ authority into the commercial pillars at `/services/[slug]`.
 | `/guides/bathroom-renovation-cost-uk` | `/services/bathroom-renovations` |
 | `/guides/kitchen-renovation-cost-uk` | `/services/kitchen-renovations` |
 | `/guides/tiling-cost-uk` | `/services/tiling` |
-| `/guides/flooring-installation-cost-uk` | `/services/flooring-installation` |
+| `/guides/flooring-installation-cost-uk` | `/services/laminate-flooring` |
 | `/guides/home-refurbishment-cost-uk` | `/services/home-refurbishment` |
 
 **Authority signals per guide:**

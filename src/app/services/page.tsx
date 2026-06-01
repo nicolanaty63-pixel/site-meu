@@ -9,9 +9,9 @@ import { services } from "@/lib/data";
 import { site } from "@/lib/site";
 
 export const metadata = pageMeta({
-  title: "Services — Bathrooms, Kitchens, Tiling & Flooring",
+  title: "Services — Renovations, Extensions, Lofts & Roofing",
   description:
-    "Bathroom renovation, kitchen fitting, precision tiling and flooring installation, plus full home refurbishment across London, North London and Hertfordshire. Fully-insured contractors rated 4.9/5.",
+    "Bathroom & kitchen renovations, tiling, flooring and home refurbishment, plus house extensions, loft conversions, roofing, landscaping and driveways across London, North London and Hertfordshire. Fully-insured contractors rated 4.9/5.",
   path: "/services",
 });
 
@@ -22,8 +22,9 @@ const serviceImages: Record<string, string> = {
   "kitchen-renovations": "/franco-debartolo-ORzG4HrA9rI-unsplash.jpeg",
   tiling: "/tilingjj.jpeg",
   "laminate-flooring": "/claire-rendall-b6kAwr1i0Iw-unsplash.jpg",
-  "flooring-installation": "/tile-merchant-ireland-Wblr6Q2Vr70-unsplash.jpeg",
   "home-refurbishment": "/brett-jordan-yica25Tg73w-unsplash.jpeg",
+  // New services (extensions, lofts, roofing, landscaping, driveways) render
+  // the same placeholder <Photo> treatment until licensed photography lands.
 };
 
 export default function ServicesPage() {

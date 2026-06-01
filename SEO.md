@@ -8,7 +8,7 @@ Service area: Hertfordshire & North London.
 | Keyword | Target page |
 |---|---|
 | builders near me | Home `/`, `/areas/*` |
-| flooring contractors London | `/areas/north-london`, `/services/flooring-installation` |
+| flooring contractors London | `/areas/north-london`, `/services/laminate-flooring` |
 | bathroom renovation specialists | `/services/bathroom-renovations` |
 | kitchen renovation company | `/services/kitchen-renovations` |
 | laminate flooring installation | `/services/laminate-flooring` |

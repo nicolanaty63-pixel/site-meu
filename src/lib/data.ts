@@ -10,6 +10,11 @@ export type IconName =
   | "tile"
   | "plank"
   | "floor"
+  | "extension"
+  | "loft"
+  | "roof"
+  | "landscape"
+  | "paving"
   | "build"
   | "shield"
   | "star"
@@ -52,7 +57,7 @@ export const services: Service[] = [
     ],
     icon: "bath",
     keyword: "bathroom renovation UK",
-    related: ["tiling", "flooring-installation", "home-refurbishment"],
+    related: ["tiling", "laminate-flooring", "home-refurbishment"],
     faqs: [
       {
         q: "How long does a typical bathroom renovation take?",
@@ -90,7 +95,7 @@ export const services: Service[] = [
     ],
     icon: "kitchen",
     keyword: "kitchen renovation specialists",
-    related: ["tiling", "flooring-installation", "home-refurbishment"],
+    related: ["tiling", "laminate-flooring", "home-refurbishment"],
     faqs: [
       {
         q: "How long does a kitchen renovation take?",
@@ -166,7 +171,7 @@ export const services: Service[] = [
     ],
     icon: "plank",
     keyword: "laminate flooring installation",
-    related: ["flooring-installation", "home-refurbishment", "tiling"],
+    related: ["home-refurbishment", "tiling", "kitchen-renovations"],
     faqs: [
       {
         q: "What's the difference between laminate, LVT and engineered wood?",
@@ -191,44 +196,6 @@ export const services: Service[] = [
     ],
   },
   {
-    slug: "flooring-installation",
-    title: "Flooring Installation",
-    short: "Engineered wood, LVT, vinyl and more.",
-    description:
-      "Beautiful flooring transforms a room, and we install it properly. As flooring contractors we fit engineered and solid wood, luxury vinyl tile (LVT) and vinyl — levelling subfloors, laying with precision and finishing every edge cleanly for floors that last.",
-    features: [
-      "Engineered & solid wood",
-      "Luxury vinyl tile (LVT)",
-      "Self-levelling subfloors",
-      "Pattern & herringbone lays",
-    ],
-    icon: "floor",
-    keyword: "flooring contractors",
-    related: ["laminate-flooring", "tiling", "home-refurbishment"],
-    faqs: [
-      {
-        q: "What flooring types do you install?",
-        a: "Engineered and solid wood, luxury vinyl tile (LVT), vinyl plank and laminate. We focus on hard flooring; for carpet we work with a trusted carpet fitter and coordinate the schedule so the rooms hand over together.",
-      },
-      {
-        q: "Can you lay herringbone or chevron patterns?",
-        a: "Yes — herringbone parquet and chevron lays are some of our favourite jobs. The finished result looks spectacular but the lay takes about 1.5× longer than a straight-plank lay and the subfloor has to be very precisely level. Worth it.",
-      },
-      {
-        q: "Do you level the subfloor first?",
-        a: "Always check, and if it's out of spec we self-level with the correct compound. A wavy or stepped subfloor will telegraph through any floor finish — fixing it first is non-negotiable for a premium feel underfoot.",
-      },
-      {
-        q: "Will you fit skirting, scotia and threshold trims?",
-        a: "Yes. New skirting, scotia, threshold strips and door trims as needed — colour-matched to the floor or to your existing decor. We never leave gappy edges or exposed expansion gaps; the trim work is what makes the floor look professionally fitted.",
-      },
-      {
-        q: "Can you install over underfloor heating?",
-        a: "Yes — engineered wood and LVT both work brilliantly over UFH. We use stable products with the right thermal rating, follow the manufacturer's acclimatisation period, and run the heating to spec during commissioning.",
-      },
-    ],
-  },
-  {
     slug: "home-refurbishment",
     title: "Home Refurbishment & Building",
     short: "General building and full home improvements.",
@@ -242,7 +209,7 @@ export const services: Service[] = [
     ],
     icon: "build",
     keyword: "home refurbishment company",
-    related: ["bathroom-renovations", "kitchen-renovations", "flooring-installation"],
+    related: ["bathroom-renovations", "kitchen-renovations", "home-extensions"],
     faqs: [
       {
         q: "What does a full home refurbishment include?",
@@ -266,6 +233,176 @@ export const services: Service[] = [
       },
     ],
   },
+  {
+    slug: "home-extensions",
+    title: "Home Extensions",
+    short: "Single & double-storey extensions, built end to end.",
+    description:
+      "Create the space your home has been missing. We design and build single-storey, double-storey and wrap-around extensions — from foundations and structural steelwork through to a fully finished, decorated room that flows seamlessly into the existing house. One team, one standard, one point of contact.",
+    features: [
+      "Single & double-storey extensions",
+      "Foundations & structural steel",
+      "Building control & regs managed",
+      "Seamless tie-in to your existing home",
+    ],
+    icon: "extension",
+    keyword: "house extension builders",
+    related: ["loft-conversions", "home-refurbishment", "roofing"],
+    faqs: [
+      {
+        q: "Do I need planning permission for an extension?",
+        a: "Many single-storey rear extensions fall under permitted development, but it depends on the size, your property and whether you're in a conservation area. We assess this early, handle the planning or lawful-development application where it's needed, and never start ground works until approvals and building control are in place.",
+      },
+      {
+        q: "How long does a typical extension take?",
+        a: "A single-storey rear extension is usually 8–12 weeks on site; double-storey and wrap-around builds run longer. We give you a phased programme up front — foundations, structure, weathertight shell, then first and second fix — so you always know what's happening that week.",
+      },
+      {
+        q: "Will you manage the structural design and building control?",
+        a: "Yes. We work with a structural engineer for the steel and foundation design and liaise with building control through to final sign-off, handing you the completion certificate at the end. It's all coordinated under one contract.",
+      },
+      {
+        q: "Can we stay in the house during the build?",
+        a: "In most cases, yes. The extension is built as a sealed shell before we break through to the existing house, so the messiest work stays outside until the final tie-in. We dust-sheet, protect and clean the site every day.",
+      },
+    ],
+  },
+  {
+    slug: "loft-conversions",
+    title: "Loft Conversions",
+    short: "Unlock a bright new room in your roof space.",
+    description:
+      "Turn unused loft space into a light-filled bedroom, home office or en-suite. We handle the full conversion — structural floor, dormers or rooflights, staircase, insulation and a finished, regulation-compliant room — designed to add real space and lasting value to your home.",
+    features: [
+      "Dormer, hip-to-gable & rooflight",
+      "Structural floor & staircase",
+      "Insulation & fire-regs compliant",
+      "En-suite & built-in storage",
+    ],
+    icon: "loft",
+    keyword: "loft conversion specialists",
+    related: ["home-extensions", "roofing", "home-refurbishment"],
+    faqs: [
+      {
+        q: "Is my loft suitable for a conversion?",
+        a: "Most are. The key factors are the usable head height, the roof pitch and the existing structure. We carry out a free survey to measure the available height and advise on the best conversion type — rooflight, dormer or hip-to-gable — for your roof.",
+      },
+      {
+        q: "Do loft conversions need building regulations?",
+        a: "Always. A loft conversion must meet structural, fire-safety, insulation and staircase regulations. We design to spec, work with a structural engineer and see it through building control sign-off, so the new room is fully certified.",
+      },
+      {
+        q: "How much head height do I need?",
+        a: "As a rule of thumb you want around 2.2–2.4m at the highest point before conversion. If you're short on height, a dormer — or in some cases lowering the ceiling in the room below — can help. We'll tell you honestly at the survey whether it's worth doing.",
+      },
+      {
+        q: "How long does a loft conversion take?",
+        a: "A typical dormer loft conversion is around 6–8 weeks on site. Most of the structural and weatherproofing work happens externally first, so disruption inside the home is limited until the staircase goes in.",
+      },
+    ],
+  },
+  {
+    slug: "roofing",
+    title: "Roofing Services",
+    short: "Repairs, re-roofs and flat roofs, built to last.",
+    description:
+      "A roof that's watertight and finished properly protects everything beneath it. We carry out pitched re-roofs, flat-roof systems, repairs, fascias, soffits and guttering — using quality materials and clean detailing, with every job left weathertight and backed by a guarantee.",
+    features: [
+      "Pitched re-roofs & repairs",
+      "Flat roofing (EPDM & GRP)",
+      "Fascias, soffits & guttering",
+      "Leadwork & chimney flashing",
+    ],
+    icon: "roof",
+    keyword: "roofing contractors",
+    related: ["home-extensions", "loft-conversions", "home-refurbishment"],
+    faqs: [
+      {
+        q: "Do you repair roofs as well as replace them?",
+        a: "Yes. Many leaks come down to slipped tiles, failed flashing or worn flat-roof felt and can be fixed without a full re-roof. We inspect first and recommend the most cost-effective option honestly — a repair where it will last, a re-roof where it won't.",
+      },
+      {
+        q: "What flat roofing systems do you install?",
+        a: "EPDM rubber and GRP fibreglass for most domestic flat roofs — both far longer-lasting than traditional felt. We spec the right system for the roof's size, access and use, including warm-roof build-ups under a loft or extension.",
+      },
+      {
+        q: "Is your roofing work guaranteed?",
+        a: "Yes. New roofs and flat-roof systems are covered by a workmanship guarantee, and many of the materials we fit carry their own manufacturer warranty on top. We hand the paperwork over at completion.",
+      },
+      {
+        q: "Can you roof a new extension or loft conversion?",
+        a: "Absolutely — roofing is part of our extension and loft work, handled in-house and detailed to tie cleanly into the existing roofline rather than bolted on as an afterthought.",
+      },
+    ],
+  },
+  {
+    slug: "landscaping",
+    title: "Landscaping",
+    short: "Considered outdoor spaces, built to a premium finish.",
+    description:
+      "Bring the same craftsmanship outdoors. We design and build patios, garden walls, turfing, planting beds, fencing and full garden transformations — levelled, drained and finished properly so your outdoor space looks intentional and lasts through every season.",
+    features: [
+      "Patios & natural stone paving",
+      "Garden walls & raised beds",
+      "Turfing & planting",
+      "Fencing & drainage",
+    ],
+    icon: "landscape",
+    keyword: "landscaping services",
+    related: ["driveways-paving", "home-refurbishment", "tiling"],
+    faqs: [
+      {
+        q: "Do you design the garden or only build it?",
+        a: "Both. We can work to your own design or a garden designer's plans, or develop a simple layout with you at the quote stage — levels, materials and planting — so you can picture the finished space before we start.",
+      },
+      {
+        q: "What patio materials do you lay?",
+        a: "Porcelain, natural stone (sandstone, limestone, granite) and block paving. Outdoor porcelain is increasingly popular for its clean, low-maintenance finish; we lay everything on a proper sub-base with falls for drainage so it stays flat and puddle-free.",
+      },
+      {
+        q: "Will the patio drain properly?",
+        a: "Yes — correct falls and a compacted sub-base are non-negotiable on any paving we lay. Where needed we add channel or soakaway drainage so surface water runs away from the house in line with current regulations.",
+      },
+      {
+        q: "Do you handle levels and groundwork?",
+        a: "We do. Excavation, levelling, retaining walls and sub-base preparation are the foundation of a garden that lasts — we get the groundwork right before anything visible goes down.",
+      },
+    ],
+  },
+  {
+    slug: "driveways-paving",
+    title: "Driveways & Paving",
+    short: "Durable, great-looking driveways laid to last.",
+    description:
+      "A well-built driveway lifts the whole front of your home. We lay block paving, resin-bound, porcelain and natural stone driveways and paths — excavated, sub-based and edged correctly, with proper drainage built in for a finish that stays level, clean and solid for years.",
+    features: [
+      "Block paving & natural stone",
+      "Resin-bound surfacing",
+      "Permeable, SUDS-compliant drainage",
+      "Kerbs, edging & groundwork",
+    ],
+    icon: "paving",
+    keyword: "driveways and paving",
+    related: ["landscaping", "home-refurbishment", "tiling"],
+    faqs: [
+      {
+        q: "What driveway surfaces do you install?",
+        a: "Block paving, resin-bound gravel, porcelain and natural stone. Block paving is hard-wearing and easily repaired; resin-bound gives a smooth, contemporary, permeable finish. We'll match the surface to your home and budget.",
+      },
+      {
+        q: "Do I need planning permission for a new driveway?",
+        a: "Usually not, provided the surface is permeable or drains to a soakaway within your property rather than onto the road — which is how we build them. Non-permeable driveways over 5m² draining to the highway can need permission; we design to stay compliant.",
+      },
+      {
+        q: "How long does a driveway take to install?",
+        a: "A typical domestic driveway is around 1–2 weeks depending on size, surface and the groundwork involved. Resin-bound needs a dry, cured base before the topping goes down, so we plan the schedule around the weather.",
+      },
+      {
+        q: "Will the driveway drain correctly?",
+        a: "Yes. We build in permeable surfacing or linear drainage and proper falls so water never pools or runs toward the house, meeting SUDS guidance for surface water.",
+      },
+    ],
+  },
 ];
 
 /**
@@ -282,7 +419,7 @@ export function serviceSlugFor(label: string): string | null {
   if (l.includes("laminate")) return "laminate-flooring";
   if (l.includes("tiling") || l.includes("tile")) return "tiling";
   if (l.includes("flooring") || l.includes("wood") || l.includes("herringbone"))
-    return "flooring-installation";
+    return "laminate-flooring";
   if (l.includes("refurb") || l.includes("building")) return "home-refurbishment";
   return null;
 }

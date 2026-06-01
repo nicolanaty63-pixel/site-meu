@@ -44,12 +44,12 @@ const featuredServices = [
     icon: "kitchen",
   },
   {
-    slug: "flooring-installation",
-    title: "Expert Flooring Installation",
+    slug: "home-extensions",
+    title: "Bespoke Home Extensions",
     blurb:
-      "Engineered wood, LVT and herringbone — levelled subfloors, precise lays and crisp edges, finished to a flawless standard.",
-    image: "/tile-merchant-ireland-Wblr6Q2Vr70-unsplash.jpeg",
-    icon: "floor",
+      "Single and double-storey extensions designed and built end to end — foundations, structure and a flawless finish that flows into your existing home.",
+    image: "/brett-jordan-yica25Tg73w-unsplash.jpeg",
+    icon: "extension",
   },
   {
     slug: "home-refurbishment",

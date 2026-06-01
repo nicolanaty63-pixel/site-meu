@@ -42,6 +42,40 @@ const paths: Record<string, React.ReactNode> = {
       <path d="M14.7 6.3a4 4 0 0 0-5.2 5.2L4 17l3 3 5.5-5.5a4 4 0 0 0 5.2-5.2l-2.4 2.4-2.1-2.1 2.5-2.3Z" />
     </>
   ),
+  extension: (
+    <>
+      <path d="M3 21V9l6-4 6 4v12" />
+      <path d="M12 21v-8h9v8" />
+      <path d="M2 21h20" />
+    </>
+  ),
+  loft: (
+    <>
+      <path d="M3 12l9-7 9 7" />
+      <path d="M5 10.5V20h14V10.5" />
+      <rect x="10" y="13" width="4" height="4" />
+    </>
+  ),
+  roof: (
+    <>
+      <path d="M2 13 12 4l10 9" />
+      <path d="M5 11v9h14v-9" />
+      <path d="M16 6V4h2v3.6" />
+    </>
+  ),
+  landscape: (
+    <>
+      <path d="M12 21v-8" />
+      <path d="M12 13c0-3.3-2.7-6-6-6 0 3.3 2.7 6 6 6Z" />
+      <path d="M12 15c0-2.8 2.2-5 5-5 0 2.8-2.2 5-5 5Z" />
+    </>
+  ),
+  paving: (
+    <>
+      <path d="M4 8h16M3.5 12h17M3 16h18" />
+      <path d="M9 8v8m6-8v8" />
+    </>
+  ),
   shield: (
     <>
       <path d="M12 3l7 3v5c0 4.5-3 7.7-7 9-4-1.3-7-4.5-7-9V6l7-3Z" />

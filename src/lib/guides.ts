@@ -410,7 +410,7 @@ export const guides: Guide[] = [
       "UK 2026 flooring installation costs — LVT, engineered wood, solid wood, laminate per sqm rates, project costs and what drives the price.",
     intro:
       "Flooring installation costs in the UK depend on the material, the room and the level of subfloor prep needed. This guide covers per-sqm rates and typical project costs for laminate, LVT, engineered wood and solid wood — plus the patterns and prep work that move the price.",
-    serviceSlug: "flooring-installation",
+    serviceSlug: "laminate-flooring",
     publishedDate: "2026-05-29",
     lastUpdated: "2026-05-29",
     ctaLabel: "See flooring installation cost guide",

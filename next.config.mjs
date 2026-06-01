@@ -24,6 +24,15 @@ const nextConfig = {
         destination: "https://nicollacontractors.co.uk/:path*",
         permanent: true,
       },
+      // The Flooring Installation service was retired and folded into the
+      // remaining Laminate Flooring service. 301 the old indexed URL so any
+      // backlinks / cached search results land on the closest live service
+      // rather than a 404, preserving the link equity.
+      {
+        source: "/services/flooring-installation",
+        destination: "/services/laminate-flooring",
+        permanent: true,
+      },
       // Legacy "/pages/*" URLs from a previous site iteration still surface in
       // Google's index. 301 them to the App Router equivalent so any old
       // backlinks / cached search results land on the correct page rather
