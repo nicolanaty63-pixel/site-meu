@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { testimonials as defaultData, type Testimonial } from "@/lib/data";
 import Icon from "@/components/ui/Icon";
+import { EASE_OUT } from "@/components/motion/tokens";
 
 function Stars({ n }: { n: number }) {
   return (
@@ -63,7 +64,7 @@ export default function Testimonials({
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.4, ease: "easeInOut" }}
+            transition={{ duration: 0.5, ease: EASE_OUT }}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={0.18}
@@ -136,7 +137,7 @@ export default function Testimonials({
                 className={`block h-2 rounded-full transition-all ${
                   i === index
                     ? "w-6 bg-gold"
-                    : "w-2 bg-white/20 group-hover:bg-white/40"
+                    : "w-2.5 bg-white/20 group-hover:bg-white/40"
                 }`}
               />
             </button>

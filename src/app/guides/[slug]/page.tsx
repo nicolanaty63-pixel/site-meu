@@ -126,7 +126,7 @@ export default async function GuidePage({ params }: Params) {
       />
 
       {/* Body */}
-      <section className="py-12">
+      <section className="py-20">
         <Container>
           <article className="mx-auto max-w-3xl">
             <p className="text-sm text-concrete-dark">
@@ -229,7 +229,7 @@ export default async function GuidePage({ params }: Params) {
       </section>
 
       {/* FAQ */}
-      <section className="py-12">
+      <section className="py-20">
         <Container>
           <SectionHeading center eyebrow="FAQ" title="Common questions" />
           <div className="mt-10">
@@ -239,7 +239,7 @@ export default async function GuidePage({ params }: Params) {
       </section>
 
       {/* Other guides */}
-      <section className="border-t border-white/10 py-14">
+      <section className="border-t border-white/10 py-20">
         <Container className="text-center">
           <h2 className="text-xl font-semibold text-white">Other cost guides</h2>
           <div className="mt-5 flex flex-wrap justify-center gap-2">

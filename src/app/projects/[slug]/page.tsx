@@ -303,14 +303,14 @@ export default async function ProjectPage({ params }: Params) {
 
       {/* Related services */}
       {relatedServices.length > 0 && (
-        <section className="border-t border-white/10 py-14">
+        <section className="border-t border-white/10 py-20">
           <Container>
             <SectionHeading
               center
               eyebrow="Trades involved"
               title="Services used on this project"
             />
-            <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-10 grid gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-3">
               {relatedServices.map((s) => (
                 <Link
                   key={s.slug}
@@ -342,14 +342,14 @@ export default async function ProjectPage({ params }: Params) {
 
       {/* Related projects */}
       {relatedProjects.length > 0 && (
-        <section className="py-14">
+        <section className="py-20">
           <Container>
             <SectionHeading
               center
               eyebrow={`More ${p.category.toLowerCase()} projects`}
               title="Other transformations"
             />
-            <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-10 grid gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-3">
               {relatedProjects.map((other) => {
                 const href = other.slug
                   ? `/projects/${other.slug}`
@@ -388,7 +388,7 @@ export default async function ProjectPage({ params }: Params) {
       {/* CTA */}
       <section className="pb-20">
         <Container>
-          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-gold/15 via-charcoal to-charcoal px-8 py-14 text-center">
+          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-gold/15 via-charcoal to-charcoal px-8 py-16 text-center">
             <h2 className="mx-auto max-w-2xl text-3xl font-bold text-white sm:text-4xl">
               Want a project like this?
             </h2>

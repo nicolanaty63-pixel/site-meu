@@ -35,7 +35,7 @@ export default function TestimonialsPage() {
       />
 
       {/* Rating + trust badges + carousel */}
-      <section className="py-16">
+      <section className="py-20">
         <Container>
           <TestimonialsSection />
         </Container>

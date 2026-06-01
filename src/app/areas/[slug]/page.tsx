@@ -103,7 +103,7 @@ export default async function AreaPage({ params }: Params) {
       />
 
       {/* Local intro + CTA */}
-      <section className="py-14">
+      <section className="py-20">
         <Container>
           <Reveal className="mx-auto max-w-3xl text-center">
             <p className="text-lg leading-relaxed text-concrete">
@@ -135,14 +135,14 @@ export default async function AreaPage({ params }: Params) {
       </section>
 
       {/* Services */}
-      <section className="py-16">
+      <section className="py-20">
         <Container>
           <SectionHeading
             center
             eyebrow="Our services"
             title={`Renovation services in ${area.name}`}
           />
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-3">
             {services.map((s, i) => (
               <Reveal key={s.slug} delay={(i % 3) * 0.06}>
                 <Link
@@ -181,7 +181,7 @@ export default async function AreaPage({ params }: Params) {
       />
 
       {/* Social proof */}
-      <section className="py-16">
+      <section className="py-20">
         <Container>
           <SectionHeading
             center
@@ -195,7 +195,7 @@ export default async function AreaPage({ params }: Params) {
       </section>
 
       {/* Nearby areas */}
-      <section className="border-t border-white/10 py-14">
+      <section className="border-t border-white/10 py-20">
         <Container className="text-center">
           <h2 className="text-xl font-semibold text-white">Nearby areas</h2>
           <div className="mt-5 flex flex-wrap justify-center gap-2">

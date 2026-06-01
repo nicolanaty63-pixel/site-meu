@@ -23,7 +23,7 @@ export default function GuidesIndexPage() {
         subtitle={`Real 2026 cost ranges for the work we do every day across ${site.region} and North London — what each project actually costs, where the money goes, and the choices that move the budget.`}
       />
 
-      <section className="py-16 sm:py-20">
+      <section className="py-20 sm:py-24">
         <Container>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {guides.map((g, i) => {

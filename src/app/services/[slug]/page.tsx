@@ -128,7 +128,7 @@ export default async function ServicePage({ params }: Params) {
       />
 
       {/* Overview */}
-      <section className="py-16">
+      <section className="py-20">
         <Container>
           <div className="grid items-center gap-10 lg:grid-cols-2">
             <Reveal>
@@ -185,7 +185,7 @@ export default async function ServicePage({ params }: Params) {
       </section>
 
       {/* Why us */}
-      <section className="border-y border-white/10 bg-charcoal/40 py-16">
+      <section className="border-y border-white/10 bg-charcoal/40 py-20">
         <Container>
           <SectionHeading
             center
@@ -206,7 +206,7 @@ export default async function ServicePage({ params }: Params) {
       </section>
 
       {/* Social proof */}
-      <section className="py-16">
+      <section className="py-20">
         <Container>
           <SectionHeading center eyebrow="Testimonials" title="Rated 4.9/5" />
           <div className="mt-12">
@@ -216,7 +216,7 @@ export default async function ServicePage({ params }: Params) {
       </section>
 
       {/* Areas */}
-      <section className="py-16">
+      <section className="py-20">
         <Container className="text-center">
           <h2 className="text-xl font-semibold text-white">
             {s.title} across our areas
@@ -239,7 +239,7 @@ export default async function ServicePage({ params }: Params) {
       </section>
 
       {/* FAQ */}
-      <section className="py-16">
+      <section className="py-20">
         <Container>
           <SectionHeading center eyebrow="FAQ" title="Common questions" />
           <div className="mt-12">
@@ -264,7 +264,7 @@ export default async function ServicePage({ params }: Params) {
       {/* CTA */}
       <section className="pb-20">
         <Container>
-          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-gold/15 via-charcoal to-charcoal px-8 py-14 text-center">
+          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-gold/15 via-charcoal to-charcoal px-8 py-16 text-center">
             <h2 className="mx-auto max-w-2xl text-3xl font-bold text-white sm:text-4xl">
               Ready for your {s.title.toLowerCase()}?
             </h2>

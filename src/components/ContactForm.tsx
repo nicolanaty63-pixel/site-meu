@@ -70,7 +70,7 @@ export default function ContactForm() {
           name="service"
           required
           defaultValue=""
-          className="w-full rounded-xl border border-white/10 bg-ink px-4 py-3 text-base text-white outline-none transition-colors focus:border-gold/60"
+          className="w-full rounded-xl border border-white/10 bg-ink px-4 py-3 text-base text-white outline-none transition-colors focus:border-gold/60 focus:ring-2 focus:ring-gold/25"
         >
           <option value="" disabled>
             Select a service…
@@ -92,7 +92,7 @@ export default function ContactForm() {
           required
           rows={5}
           placeholder="Tell us about your project, location and rough timescale…"
-          className="w-full resize-none rounded-xl border border-white/10 bg-ink px-4 py-3 text-base text-white placeholder-concrete-dark outline-none transition-colors focus:border-gold/60"
+          className="w-full resize-none rounded-xl border border-white/10 bg-ink px-4 py-3 text-base text-white placeholder-concrete-dark outline-none transition-colors focus:border-gold/60 focus:ring-2 focus:ring-gold/25"
         />
       </div>
       <div className="mt-5">
@@ -100,7 +100,7 @@ export default function ContactForm() {
       </div>
       <button
         type="submit"
-        className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-6 py-3.5 font-semibold text-ink transition-transform hover:scale-[1.01]"
+        className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-6 py-3.5 font-semibold text-ink transition-transform hover:scale-[1.02]"
       >
         Request free quote
         <Icon name="arrow" className="h-4 w-4" />
@@ -131,7 +131,7 @@ function Field({
         type={type}
         required
         placeholder={placeholder}
-        className="w-full rounded-xl border border-white/10 bg-ink px-4 py-3 text-base text-white placeholder-concrete-dark outline-none transition-colors focus:border-gold/60"
+        className="w-full rounded-xl border border-white/10 bg-ink px-4 py-3 text-base text-white placeholder-concrete-dark outline-none transition-colors focus:border-gold/60 focus:ring-2 focus:ring-gold/25"
       />
     </div>
   );

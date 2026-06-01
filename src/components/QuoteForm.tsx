@@ -99,7 +99,7 @@ export default function QuoteForm() {
             name="service"
             required
             defaultValue=""
-            className="w-full rounded-xl border border-white/10 bg-ink px-4 py-3 text-base text-white outline-none transition-colors focus:border-gold/60"
+            className="w-full rounded-xl border border-white/10 bg-ink px-4 py-3 text-base text-white outline-none transition-colors focus:border-gold/60 focus:ring-2 focus:ring-gold/25"
           >
             <option value="" disabled>
               Select a service…
@@ -121,13 +121,13 @@ export default function QuoteForm() {
             name="message"
             rows={3}
             placeholder="Tell us a little about your project and timescale…"
-            className="w-full resize-none rounded-xl border border-white/10 bg-ink px-4 py-3 text-base text-white placeholder-concrete-dark outline-none transition-colors focus:border-gold/60"
+            className="w-full resize-none rounded-xl border border-white/10 bg-ink px-4 py-3 text-base text-white placeholder-concrete-dark outline-none transition-colors focus:border-gold/60 focus:ring-2 focus:ring-gold/25"
           />
         </div>
         <FormConsent />
         <button
           type="submit"
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-6 py-4 text-base font-bold text-ink transition-transform hover:scale-[1.01]"
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-6 py-4 text-base font-bold text-ink transition-transform hover:scale-[1.02]"
         >
           Get my free quote
           <Icon name="arrow" className="h-4 w-4" />
@@ -163,7 +163,7 @@ function Field({
         type={type}
         required={required}
         placeholder={placeholder}
-        className="w-full rounded-xl border border-white/10 bg-ink px-4 py-3 text-base text-white placeholder-concrete-dark outline-none transition-colors focus:border-gold/60"
+        className="w-full rounded-xl border border-white/10 bg-ink px-4 py-3 text-base text-white placeholder-concrete-dark outline-none transition-colors focus:border-gold/60 focus:ring-2 focus:ring-gold/25"
       />
     </div>
   );

@@ -81,7 +81,7 @@ export default function Photo({
       )}
 
       {tone !== "default" && (
-        <span className="absolute left-3 top-3 z-10 rounded-full bg-black/50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white/90 backdrop-blur">
+        <span className="absolute left-3 top-3 z-10 rounded-full border border-gold/30 bg-black/55 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-gold backdrop-blur">
           {tone}
         </span>
       )}

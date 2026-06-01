@@ -23,9 +23,9 @@ export default function AreasPage() {
         subtitle={`Based in ${site.baseTown}, we serve homeowners throughout the region. Find your area below for local renovation services.`}
       />
 
-      <section className="py-16 sm:py-20">
+      <section className="py-20 sm:py-24">
         <Container>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-3">
             {areas.map((a, i) => (
               <Reveal key={a.slug} delay={(i % 3) * 0.06}>
                 <Link

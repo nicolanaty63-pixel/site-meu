@@ -21,14 +21,14 @@ export default function Breadcrumbs({ items }: { items: Crumb[] }) {
                 {c.href && !isLast ? (
                   <Link
                     href={c.href}
-                    className="text-concrete transition-colors hover:text-gold"
+                    className="text-concrete underline-offset-2 transition-colors hover:text-gold hover:underline"
                   >
                     {c.label}
                   </Link>
                 ) : (
                   <span
                     aria-current={isLast ? "page" : undefined}
-                    className={isLast ? "text-concrete" : ""}
+                    className={isLast ? "font-medium text-concrete" : ""}
                   >
                     {c.label}
                   </span>

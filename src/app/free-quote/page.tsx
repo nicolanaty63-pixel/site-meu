@@ -75,7 +75,7 @@ export default function FreeQuotePage() {
       </section>
 
       {/* Why homeowners choose us */}
-      <section className="py-16">
+      <section className="py-20">
         <Container>
           <SectionHeading
             center
@@ -83,7 +83,7 @@ export default function FreeQuotePage() {
             title="Renovating should feel exciting, not stressful"
             subtitle="We take care of everything — so you get a beautiful, premium finish without the headaches."
           />
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-4">
             {reasons.map((r, i) => (
               <Reveal key={r.title} delay={(i % 4) * 0.06}>
                 <div className="flex h-full flex-col rounded-2xl border border-white/10 bg-surface/40 p-6">
@@ -104,7 +104,7 @@ export default function FreeQuotePage() {
       </section>
 
       {/* Service highlights */}
-      <section className="py-16">
+      <section className="py-20">
         <Container>
           <SectionHeading
             center
@@ -186,7 +186,7 @@ export default function FreeQuotePage() {
       </section>
 
       {/* Social proof */}
-      <section className="py-16">
+      <section className="py-20">
         <Container>
           <SectionHeading
             center
@@ -200,10 +200,10 @@ export default function FreeQuotePage() {
       </section>
 
       {/* Urgency CTA */}
-      <section className="py-16">
+      <section className="py-20">
         <Container>
           <Reveal>
-            <div className="relative overflow-hidden rounded-3xl border border-gold/20 bg-gradient-to-br from-gold/15 via-charcoal to-charcoal px-6 py-12 text-center sm:px-10">
+            <div className="relative overflow-hidden rounded-3xl border border-gold/20 bg-gradient-to-br from-gold/15 via-charcoal to-charcoal px-6 py-16 text-center sm:px-10">
               <div className="grain pointer-events-none absolute inset-0 opacity-[0.05]" />
               <span className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-ink/40 px-4 py-1.5 text-sm font-medium text-gold">
                 <Icon name="clock" className="h-4 w-4" />

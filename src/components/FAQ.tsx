@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { faqs as defaultFaqs, type FAQ as FAQItem } from "@/lib/data";
 import Icon from "@/components/ui/Icon";
+import { EASE_OUT, DURATION } from "@/components/motion/tokens";
 
 export default function FAQ({ items = defaultFaqs }: { items?: FAQItem[] }) {
   const [open, setOpen] = useState<number | null>(0);
@@ -33,7 +34,7 @@ export default function FAQ({ items = defaultFaqs }: { items?: FAQItem[] }) {
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  transition={{ duration: DURATION.fast, ease: EASE_OUT }}
                   className="overflow-hidden"
                 >
                   <p className="px-6 pb-5 leading-relaxed text-concrete">
