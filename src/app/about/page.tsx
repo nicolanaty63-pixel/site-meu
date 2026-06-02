@@ -15,7 +15,7 @@ import { site } from "@/lib/site";
 export const metadata = pageMeta({
   title: "About Us — Trusted Builders in Hertfordshire",
   description:
-    "Learn about Nicolla Contractors Ltd, a premium home refurbishment company in Kings Langley, Hertfordshire. Reliable, professional builders rated 4.9/5 by 100+ customers.",
+    "Learn about Nicolla Contractors Ltd, a premium home refurbishment company in Kings Langley, Hertfordshire. Reliable, professional builders rated 4.9/5 by 350+ customers.",
   path: "/about",
 });
 

@@ -163,7 +163,7 @@ export default function Hero() {
                 </div>
               </ParallaxImage>
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/10 to-ink/20" />
-              {/* On lg+ the "100+ Homeowners served" stat card overhangs the
+              {/* On lg+ the "350+ Homeowners served" stat card overhangs the
                   collage's bottom-left — move the label to the top-left there
                   so it never collides. Below lg, the stat is hidden, so the
                   original bottom-left placement still reads as intended. */}

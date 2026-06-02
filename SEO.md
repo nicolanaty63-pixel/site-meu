@@ -20,12 +20,12 @@ Service area: Hertfordshire & North London.
 
 | Page | Title | Description (≈155 chars) |
 |---|---|---|
-| Home | Nicolla Contractors Ltd \| Premium Builders & Renovation in Hertfordshire | Premium bathroom, kitchen, tiling & flooring renovations across Hertfordshire & North London. Rated 4.9/5 by 100+ homeowners. Free quote. |
+| Home | Nicolla Contractors Ltd \| Premium Builders & Renovation in Hertfordshire | Premium bathroom, kitchen, tiling & flooring renovations across Hertfordshire & North London. Rated 4.9/5 by 350+ homeowners. Free quote. |
 | About | About Us — Trusted Builders in Hertfordshire | Learn about Nicolla Contractors, a premium home refurbishment company in Kings Langley. Reliable, professional builders rated 4.9/5. |
 | Services | Services — Bathrooms, Kitchens, Tiling & Flooring | Bathroom & kitchen renovations, tiling, laminate & flooring installation, refurbishment in Hertfordshire & North London. Rated 4.9/5. |
 | Service pages | {Service} — Hertfordshire & North London | Per-service description + keyword + 4.9/5 + free quotes. |
 | Projects | Projects — Our Portfolio of Renovations | Browse recent bathroom, kitchen, tiling & flooring projects with before & after transformations. |
-| Testimonials | Testimonials — 4.9/5 from 100+ Customers | Reviews praising professionalism, punctuality, attention to detail and high-quality workmanship. |
+| Testimonials | Testimonials — 4.9/5 from 350+ Customers | Reviews praising professionalism, punctuality, attention to detail and high-quality workmanship. |
 | Contact | Contact — Free Quotes for Builders in Hertfordshire | Contact us for a free, no-obligation quote. Bathroom, kitchen, tiling, flooring & refurbishment specialists. |
 | Free quote | Free Renovation Quote — Bathrooms, Kitchens, Tiling & Flooring | Free, no-obligation renovation quote. Rated 4.9/5 — reply within 24 hours. |
 | Areas | Areas We Cover — Builders in Hertfordshire & North London | Renovations across Watford, St Albans, Hemel Hempstead & more. |

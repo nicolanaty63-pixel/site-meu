@@ -35,7 +35,7 @@ const reasons = [
   {
     icon: "star" as const,
     title: "Premium craftsmanship",
-    desc: "A high quality finish in every detail. Rated 4.9/5 by over 100 happy homeowners.",
+    desc: "A high quality finish in every detail. Rated 4.9/5 by over 350 happy homeowners.",
   },
   {
     icon: "clock" as const,

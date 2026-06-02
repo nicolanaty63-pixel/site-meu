@@ -10,7 +10,7 @@ workmanship", "fast and reliable".
 
 **Homepage**
 - Title: Nicolla Contractors Ltd | Premium Builders & Renovations in Hertfordshire
-- Description: Premium bathroom, kitchen, tiling & flooring renovations across Hertfordshire & North London. Rated 4.9/5 by 100+ homeowners. Get your free quote today.
+- Description: Premium bathroom, kitchen, tiling & flooring renovations across Hertfordshire & North London. Rated 4.9/5 by 350+ homeowners. Get your free quote today.
 
 Primary keywords: bathroom renovation, kitchen renovation, tiling contractors,
 flooring installation, laminate flooring, home refurbishment, builders near me,
@@ -29,7 +29,7 @@ Alternatives:
 
 **Subheadline:** Premium bathrooms, kitchens, tiling and flooring across
 Hertfordshire and North London — finished to the highest standard and built to
-last. Rated 4.9/5 by over 100 happy homeowners.
+last. Rated 4.9/5 by over 350 happy homeowners.
 
 Micro-CTA: Free, no-obligation quotes · Fully insured · Workmanship guaranteed
 
@@ -136,7 +136,7 @@ Hero / sticky: Free, no-obligation quotes — we reply within 24 hours.
 Form intro: Tell us about your project. We'll arrange a free, no-obligation
 consultation and a clear written quote — no pressure, no hidden costs.
 
-Closing CTA: **Ready to transform your home?** Join over 100 happy homeowners
+Closing CTA: **Ready to transform your home?** Join over 350 happy homeowners
 across Hertfordshire and North London who trusted Nicolla Contractors with their
 renovation. Get your free quote today — and discover the difference proper
 craftsmanship makes.

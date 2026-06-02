@@ -29,7 +29,7 @@ Add each with a short keyword-rich description (mirror the site's service pages)
 - Bathroom Renovations · Kitchen Renovations · Tiling · Laminate Flooring · Flooring Installation · Home Refurbishment & Building.
 
 ## 6. Business description (max 750 characters)
-> Nicolla Contractors Ltd is a premium construction and renovation company based in Kings Langley, Hertfordshire. We specialise in bathroom and kitchen renovations, tiling, laminate and flooring installation, and complete home refurbishment across Hertfordshire and North London. Rated 4.9/5 by 100+ homeowners, we're known for punctual, professional, tidy work and a high-quality finish. Fully insured with a workmanship guarantee. Free, no-obligation quotes.
+> Nicolla Contractors Ltd is a premium construction and renovation company based in Kings Langley, Hertfordshire. We specialise in bathroom and kitchen renovations, tiling, laminate and flooring installation, and complete home refurbishment across Hertfordshire and North London. Rated 4.9/5 by 350+ homeowners, we're known for punctual, professional, tidy work and a high-quality finish. Fully insured with a workmanship guarantee. Free, no-obligation quotes.
 
 ## 7. Photos & video (add 15+ and refresh monthly)
 - Logo + cover photo (branded, charcoal/gold).

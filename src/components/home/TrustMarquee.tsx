@@ -1,7 +1,7 @@
 const items = [
   "Highly rated on MyBuilder",
   "4.9 / 5 average rating",
-  "100+ happy clients",
+  "350+ happy clients",
   "Trusted by homeowners",
   "Fully insured",
   "12-month workmanship guarantee",

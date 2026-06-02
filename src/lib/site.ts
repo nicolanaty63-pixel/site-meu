@@ -48,7 +48,7 @@ export const site = {
 
   // Reputation
   rating: 4.9,
-  reviewCount: 100,
+  reviewCount: 350,
   yearsExperience: 15,
   projectsCompleted: 100,
 

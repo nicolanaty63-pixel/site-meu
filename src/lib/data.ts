@@ -1037,7 +1037,7 @@ export type Stat = {
 
 export const stats: Stat[] = [
   { value: 4.9, decimals: 1, suffix: "/5", label: "Average rating" },
-  { value: 100, suffix: "+", label: "Happy customers" },
+  { value: 350, suffix: "+", label: "Happy customers" },
   { value: 15, suffix: "+", label: "Years experience" },
   { value: 100, suffix: "%", label: "Recommended" },
 ];
@@ -1045,7 +1045,7 @@ export const stats: Stat[] = [
 export type Badge = { icon: IconName; title: string; sub: string };
 
 export const badges: Badge[] = [
-  { icon: "star", title: "4.9 / 5 Rated", sub: "100+ reviews" },
+  { icon: "star", title: "4.9 / 5 Rated", sub: "350+ reviews" },
   { icon: "shield", title: "Fully Insured", sub: "Workmanship guaranteed" },
   { icon: "clock", title: "Always On Time", sub: "Reliable & punctual" },
   { icon: "broom", title: "Clean & Tidy", sub: "We respect your home" },

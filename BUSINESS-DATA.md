@@ -27,7 +27,7 @@ confirmed.
 | Service area cities (× 10) | `site.serves` + `src/lib/areas.ts` | Schema `areaServed`, `/areas/[slug]` × 10 |
 | Service regions (× 3) | `site.serviceRegions` | Schema `areaServed` (broader Place entities) |
 | Average rating | `site.rating` = `4.9` | Schema `aggregateRating.ratingValue` |
-| Review count | `site.reviewCount` = `100` | Schema `aggregateRating.reviewCount` |
+| Review count | `site.reviewCount` = `350` | Schema `aggregateRating.reviewCount` |
 | Years experience | `site.yearsExperience` = `15` | About + service pages |
 | Opening hours | `site.hours` + Schema `openingHoursSpecification` (Mon–Sat 08:00–18:00) | Schema, contact page |
 | Brand logo | `public/logo-nicolla-mark.png` | Navbar, footer, schema `logo`, manifest icon |
