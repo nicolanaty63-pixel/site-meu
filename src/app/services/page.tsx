@@ -23,8 +23,22 @@ const serviceImages: Record<string, string> = {
   tiling: "/tilingjj.jpeg",
   "laminate-flooring": "/claire-rendall-b6kAwr1i0Iw-unsplash.jpg",
   "home-refurbishment": "/brett-jordan-yica25Tg73w-unsplash.jpeg",
-  // New services (extensions, lofts, roofing, landscaping, driveways) render
-  // the same placeholder <Photo> treatment until licensed photography lands.
+  "loft-conversions": "/toa-heftiba-WqE24tdeRMU-unsplash.jpg",
+  roofing: "/clement-proust-RO9HIOzFSX0-unsplash.jpg",
+  // Remaining new services (extensions, landscaping, driveways) render the same
+  // placeholder <Photo> treatment until licensed photography lands.
+};
+
+// Focal point for the 4:3 cover crop on tiles whose source is a tall portrait,
+// so the most important part stays in frame. Same crop at every breakpoint
+// (the card ratio is fixed), so it reads on desktop, tablet and mobile alike.
+const servicePositions: Record<string, string> = {
+  // Loft: lift the crop toward the exposed beams + sloped ceiling — the
+  // unmistakable "loft" read — while keeping the seating below in frame.
+  "loft-conversions": "center 38%",
+  // Roofing: hold the tile field and ridge against the sky for clear roofing
+  // emphasis, trimming the eaves at the foot of the portrait.
+  roofing: "center 42%",
 };
 
 export default function ServicesPage() {
@@ -51,6 +65,7 @@ export default function ServicesPage() {
                     <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10">
                       <Photo
                         src={serviceImages[s.slug]}
+                        position={servicePositions[s.slug]}
                         variant={i}
                         icon={s.icon}
                         caption={s.title}

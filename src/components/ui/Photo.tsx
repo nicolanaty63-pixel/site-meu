@@ -23,6 +23,12 @@ type Props = {
   className?: string;
   /** Responsive sizes hint for next/image (improves sharpness on large tiles). */
   sizes?: string;
+  /**
+   * CSS object-position for the cover crop (e.g. "center 40%"). Lets a specific
+   * tile steer its focal point so the crop emphasises the right part of the
+   * photo. Omitted = browser default (centred), so existing tiles are unchanged.
+   */
+  position?: string;
   /** Eager-load + preload for above-the-fold LCP imagery. */
   priority?: boolean;
   /** next/image re-encode quality (default 75). Raise for hero/showcase photos. */
@@ -47,6 +53,7 @@ export default function Photo({
   sizes = "(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw",
   priority = false,
   quality,
+  position,
 }: Props) {
   const tint = tints[variant % tints.length];
   // Only desaturate the placeholder for "before"; real photos keep natural colour.
@@ -65,6 +72,7 @@ export default function Photo({
             priority={priority}
             quality={quality}
             className="img-grade object-cover"
+            style={position ? { objectPosition: position } : undefined}
             sizes={sizes}
           />
           {/* Unified warm brand wash — keeps every photo on one premium tone */}
