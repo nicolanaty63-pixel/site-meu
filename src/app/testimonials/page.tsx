@@ -5,6 +5,7 @@ import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
 import PageHero from "@/components/PageHero";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import CustomerReviews from "@/components/reviews/CustomerReviews";
 import Icon from "@/components/ui/Icon";
 import { testimonials } from "@/lib/data";
 
@@ -75,6 +76,13 @@ export default function TestimonialsPage() {
               </Reveal>
             ))}
           </div>
+        </Container>
+      </section>
+
+      {/* Customer-submitted reviews: form + live feed (newest first) */}
+      <section className="bg-charcoal/30">
+        <Container>
+          <CustomerReviews />
         </Container>
       </section>
 
