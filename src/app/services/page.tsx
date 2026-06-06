@@ -25,8 +25,11 @@ const serviceImages: Record<string, string> = {
   "home-refurbishment": "/brett-jordan-yica25Tg73w-unsplash.jpeg",
   "loft-conversions": "/toa-heftiba-WqE24tdeRMU-unsplash.jpg",
   roofing: "/clement-proust-RO9HIOzFSX0-unsplash.jpg",
-  // Remaining new services (extensions, landscaping, driveways) render the same
-  // placeholder <Photo> treatment until licensed photography lands.
+  // Real finished-garden photo, retouched to remove a child from the lawn.
+  // Already 4:3, so it fills the card with no crop at any breakpoint.
+  landscaping: "/landscaping-garden-nicolla.jpg",
+  // Remaining new services (extensions, driveways) render the same placeholder
+  // <Photo> treatment until licensed photography lands.
 };
 
 // Focal point for the 4:3 cover crop on tiles whose source is a tall portrait,
