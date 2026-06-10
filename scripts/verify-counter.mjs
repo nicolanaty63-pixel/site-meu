@@ -7,7 +7,7 @@
 // non-decreasing, small max-jump. A janky count => few samples + large jumps.
 import { chromium } from "playwright-core";
 
-const BASE = "http://localhost:3000";
+const BASE = process.env.BASE || "http://localhost:3000";
 const TARGET = 350; // the "Happy customers" stat
 
 const viewports = [
