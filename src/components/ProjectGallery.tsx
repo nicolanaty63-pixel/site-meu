@@ -132,16 +132,23 @@ export default function ProjectGallery({
                   alt={p.title}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 420px"
                   quality={90}
+                  // Native lazy-loading never fires for below-fold images
+                  // inside this CSS multi-column grid on small viewports
+                  // (Chromium quirk) — cards rendered blank on mobile.
+                  eager
                 />
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
               <span className="absolute left-4 top-4 rounded-full bg-black/50 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-gold backdrop-blur">
                 {p.category}
               </span>
-              <span className="glass absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs text-white">
-                <Icon name="clock" className="h-3.5 w-3.5 text-gold" />
-                {p.duration}
-              </span>
+              {/* Only claim a duration when the real one is known. */}
+              {p.duration && (
+                <span className="glass absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs text-white">
+                  <Icon name="clock" className="h-3.5 w-3.5 text-gold" />
+                  {p.duration}
+                </span>
+              )}
             </div>
 
             <div className="p-5">
@@ -308,15 +315,18 @@ export default function ProjectGallery({
                 </p>
 
                 <div className="mt-6 grid gap-5 border-t border-white/10 pt-6 sm:grid-cols-3">
-                  <div>
-                    <div className="text-xs uppercase tracking-wider text-concrete-dark">
-                      Completion time
+                  {/* Only claim a duration when the real one is known. */}
+                  {active.duration && (
+                    <div>
+                      <div className="text-xs uppercase tracking-wider text-concrete-dark">
+                        Completion time
+                      </div>
+                      <div className="mt-1 flex items-center gap-2 font-medium text-white">
+                        <Icon name="clock" className="h-4 w-4 text-gold" />
+                        {active.duration}
+                      </div>
                     </div>
-                    <div className="mt-1 flex items-center gap-2 font-medium text-white">
-                      <Icon name="clock" className="h-4 w-4 text-gold" />
-                      {active.duration}
-                    </div>
-                  </div>
+                  )}
                   <div>
                     <div className="text-xs uppercase tracking-wider text-concrete-dark">
                       Location

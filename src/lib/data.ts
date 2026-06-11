@@ -639,22 +639,28 @@ export const projects: Project[] = [
     variant: 2,
     beforeVariant: 4,
     icon: "floor",
-    // Premium 3-photo collage (hero-left + two stacked details), baked to a
-    // single 4:3 WebP by scripts/build-herringbone-collage.mjs so it slots into
-    // the card frame with no layout/hover/overlay changes.
+    // Real-photo collage v2 (warm-oak room hero + transition detail + wide
+    // room — all panels from the same job), built by
+    // scripts/build-real-projects.mjs into the same 4:3 baked-WebP slot.
     image: "/projects/herringbone-hallway.webp",
   },
   {
-    title: "Zellige Feature Splashback",
+    title: "Glazed Zellige Family Bathroom",
     category: "Tiling",
-    location: "North London",
+    // Region-level until the exact town is confirmed by the owner.
+    location: "Hertfordshire",
     summary:
-      "A statement zellige-style splashback bringing texture, warmth and a handmade finish to a contemporary kitchen.",
-    services: ["Tiling", "Kitchen"],
-    duration: "4 days",
+      "Hand-glazed zellige-style tiling in deep ocean tones — full-height walls, an LED-lit storage niche, and a crisp glass screen over the bath.",
+    services: ["Tiling", "Bathroom fitting", "LED niche"],
+    // Real job, duration unconfirmed — the card hides the pill when empty.
+    duration: "",
     variant: 5,
     beforeVariant: 1,
     icon: "tile",
+    // Real photography (May 2026 batch) — collage with the hero on the RIGHT,
+    // mirroring the herringbone card's hero-left for masonry rhythm. Built by
+    // scripts/build-real-projects.mjs.
+    image: "/projects/zellige-bathroom.webp",
   },
   {
     title: "Warm Laminate Living Space",
@@ -882,6 +888,51 @@ export const projects: Project[] = [
       outcome:
         "What was two cramped, dated rooms is now a single open-plan kitchen-diner where the family hosts every weekend. The downdraft extractor keeps the island sightline clean from the dining end of the room. Marble worktop and the dining extension read as one continuous slab.",
     },
+  },
+  // ——— Real-photography projects (May 2026 client batch) ———————————————
+  // Locations are region-level and durations are omitted until the owner
+  // confirms the real values — never invent either. Images built by
+  // scripts/build-real-projects.mjs.
+  {
+    title: "Complete Garden Transformation",
+    category: "Landscaping",
+    location: "Hertfordshire",
+    summary:
+      "A full rear-garden rebuild — porcelain patio, low-maintenance artificial lawn and sleeper-edged planting beds wrapping the boundary.",
+    services: ["Landscaping", "Porcelain patio", "Artificial lawn"],
+    duration: "",
+    variant: 3,
+    beforeVariant: 0,
+    icon: "build",
+    image: "/projects/garden-transformation.webp",
+  },
+  {
+    title: "Bespoke Utility Room",
+    category: "Utility Room",
+    location: "Hertfordshire",
+    summary:
+      "Floor-to-ceiling sage cabinetry with a dramatic book-matched stone splashback and worktop, under-cabinet lighting and an integrated sink run.",
+    services: ["Bespoke cabinetry", "Stone worktops", "Plumbing"],
+    duration: "",
+    variant: 1,
+    beforeVariant: 3,
+    icon: "build",
+    // Portrait elevation — rendered as the gallery's 4:5 span tile.
+    span: true,
+    image: "/projects/utility-room.webp",
+  },
+  {
+    title: "Block-Paved Driveway & Lighting",
+    category: "Driveway",
+    location: "Hertfordshire",
+    summary:
+      "Tumbled block paving with a charcoal border, recessed ground lights and discreet channel drainage — kerb appeal that works at dusk.",
+    services: ["Block paving", "Ground lighting", "Drainage"],
+    duration: "",
+    variant: 4,
+    beforeVariant: 2,
+    icon: "build",
+    image: "/projects/driveway-paving.webp",
   },
 ];
 

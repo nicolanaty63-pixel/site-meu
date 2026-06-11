@@ -31,6 +31,10 @@ type Props = {
   position?: string;
   /** Eager-load + preload for above-the-fold LCP imagery. */
   priority?: boolean;
+  /** Eager-load WITHOUT preload. For contexts where native lazy-loading is
+   *  unreliable — Chromium never loads below-fold lazy images inside the CSS
+   *  multi-column project gallery on small viewports. */
+  eager?: boolean;
   /** next/image re-encode quality (default 75). Raise for hero/showcase photos. */
   quality?: number;
 };
@@ -52,6 +56,7 @@ export default function Photo({
   className = "",
   sizes = "(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw",
   priority = false,
+  eager = false,
   quality,
   position,
 }: Props) {
@@ -70,6 +75,7 @@ export default function Photo({
             alt={alt ?? label ?? "Nicolla Contractors project"}
             fill
             priority={priority}
+            loading={!priority && eager ? "eager" : undefined}
             quality={quality}
             className="img-grade object-cover"
             style={position ? { objectPosition: position } : undefined}
