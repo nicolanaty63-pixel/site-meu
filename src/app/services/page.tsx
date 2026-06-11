@@ -32,8 +32,10 @@ const serviceImages: Record<string, string> = {
   // Real finished-garden photo, retouched to remove a child from the lawn.
   // Already 4:3, so it fills the card with no crop at any breakpoint.
   landscaping: "/landscaping-garden-nicolla.jpg",
-  // Driveways still renders the placeholder <Photo> treatment until
-  // licensed photography lands.
+  // Real client photo (rrr.jpg) — 4:3 crop baked by
+  // scripts/build-driveway-service.mjs, bottom-weighted so the block paving
+  // stays the focal point at every breakpoint.
+  "driveways-paving": "/driveway-block-paving.webp",
 };
 
 // Focal point for the 4:3 cover crop on tiles whose source is a tall portrait,
