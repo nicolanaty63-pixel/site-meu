@@ -71,12 +71,8 @@ for (const f of sources) {
   }
 }
 
-// Zellige bathroom — hero RIGHT (mirrors the herringbone card for masonry rhythm).
+// Zellige bathroom — hero RIGHT collage.
 await collage("zellige-bathroom.webp", wa("22.11.04"), wa("22.11.24"), wa("22.11.13"), "right");
-
-// Herringbone v2 — all three panels from the same warm-oak job (don't mix
-// floors from different projects into one card).
-await collage("herringbone-hallway.webp", wa("22.29.21"), wa("22.29.21 (1)"), wa("22.29.21 (2)"), "left");
 
 // Singles.
 await single("utility-room.webp", wa("22.16.17 (2)"), 1280, 1600); // 4:5 span card
@@ -91,5 +87,21 @@ await sharp(wa("22.21.03 (1)"))
   .toFile(join(OUT, "driveway-paving.webp"));
 console.log("driveway-paving.webp  1600x1200 (bumper cropped)");
 await single("garden-transformation.webp", join(PUB, "landscaping-garden-nicolla.jpg"), 1600, 1200);
+
+// Lightbox heroes (afterImage) — without these the modal falls back to the
+// placeholder before/after slider. Landscape jobs get 16:9; the utility room
+// is a span project so its modal frame is portrait 4:5 (second angle for
+// variety against the straight-on card shot).
+await single("zellige-bathroom-wide.webp", wa("22.11.04"), 2048, 1152);
+await single("utility-room-angle.webp", wa("22.16.17 (1)"), 1280, 1600);
+await single("driveway-paving-wide.webp", wa("22.21.03"), 2048, 1152);
+// Garden 16:9: trim sky rather than patio (the foreground porcelain is the work).
+await sharp(join(PUB, "landscaping-garden-nicolla.jpg"))
+  .rotate()
+  .extract({ left: 0, top: 180, width: 1600, height: 900 })
+  .sharpen({ sigma: 0.6 })
+  .webp({ quality: 92 })
+  .toFile(join(OUT, "garden-transformation-wide.webp"));
+console.log("garden-transformation-wide.webp  1600x900 (sky-trimmed)");
 
 console.log("done");

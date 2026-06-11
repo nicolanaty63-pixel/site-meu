@@ -629,22 +629,6 @@ export const projects: Project[] = [
     },
   },
   {
-    title: "Herringbone Oak Hallway",
-    category: "Flooring",
-    location: "Hemel Hempstead",
-    summary:
-      "Engineered oak laid in a classic herringbone pattern over a perfectly levelled subfloor, with crisp trims throughout.",
-    services: ["Flooring installation", "Engineered wood"],
-    duration: "5 days",
-    variant: 2,
-    beforeVariant: 4,
-    icon: "floor",
-    // Real-photo collage v2 (warm-oak room hero + transition detail + wide
-    // room — all panels from the same job), built by
-    // scripts/build-real-projects.mjs into the same 4:3 baked-WebP slot.
-    image: "/projects/herringbone-hallway.webp",
-  },
-  {
     title: "Glazed Zellige Family Bathroom",
     category: "Tiling",
     // Region-level until the exact town is confirmed by the owner.
@@ -657,10 +641,11 @@ export const projects: Project[] = [
     variant: 5,
     beforeVariant: 1,
     icon: "tile",
-    // Real photography (May 2026 batch) — collage with the hero on the RIGHT,
-    // mirroring the herringbone card's hero-left for masonry rhythm. Built by
-    // scripts/build-real-projects.mjs.
+    // Real photography (May 2026 batch) — hero-right collage; the 16:9
+    // afterImage gives the lightbox a real hero instead of the placeholder
+    // slider. Built by scripts/build-real-projects.mjs.
     image: "/projects/zellige-bathroom.webp",
+    afterImage: "/projects/zellige-bathroom-wide.webp",
   },
   {
     title: "Warm Laminate Living Space",
@@ -894,45 +879,66 @@ export const projects: Project[] = [
   // confirms the real values — never invent either. Images built by
   // scripts/build-real-projects.mjs.
   {
-    title: "Complete Garden Transformation",
+    title: "Porcelain Patio & Garden Transformation",
     category: "Landscaping",
     location: "Hertfordshire",
     summary:
-      "A full rear-garden rebuild — porcelain patio, low-maintenance artificial lawn and sleeper-edged planting beds wrapping the boundary.",
-    services: ["Landscaping", "Porcelain patio", "Artificial lawn"],
+      "Large-format porcelain laid level off the house, a crisp artificial lawn and timber sleeper beds planted along the boundary — finished with LED edge lighting so the garden earns its keep after dark.",
+    services: [
+      "Porcelain patio",
+      "Artificial lawn",
+      "Sleeper planting beds",
+      "LED edge lighting",
+    ],
     duration: "",
     variant: 3,
     beforeVariant: 0,
     icon: "build",
     image: "/projects/garden-transformation.webp",
+    // 16:9 lightbox hero (sky trimmed so the porcelain stays in frame).
+    afterImage: "/projects/garden-transformation-wide.webp",
   },
   {
-    title: "Bespoke Utility Room",
+    title: "Bespoke Sage Utility Room",
     category: "Utility Room",
     location: "Hertfordshire",
     summary:
-      "Floor-to-ceiling sage cabinetry with a dramatic book-matched stone splashback and worktop, under-cabinet lighting and an integrated sink run.",
-    services: ["Bespoke cabinetry", "Stone worktops", "Plumbing"],
+      "Floor-to-ceiling cabinetry in a satin sage finish, scribed tight to every wall, beneath a book-matched stone splashback lit from under the units — a hard-working room with zero wasted millimetres.",
+    services: [
+      "Bespoke joinery",
+      "Book-matched stone",
+      "Under-unit lighting",
+      "Plumbing",
+    ],
     duration: "",
     variant: 1,
     beforeVariant: 3,
     icon: "build",
-    // Portrait elevation — rendered as the gallery's 4:5 span tile.
+    // Portrait elevation — rendered as the gallery's 4:5 span tile; the span
+    // lightbox frame is portrait too, so the second angle slots straight in.
     span: true,
     image: "/projects/utility-room.webp",
+    afterImage: "/projects/utility-room-angle.webp",
   },
   {
-    title: "Block-Paved Driveway & Lighting",
+    title: "Block Driveway with Recessed Lighting",
     category: "Driveway",
     location: "Hertfordshire",
     summary:
-      "Tumbled block paving with a charcoal border, recessed ground lights and discreet channel drainage — kerb appeal that works at dusk.",
-    services: ["Block paving", "Ground lighting", "Drainage"],
+      "Tumbled blocks laid to even falls inside a charcoal soldier border, flush recessed uplights and a discreet channel drain across the threshold — kerb appeal that works hardest at dusk.",
+    services: [
+      "Block paving",
+      "Charcoal soldier border",
+      "Recessed uplights",
+      "Channel drainage",
+    ],
     duration: "",
     variant: 4,
     beforeVariant: 2,
     icon: "build",
     image: "/projects/driveway-paving.webp",
+    // 16:9 lightbox hero — the paving close-up with the drain and uplights.
+    afterImage: "/projects/driveway-paving-wide.webp",
   },
 ];
 
