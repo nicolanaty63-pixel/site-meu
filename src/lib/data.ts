@@ -852,11 +852,13 @@ export type Testimonial = {
 };
 
 export const testimonials: Testimonial[] = [
-  // ——— GENUINE MyBuilder reviews (verbatim, trimmed only with ellipses) ————
+  // ——— ALL GENUINE MyBuilder reviews (verbatim, trimmed only with "…") ————
   // Source: https://www.mybuilder.com/profile/view/ns_tiling_solutions
-  // (profile now displays as "Nicolla Contractors Ltd", Kings Langley —
-  // 4.9/5, 115 reviews, Verified by MyBuilder). Reviewer names/locations are
-  // exactly as published. Headlines are verbatim phrases from each review.
+  // (displays as "Nicolla Contractors Ltd", Kings Langley — 4.9/5, 115
+  // reviews, Verified by MyBuilder). Jobs/dates/locations exactly as
+  // published. Display names: the public username, softened to a first name
+  // only where the username unambiguously contains one (e.g. sunita67563 →
+  // Sunita). Headlines are verbatim phrases lifted from each review.
   {
     name: "MyBuilder user",
     location: "Watford",
@@ -866,6 +868,36 @@ export const testimonials: Testimonial[] = [
       "I wanted to make sure I was giving an honest review so I waited to really put the new bathroom to the test... There is not a single thing I can fault! Sebastian was excellent at communication, timekeeping and professional in all manners. He gave some unreal advice on the best products and materials to use within the bathroom for a long lasting high end finish. … Nothing was ever too much trouble and I can not recommend him enough. … I HIGHLY HIGHLY recommend!",
     job: "Bathroom remodel",
     date: "May 2024",
+  },
+  {
+    name: "gfranke",
+    location: "Aylesbury",
+    rating: 5,
+    headline: "It looks very high-end",
+    quote:
+      "Sebastian came and did the plumbing, tiling, and furniture fixing for a bathroom renovation for us… I hired Sebastian because he was the most honest of all the tradesmen I met with. … I have a very high attention to detail, which Sebastian was very capable to meet. … His finish was excellent, and it looks very high-end. It is exactly how we wanted it.",
+    job: "Bathroom renovation",
+    date: "March 2019",
+  },
+  {
+    name: "Substructure Building Contractors",
+    location: "Slough",
+    rating: 5,
+    headline: "One of the best tiling contractors I've seen",
+    quote:
+      "I'm a building contractor running major refurbishments, renovations and extensions. Sebastian has more than impressed me… my projects demand high end finishes so we are very selective with trades, especially finishing trades. Sebastian has passed with flying colours. Great communication, listens to requirements and his finished product is second to none… I've been in building 32 years and he is one of the best tiling contractors I've seen or had the pleasure of working with.",
+    job: "3 en suite bathrooms, kitchen & floors",
+    date: "November 2018",
+  },
+  {
+    name: "Sunita",
+    location: "Uxbridge",
+    rating: 5,
+    headline: "The best builder I have come across",
+    quote:
+      "Having had three houses refurbished and being particularly fussy, I would like to say that Sebastian has been the best builder I have come across. He is punctual, gets on with the job, his workmanship is carefully carried out with a flawless finish. … My family and friends have already requested that Sebastian also completes their building work. May I add he is also trustworthy — this was paramount to my family.",
+    job: "Flooring in open plan kitchen and living room",
+    date: "February 2019",
   },
   {
     name: "dmg_20",
@@ -878,17 +910,7 @@ export const testimonials: Testimonial[] = [
     date: "March 2024",
   },
   {
-    name: "sunita67563",
-    location: "Uxbridge",
-    rating: 5,
-    headline: "The best builder I have come across",
-    quote:
-      "Having had three houses refurbished and being particularly fussy, I would like to say that Sebastian has been the best builder I have come across. He is punctual, gets on with the job, his workmanship is carefully carried out with a flawless finish. … My family and friends have already requested that Sebastian also completes their building work. May I add he is also trustworthy — this was paramount to my family.",
-    job: "Flooring in open plan kitchen and living room",
-    date: "February 2019",
-  },
-  {
-    name: "robin_99",
+    name: "Robin",
     location: "Uxbridge",
     rating: 5,
     headline: "They treated the job like it was their own house",
@@ -896,6 +918,36 @@ export const testimonials: Testimonial[] = [
       "Sebastian (and colleague) just completed an outdoor tiling job which had a few tricky areas which needed some special attention. I have to say I am so impressed with the end result. The guys worked tirelessly over three days to get the job done and were clinical in making every last bit perfect. They really treated the job like it was their own house which is a rare attribute these days. I cannot recommend Sebastian enough…",
     job: "Tiling for kitchen, hallway and patio",
     date: "May 2020",
+  },
+  {
+    name: "Amanda",
+    location: "Gerrards Cross",
+    rating: 5,
+    headline: "Everything you could want",
+    quote:
+      "Sabastian and his team were everything you could want in a decorator. Always very polite, extremely hardworking, on a couple of days even putting in a 12-hour day, and excellent attention to detail. They left the place beautifully tidy as well as beautifully decorated. A great team.",
+    job: "Painting & decorating house ready for sale",
+    date: "October 2023",
+  },
+  {
+    name: "MyBuilder user",
+    location: "Gerrards Cross",
+    rating: 5,
+    headline: "Left it spotless",
+    quote:
+      "Sebastian and his colleague did a very good job laying new laminate flooring to my kitchen and hallway. They were very tidy cleaning up after they finished and left it spotless. Always arrived on time. I was very pleased with the final result. … Would have no hesitation in recommending his company to people, he is a very good tradesmen.",
+    job: "Fitting new laminate flooring to kitchen and hallway",
+    date: "April 2024",
+  },
+  {
+    name: "Dorothy",
+    location: "Watford",
+    rating: 5,
+    headline: "Finished the job beautifully",
+    quote:
+      "Sebastian was very professional. Turned up when he said, replied promptly to email queries. Finished the job beautifully. All in all a job well done.",
+    job: "Engineered wood flooring in lounge",
+    date: "June 2021",
   },
 ];
 
