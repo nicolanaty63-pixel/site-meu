@@ -13,6 +13,7 @@ import RelatedProjectsFor from "@/components/RelatedProjectsFor";
 import Photo from "@/components/ui/Photo";
 import Icon from "@/components/ui/Icon";
 import { services, faqs } from "@/lib/data";
+import { serviceImages, servicePositions } from "@/lib/service-images";
 import { areas } from "@/lib/areas";
 import { guides } from "@/lib/guides";
 import { site } from "@/lib/site";
@@ -133,7 +134,18 @@ export default async function ServicePage({ params }: Params) {
           <div className="grid items-center gap-10 lg:grid-cols-2">
             <Reveal>
               <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10">
-                <Photo variant={0} icon={s.icon} caption={s.title} />
+                {/* Exactly the photo this service shows on /services — both
+                    pages read from lib/service-images so they can't drift.
+                    Same 4:3 frame and focal point at every breakpoint. */}
+                <Photo
+                  src={serviceImages[s.slug]}
+                  position={servicePositions[s.slug]}
+                  variant={0}
+                  icon={s.icon}
+                  caption={s.title}
+                  alt={s.title}
+                  eager
+                />
               </div>
             </Reveal>
             <Reveal delay={0.08}>
