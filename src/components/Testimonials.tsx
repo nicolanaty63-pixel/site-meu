@@ -101,8 +101,10 @@ export default function Testimonials({
                   </div>
                 </div>
               </div>
-              <div className="text-right text-xs text-concrete-dark">
-                <div className="font-medium text-concrete">via MyBuilder</div>
+              <div className="max-w-[13rem] text-right text-xs text-concrete-dark">
+                <div className="font-medium text-concrete">
+                  Verified MyBuilder review for Nicolla Contractors Ltd
+                </div>
                 <div>{t.date}</div>
               </div>
             </div>

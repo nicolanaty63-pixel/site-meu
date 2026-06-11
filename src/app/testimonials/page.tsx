@@ -72,6 +72,10 @@ export default function TestimonialsPage() {
                       </div>
                     </div>
                   </div>
+                  <p className="mt-3 text-[11px] text-concrete-dark">
+                    Verified MyBuilder review for Nicolla Contractors Ltd ·{" "}
+                    {t.date}
+                  </p>
                 </figure>
               </Reveal>
             ))}
