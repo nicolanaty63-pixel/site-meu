@@ -629,27 +629,8 @@ export const projects: Project[] = [
     },
   },
   {
-    title: "Glazed Zellige Family Bathroom",
-    category: "Tiling",
-    // Region-level until the exact town is confirmed by the owner.
-    location: "Hertfordshire",
-    summary:
-      "Hand-glazed zellige-style tiling in deep ocean tones — full-height walls, an LED-lit storage niche, and a crisp glass screen over the bath.",
-    services: ["Tiling", "Bathroom fitting", "LED niche"],
-    // Real job, duration unconfirmed — the card hides the pill when empty.
-    duration: "",
-    variant: 5,
-    beforeVariant: 1,
-    icon: "tile",
-    // Real photography (May 2026 batch) — hero-right collage; the 16:9
-    // afterImage gives the lightbox a real hero instead of the placeholder
-    // slider. Built by scripts/build-real-projects.mjs.
-    image: "/projects/zellige-bathroom.webp",
-    afterImage: "/projects/zellige-bathroom-wide.webp",
-  },
-  {
     title: "Warm Laminate Living Space",
-    category: "Laminate",
+    category: "Flooring",
     location: "Watford",
     summary:
       "Hard-wearing wood-effect laminate with acoustic underlay and neat skirting — a fast, flawless refresh for a busy living room.",
@@ -897,48 +878,6 @@ export const projects: Project[] = [
     image: "/projects/garden-transformation.webp",
     // 16:9 lightbox hero (sky trimmed so the porcelain stays in frame).
     afterImage: "/projects/garden-transformation-wide.webp",
-  },
-  {
-    title: "Bespoke Sage Utility Room",
-    category: "Utility Room",
-    location: "Hertfordshire",
-    summary:
-      "Floor-to-ceiling cabinetry in a satin sage finish, scribed tight to every wall, beneath a book-matched stone splashback lit from under the units — a hard-working room with zero wasted millimetres.",
-    services: [
-      "Bespoke joinery",
-      "Book-matched stone",
-      "Under-unit lighting",
-      "Plumbing",
-    ],
-    duration: "",
-    variant: 1,
-    beforeVariant: 3,
-    icon: "build",
-    // Portrait elevation — rendered as the gallery's 4:5 span tile; the span
-    // lightbox frame is portrait too, so the second angle slots straight in.
-    span: true,
-    image: "/projects/utility-room.webp",
-    afterImage: "/projects/utility-room-angle.webp",
-  },
-  {
-    title: "Block Driveway with Recessed Lighting",
-    category: "Driveway",
-    location: "Hertfordshire",
-    summary:
-      "Tumbled blocks laid to even falls inside a charcoal soldier border, flush recessed uplights and a discreet channel drain across the threshold — kerb appeal that works hardest at dusk.",
-    services: [
-      "Block paving",
-      "Charcoal soldier border",
-      "Recessed uplights",
-      "Channel drainage",
-    ],
-    duration: "",
-    variant: 4,
-    beforeVariant: 2,
-    icon: "build",
-    image: "/projects/driveway-paving.webp",
-    // 16:9 lightbox hero — the paving close-up with the drain and uplights.
-    afterImage: "/projects/driveway-paving-wide.webp",
   },
 ];
 
