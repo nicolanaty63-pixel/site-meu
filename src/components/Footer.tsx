@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { nav, site } from "@/lib/site";
 import { services } from "@/lib/data";
-import { legalPages } from "@/lib/legal";
+import { legal, legalPages } from "@/lib/legal";
 import Icon from "@/components/ui/Icon";
 import ManageCookiesButton from "@/components/consent/ManageCookiesButton";
 import Logo from "@/components/Logo";
@@ -132,6 +132,14 @@ export default function Footer() {
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 py-6 text-xs text-concrete-dark sm:flex-row sm:px-6">
           <p>
             © {new Date().getFullYear()} {site.legalName}. All rights reserved.
+            {legal.companyNumber && (
+              <>
+                {" "}
+                <span className="whitespace-nowrap">
+                  {site.legalName} — Company No. {legal.companyNumber}
+                </span>
+              </>
+            )}
           </p>
           <nav
             aria-label="Legal"

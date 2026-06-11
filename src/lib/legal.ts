@@ -26,7 +26,9 @@ type Legal = {
 
 export const legal: Legal = {
   companyName: site.legalName,
-  companyNumber: undefined,
+  // Verified: displayed publicly on the company's MyBuilder profile
+  // ("Registered at Companies House", company number 15281877).
+  companyNumber: "15281877",
   registeredOffice: undefined,
   icoRegistration: undefined,
   vatNumber: undefined,

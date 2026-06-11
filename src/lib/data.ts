@@ -1,8 +1,6 @@
 // Content data for Nicolla Contractors Ltd.
-// Testimonials are original, review-style copy written from the themes the
-// company is known for (punctuality, professionalism, attention to detail,
-// cleanliness, quality, reliability, communication) — not copied from any
-// real person's review.
+// Testimonials are genuine customer reviews quoted verbatim from the
+// company's public MyBuilder profile (see the source comment on the array).
 
 export type IconName =
   | "bath"
@@ -854,86 +852,6 @@ export type Testimonial = {
 };
 
 export const testimonials: Testimonial[] = [
-  {
-    name: "Sarah M.",
-    location: "Watford",
-    rating: 5,
-    headline: "Fantastic workmanship",
-    quote:
-      "Fantastic workmanship from start to finish. The team were professional, punctual and left everything clean and tidy every day. The finish is better than we imagined.",
-    job: "Bathroom renovation",
-    date: "March 2026",
-  },
-  {
-    name: "James P.",
-    location: "St Albans",
-    rating: 5,
-    headline: "Very professional and reliable",
-    quote:
-      "Fast, reliable and a pleasure to deal with. They did exactly what they promised, when they promised. I wouldn't hesitate to recommend them.",
-    job: "Kitchen renovation",
-    date: "February 2026",
-  },
-  {
-    name: "Priya K.",
-    location: "Hemel Hempstead",
-    rating: 5,
-    headline: "Attention to detail was excellent",
-    quote:
-      "The attention to detail was excellent — every tile is perfect. You can tell they take real pride in their work.",
-    job: "Tiling & flooring",
-    date: "January 2026",
-  },
-  {
-    name: "David R.",
-    location: "Rickmansworth",
-    rating: 5,
-    headline: "Great communication",
-    quote:
-      "Brilliant communication throughout and a beautiful, high quality finish. Honest, professional and trustworthy from start to finish.",
-    job: "Home refurbishment",
-    date: "December 2025",
-  },
-  {
-    name: "Emma L.",
-    location: "Kings Langley",
-    rating: 5,
-    headline: "Clean and tidy",
-    quote:
-      "So clean and tidy — they treated our home with real respect, dust sheets down every day and a full clean before they left. The new floors look gorgeous.",
-    job: "Laminate flooring",
-    date: "November 2025",
-  },
-  {
-    name: "Michael T.",
-    location: "North London",
-    rating: 5,
-    headline: "Would highly recommend",
-    quote:
-      "Great workmanship and genuinely friendly people. Punctual, and the quality of the finish is superb — we've already recommended them to neighbours.",
-    job: "Flooring installation",
-    date: "October 2025",
-  },
-  {
-    name: "Grace H.",
-    location: "Berkhamsted",
-    rating: 5,
-    headline: "Punctual and spotless",
-    quote:
-      "Punctual every single morning and incredibly tidy — you'd never have known a major job was happening. The new bathroom is absolutely stunning.",
-    job: "Bathroom renovation",
-    date: "April 2026",
-  },
-  {
-    name: "Tom B.",
-    location: "Watford",
-    rating: 5,
-    headline: "Reliable and great value",
-    quote:
-      "Reliable, professional and great value. They kept us updated daily and the quality of the finish is first class. Couldn't be happier with the result.",
-    job: "Kitchen & tiling",
-    date: "March 2026",
-  },
   // ——— GENUINE MyBuilder reviews (verbatim, trimmed only with ellipses) ————
   // Source: https://www.mybuilder.com/profile/view/ns_tiling_solutions
   // (profile now displays as "Nicolla Contractors Ltd", Kings Langley —
@@ -1044,7 +962,7 @@ export type Stat = {
 
 export const stats: Stat[] = [
   { value: 4.9, decimals: 1, suffix: "/5", label: "Average rating" },
-  { value: 350, suffix: "+", label: "Happy customers" },
+  { value: 115, suffix: "+", label: "Happy customers" },
   { value: 15, suffix: "+", label: "Years experience" },
   { value: 100, suffix: "%", label: "Recommended" },
 ];
@@ -1052,7 +970,7 @@ export const stats: Stat[] = [
 export type Badge = { icon: IconName; title: string; sub: string };
 
 export const badges: Badge[] = [
-  { icon: "star", title: "4.9 / 5 Rated", sub: "350+ reviews" },
+  { icon: "star", title: "4.9 / 5 Rated", sub: "115+ reviews" },
   { icon: "shield", title: "Fully Insured", sub: "Workmanship guaranteed" },
   { icon: "clock", title: "Always On Time", sub: "Reliable & punctual" },
   { icon: "broom", title: "Clean & Tidy", sub: "We respect your home" },

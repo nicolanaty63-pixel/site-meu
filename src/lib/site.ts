@@ -48,7 +48,7 @@ export const site = {
 
   // Reputation
   rating: 4.9,
-  reviewCount: 350,
+  reviewCount: 115, // matches the public MyBuilder profile count
   yearsExperience: 15,
   projectsCompleted: 100,
 
