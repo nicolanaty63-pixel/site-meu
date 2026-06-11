@@ -1,12 +1,8 @@
 import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import Container from "@/components/Container";
-import Reveal from "@/components/Reveal";
-import SectionHeading from "@/components/SectionHeading";
 import PageHero from "@/components/PageHero";
 import ProjectGallery from "@/components/ProjectGallery";
-import BeforeAfterSlider from "@/components/BeforeAfterSlider";
-import Photo from "@/components/ui/Photo";
 import Icon from "@/components/ui/Icon";
 import { projects } from "@/lib/data";
 import { site } from "@/lib/site";
@@ -14,7 +10,7 @@ import { site } from "@/lib/site";
 export const metadata = pageMeta({
   title: "Projects — Our Portfolio of Renovations",
   description:
-    "Browse recent bathroom renovations, kitchen renovations, tiling and flooring projects by Nicolla Contractors across Hertfordshire and North London. Before & after transformations.",
+    "Browse recent bathroom renovations, kitchen renovations, tiling and flooring projects by Nicolla Contractors across Hertfordshire and North London.",
   path: "/projects",
 });
 
@@ -75,11 +71,6 @@ const projectsLd = {
   ],
 };
 
-const beforeAfters = [
-  { icon: "bath" as const, before: 2, after: 1, label: "Bathroom renovation" },
-  { icon: "kitchen" as const, before: 3, after: 4, label: "Kitchen renovation" },
-];
-
 export default function ProjectsPage() {
   return (
     <>
@@ -97,35 +88,6 @@ export default function ProjectsPage() {
       <section className="py-20">
         <Container>
           <ProjectGallery />
-        </Container>
-      </section>
-
-      {/* Before / after showcase */}
-      <section className="border-y border-white/10 bg-charcoal/40 py-20">
-        <Container>
-          <SectionHeading
-            center
-            eyebrow="Before & after"
-            title="See the transformation"
-            subtitle="Drag each slider to reveal the finished result."
-          />
-          <div className="mt-12 grid gap-8 md:grid-cols-2">
-            {beforeAfters.map((b) => (
-              <Reveal key={b.label}>
-                <BeforeAfterSlider
-                  before={
-                    <Photo tone="before" variant={b.before} icon={b.icon} />
-                  }
-                  after={
-                    <Photo tone="after" variant={b.after} icon={b.icon} />
-                  }
-                />
-                <p className="mt-3 text-center text-sm text-concrete">
-                  {b.label}
-                </p>
-              </Reveal>
-            ))}
-          </div>
         </Container>
       </section>
 
