@@ -11,7 +11,7 @@ import { site } from "@/lib/site";
 export const metadata = pageMeta({
   title: "Services — Renovations, Extensions, Lofts & Roofing",
   description:
-    "Bathroom & kitchen renovations, tiling, flooring and home refurbishment, plus house extensions, loft conversions, roofing, landscaping and driveways across London, North London and Hertfordshire. Fully-insured contractors rated 4.9/5.",
+    "Bathroom & kitchen renovations, tiling and flooring, plus house extensions, loft conversions, roofing, landscaping and driveways across London, North London and Hertfordshire. Fully-insured contractors rated 4.9/5.",
   path: "/services",
 });
 
@@ -22,14 +22,18 @@ const serviceImages: Record<string, string> = {
   "kitchen-renovations": "/franco-debartolo-ORzG4HrA9rI-unsplash.jpeg",
   tiling: "/tilingjj.jpeg",
   "laminate-flooring": "/claire-rendall-b6kAwr1i0Iw-unsplash.jpg",
-  "home-refurbishment": "/brett-jordan-yica25Tg73w-unsplash.jpeg",
+  // Two-storey rear extension mid-build (scaffolding + blockwork) — moved
+  // here from the retired Home Refurbishment & Building section. Landscape
+  // ~4:3 source, so the fixed-ratio tile shows it uncropped-in-spirit at
+  // every breakpoint with no focal-point override needed.
+  "home-extensions": "/brett-jordan-yica25Tg73w-unsplash.jpeg",
   "loft-conversions": "/toa-heftiba-WqE24tdeRMU-unsplash.jpg",
   roofing: "/clement-proust-RO9HIOzFSX0-unsplash.jpg",
   // Real finished-garden photo, retouched to remove a child from the lawn.
   // Already 4:3, so it fills the card with no crop at any breakpoint.
   landscaping: "/landscaping-garden-nicolla.jpg",
-  // Remaining new services (extensions, driveways) render the same placeholder
-  // <Photo> treatment until licensed photography lands.
+  // Driveways still renders the placeholder <Photo> treatment until
+  // licensed photography lands.
 };
 
 // Focal point for the 4:3 cover crop on tiles whose source is a tall portrait,
@@ -72,6 +76,10 @@ export default function ServicesPage() {
                         variant={i}
                         icon={s.icon}
                         caption={s.title}
+                        // Same Chromium quirk as the project gallery: native
+                        // lazy-load never fires for below-fold images on
+                        // small viewports, leaving tiles blank on mobile.
+                        eager
                       />
                     </div>
                   </Reveal>

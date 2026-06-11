@@ -33,6 +33,14 @@ const nextConfig = {
         destination: "/services/laminate-flooring",
         permanent: true,
       },
+      // Home Refurbishment & Building was retired; Home Extensions is the
+      // closest live service (and inherits its imagery). 301 preserves any
+      // backlinks / indexed URLs.
+      {
+        source: "/services/home-refurbishment",
+        destination: "/services/home-extensions",
+        permanent: true,
+      },
       // Legacy "/pages/*" URLs from a previous site iteration still surface in
       // Google's index. 301 them to the App Router equivalent so any old
       // backlinks / cached search results land on the correct page rather

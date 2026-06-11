@@ -57,7 +57,7 @@ export const services: Service[] = [
     ],
     icon: "bath",
     keyword: "bathroom renovation UK",
-    related: ["tiling", "laminate-flooring", "home-refurbishment"],
+    related: ["tiling", "laminate-flooring", "kitchen-renovations"],
     faqs: [
       {
         q: "How long does a typical bathroom renovation take?",
@@ -95,7 +95,7 @@ export const services: Service[] = [
     ],
     icon: "kitchen",
     keyword: "kitchen renovation specialists",
-    related: ["tiling", "laminate-flooring", "home-refurbishment"],
+    related: ["tiling", "laminate-flooring", "bathroom-renovations"],
     faqs: [
       {
         q: "How long does a kitchen renovation take?",
@@ -133,7 +133,7 @@ export const services: Service[] = [
     ],
     icon: "tile",
     keyword: "tiling contractors",
-    related: ["bathroom-renovations", "kitchen-renovations", "home-refurbishment"],
+    related: ["bathroom-renovations", "kitchen-renovations", "laminate-flooring"],
     faqs: [
       {
         q: "Do you tile floors or walls only?",
@@ -171,7 +171,7 @@ export const services: Service[] = [
     ],
     icon: "plank",
     keyword: "laminate flooring installation",
-    related: ["home-refurbishment", "tiling", "kitchen-renovations"],
+    related: ["bathroom-renovations", "tiling", "kitchen-renovations"],
     faqs: [
       {
         q: "What's the difference between laminate, LVT and engineered wood?",
@@ -196,44 +196,6 @@ export const services: Service[] = [
     ],
   },
   {
-    slug: "home-refurbishment",
-    title: "Home Refurbishment & Building",
-    short: "General building and full home improvements.",
-    description:
-      "Planning something bigger? Our home refurbishment and general building service brings everything under one trusted team — plastering, partitions, carpentry, decorating and full project management, with one point of contact and one consistent standard.",
-    features: [
-      "Full home refurbishment",
-      "Plastering & partitions",
-      "Carpentry & joinery",
-      "Project management",
-    ],
-    icon: "build",
-    keyword: "home refurbishment company",
-    related: ["bathroom-renovations", "kitchen-renovations", "home-extensions"],
-    faqs: [
-      {
-        q: "What does a full home refurbishment include?",
-        a: "Anything from a single-room rip-out-and-rebuild to a whole-house refurb: structural openings, plastering, electrics, plumbing, decorating, kitchen, bathrooms, flooring and final clean — all managed under one programme with one project manager.",
-      },
-      {
-        q: "Can you do extensions, or only internal work?",
-        a: "Our core is internal refurbishment and fit-out. For new-build extensions we work alongside a structural engineer and a main contractor and take on the internal works including 1st and 2nd fix. We're honest about what we do best and where we partner.",
-      },
-      {
-        q: "Do you handle building regs and certificates?",
-        a: "Yes. Electrical Part P certificates, Gas Safe sign-off, building control liaison and structural sign-off where needed — we arrange certification through the relevant body and hand the paperwork over at the end of the job.",
-      },
-      {
-        q: "How long does a typical full refurb take?",
-        a: "Depends on scope. A flat refurb is typically 6–10 weeks; a full Victorian terrace refurb can run 12–20+ weeks. We agree a phased schedule with milestones up front, so you can see exactly when each room hands over.",
-      },
-      {
-        q: "Can we live in the house during the work?",
-        a: "For single-room work, usually yes. For a full refurb without a working kitchen or bathroom, most clients move out for the heavy phase. We keep the site clean, dust-sheeted and secure throughout regardless.",
-      },
-    ],
-  },
-  {
     slug: "home-extensions",
     title: "Home Extensions",
     short: "Single & double-storey extensions, built end to end.",
@@ -247,7 +209,7 @@ export const services: Service[] = [
     ],
     icon: "extension",
     keyword: "house extension builders",
-    related: ["loft-conversions", "home-refurbishment", "roofing"],
+    related: ["loft-conversions", "kitchen-renovations", "roofing"],
     faqs: [
       {
         q: "Do I need planning permission for an extension?",
@@ -281,7 +243,7 @@ export const services: Service[] = [
     ],
     icon: "loft",
     keyword: "loft conversion specialists",
-    related: ["home-extensions", "roofing", "home-refurbishment"],
+    related: ["home-extensions", "roofing", "bathroom-renovations"],
     faqs: [
       {
         q: "Is my loft suitable for a conversion?",
@@ -315,7 +277,7 @@ export const services: Service[] = [
     ],
     icon: "roof",
     keyword: "roofing contractors",
-    related: ["home-extensions", "loft-conversions", "home-refurbishment"],
+    related: ["home-extensions", "loft-conversions", "landscaping"],
     faqs: [
       {
         q: "Do you repair roofs as well as replace them?",
@@ -349,7 +311,7 @@ export const services: Service[] = [
     ],
     icon: "landscape",
     keyword: "landscaping services",
-    related: ["driveways-paving", "home-refurbishment", "tiling"],
+    related: ["driveways-paving", "home-extensions", "tiling"],
     faqs: [
       {
         q: "Do you design the garden or only build it?",
@@ -383,7 +345,7 @@ export const services: Service[] = [
     ],
     icon: "paving",
     keyword: "driveways and paving",
-    related: ["landscaping", "home-refurbishment", "tiling"],
+    related: ["landscaping", "home-extensions", "tiling"],
     faqs: [
       {
         q: "What driveway surfaces do you install?",
@@ -420,7 +382,7 @@ export function serviceSlugFor(label: string): string | null {
   if (l.includes("tiling") || l.includes("tile")) return "tiling";
   if (l.includes("flooring") || l.includes("wood") || l.includes("herringbone"))
     return "laminate-flooring";
-  if (l.includes("refurb") || l.includes("building")) return "home-refurbishment";
+  if (l.includes("refurb") || l.includes("building")) return "home-extensions";
   return null;
 }
 

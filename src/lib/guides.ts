@@ -555,7 +555,7 @@ export const guides: Guide[] = [
       "How much does it cost to refurbish a house in the UK in 2026? Whole-house refurbishment ranges, per-room costs and what drives the budget on a full refurb.",
     intro:
       "A full home refurbishment can be anywhere from a £40,000 cosmetic refresh to a £400,000+ structural rebuild. This guide is an honest 2026 walk-through of typical UK whole-house refurbishment costs, the per-room rough ranges, and the structural decisions that move the budget hardest.",
-    serviceSlug: "home-refurbishment",
+    serviceSlug: "home-extensions",
     publishedDate: "2026-05-29",
     lastUpdated: "2026-05-29",
     ctaLabel: "See home refurbishment cost guide",

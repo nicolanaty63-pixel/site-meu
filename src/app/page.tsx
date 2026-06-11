@@ -51,14 +51,6 @@ const featuredServices = [
     image: "/brett-jordan-yica25Tg73w-unsplash.jpeg",
     icon: "extension",
   },
-  {
-    slug: "home-refurbishment",
-    title: "Full Home Refurbishment",
-    blurb:
-      "End-to-end building and refurbishment under one trusted team — carpentry, plastering and full project management, to one exacting standard.",
-    image: "/brett-jordan-yica25Tg73w-unsplash.jpeg",
-    icon: "build",
-  },
 ] as const;
 
 export default function HomePage() {
