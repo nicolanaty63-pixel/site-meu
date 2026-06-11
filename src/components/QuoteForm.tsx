@@ -4,23 +4,34 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { services } from "@/lib/data";
 import { site } from "@/lib/site";
+import { submitLead } from "@/lib/lead";
 import Icon from "@/components/ui/Icon";
 import FormConsent from "@/components/FormConsent";
 
-// Conversion-focused quote form. Front-end demo — wire `FormData` to an API
-// route, Resend/Formspree, or a CRM to capture leads in production.
+// Conversion-focused quote form — posts to /api/lead. Success only renders
+// after the server confirms delivery; failures keep the visitor's input and
+// surface direct contact channels instead.
 export default function QuoteForm() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
+  const [error, setError] = useState<string | null>(null);
+  // Form-mount timestamp for the server-side time-trap spam check.
+  const [mountedAt] = useState(() => Date.now());
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // Honeypot anti-spam: silently ignore if the hidden field was filled.
-    const hp = e.currentTarget.elements.namedItem("_hp") as HTMLInputElement | null;
-    if (hp?.value) return;
-    setSent(true);
+    if (status === "sending") return;
+    setStatus("sending");
+    setError(null);
+    try {
+      await submitLead(e.currentTarget, "quote-form", mountedAt);
+      setStatus("sent");
+    } catch (err) {
+      setStatus("idle");
+      setError(err instanceof Error ? err.message : "Something went wrong.");
+    }
   }
 
-  if (sent) {
+  if (status === "sent") {
     return (
       <motion.div
         initial={{ opacity: 0, scale: 0.96 }}
@@ -127,11 +138,34 @@ export default function QuoteForm() {
         <FormConsent />
         <button
           type="submit"
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-6 py-4 text-base font-bold text-ink transition-transform hover:scale-[1.02]"
+          disabled={status === "sending"}
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-6 py-4 text-base font-bold text-ink transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
         >
-          Get my free quote
-          <Icon name="arrow" className="h-4 w-4" />
+          {status === "sending" ? "Sending…" : "Get my free quote"}
+          {status !== "sending" && <Icon name="arrow" className="h-4 w-4" />}
         </button>
+        {error && (
+          <div
+            role="alert"
+            className="rounded-xl border border-red-400/30 bg-red-500/10 p-4 text-sm text-red-200"
+          >
+            <p className="font-medium">{error}</p>
+            <p className="mt-2 text-red-200/80">
+              Your details haven&apos;t been lost — please try again, or reach
+              us directly:{" "}
+              <a href={site.phoneHref} className="font-semibold underline">
+                {site.phoneDisplay}
+              </a>{" "}
+              ·{" "}
+              <a
+                href={`mailto:${site.email}`}
+                className="font-semibold underline"
+              >
+                {site.email}
+              </a>
+            </p>
+          </div>
+        )}
         <p className="flex items-center justify-center gap-2 text-center text-xs text-concrete-dark">
           <Icon name="shield" className="h-3.5 w-3.5 text-gold" />
           Free &amp; no-obligation · We reply within 24 hours · Your details stay
