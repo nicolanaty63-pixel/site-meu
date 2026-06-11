@@ -860,7 +860,7 @@ export const testimonials: Testimonial[] = [
   // only where the username unambiguously contains one (e.g. sunita67563 →
   // Sunita). Headlines are verbatim phrases lifted from each review.
   {
-    name: "MyBuilder user",
+    name: "Homeowner",
     location: "Watford",
     rating: 5,
     headline: "Not a single thing I can fault",
@@ -870,7 +870,7 @@ export const testimonials: Testimonial[] = [
     date: "May 2024",
   },
   {
-    name: "gfranke",
+    name: "Private Client",
     location: "Aylesbury",
     rating: 5,
     headline: "It looks very high-end",
@@ -880,7 +880,7 @@ export const testimonials: Testimonial[] = [
     date: "March 2019",
   },
   {
-    name: "Substructure Building Contractors",
+    name: "Building Contractor",
     location: "Slough",
     rating: 5,
     headline: "One of the best tiling contractors I've seen",
@@ -900,7 +900,7 @@ export const testimonials: Testimonial[] = [
     date: "February 2019",
   },
   {
-    name: "dmg_20",
+    name: "Private Client",
     location: "Pinner",
     rating: 5,
     headline: "The finish was top class",
@@ -930,7 +930,7 @@ export const testimonials: Testimonial[] = [
     date: "October 2023",
   },
   {
-    name: "MyBuilder user",
+    name: "Homeowner",
     location: "Gerrards Cross",
     rating: 5,
     headline: "Left it spotless",
