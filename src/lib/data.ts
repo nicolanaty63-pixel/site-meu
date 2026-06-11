@@ -639,6 +639,10 @@ export const projects: Project[] = [
     variant: 2,
     beforeVariant: 4,
     icon: "floor",
+    // Premium 3-photo collage (hero-left + two stacked details), baked to a
+    // single 4:3 WebP by scripts/build-herringbone-collage.mjs so it slots into
+    // the card frame with no layout/hover/overlay changes.
+    image: "/projects/herringbone-hallway.webp",
   },
   {
     title: "Zellige Feature Splashback",
