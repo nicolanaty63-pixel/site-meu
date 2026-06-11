@@ -934,6 +934,51 @@ export const testimonials: Testimonial[] = [
     job: "Kitchen & tiling",
     date: "March 2026",
   },
+  // ——— GENUINE MyBuilder reviews (verbatim, trimmed only with ellipses) ————
+  // Source: https://www.mybuilder.com/profile/view/ns_tiling_solutions
+  // (profile now displays as "Nicolla Contractors Ltd", Kings Langley —
+  // 4.9/5, 115 reviews, Verified by MyBuilder). Reviewer names/locations are
+  // exactly as published. Headlines are verbatim phrases from each review.
+  {
+    name: "MyBuilder user",
+    location: "Watford",
+    rating: 5,
+    headline: "Not a single thing I can fault",
+    quote:
+      "I wanted to make sure I was giving an honest review so I waited to really put the new bathroom to the test... There is not a single thing I can fault! Sebastian was excellent at communication, timekeeping and professional in all manners. He gave some unreal advice on the best products and materials to use within the bathroom for a long lasting high end finish. … Nothing was ever too much trouble and I can not recommend him enough. … I HIGHLY HIGHLY recommend!",
+    job: "Bathroom remodel",
+    date: "May 2024",
+  },
+  {
+    name: "dmg_20",
+    location: "Pinner",
+    rating: 5,
+    headline: "The finish was top class",
+    quote:
+      "Great working with Sebastian. Communication fantastic, they left no mess and the finish was top class. They accommodated requests that came up during the build in a sensible way. Would definitely recommend and use again. Thank you Sebastian.",
+    job: "Bathroom, kitchen renovation & boiler replacement",
+    date: "March 2024",
+  },
+  {
+    name: "sunita67563",
+    location: "Uxbridge",
+    rating: 5,
+    headline: "The best builder I have come across",
+    quote:
+      "Having had three houses refurbished and being particularly fussy, I would like to say that Sebastian has been the best builder I have come across. He is punctual, gets on with the job, his workmanship is carefully carried out with a flawless finish. … My family and friends have already requested that Sebastian also completes their building work. May I add he is also trustworthy — this was paramount to my family.",
+    job: "Flooring in open plan kitchen and living room",
+    date: "February 2019",
+  },
+  {
+    name: "robin_99",
+    location: "Uxbridge",
+    rating: 5,
+    headline: "They treated the job like it was their own house",
+    quote:
+      "Sebastian (and colleague) just completed an outdoor tiling job which had a few tricky areas which needed some special attention. I have to say I am so impressed with the end result. The guys worked tirelessly over three days to get the job done and were clinical in making every last bit perfect. They really treated the job like it was their own house which is a rare attribute these days. I cannot recommend Sebastian enough…",
+    job: "Tiling for kitchen, hallway and patio",
+    date: "May 2020",
+  },
 ];
 
 export type FAQ = { q: string; a: string };
