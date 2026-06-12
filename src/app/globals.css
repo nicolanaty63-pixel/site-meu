@@ -299,6 +299,24 @@ body {
   );
 }
 
+/* Areas map — soft radar pulse around service-area markers. The element is
+   opacity-0 at rest, so wherever the animation is gated off (reduced motion,
+   below lg) the halo simply disappears and the static glow dot remains. */
+@keyframes areaPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70%,
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+.animate-area-pulse {
+  animation: areaPulse 3.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
 /* Cinematic vignette overlay */
 .vignette {
   background: radial-gradient(
@@ -412,7 +430,8 @@ body {
   .text-gold-shimmer,
   .animate-floaty,
   .animate-drift-a,
-  .animate-drift-b {
+  .animate-drift-b,
+  .animate-area-pulse {
     animation: none !important;
   }
   .btn-sheen::after {
@@ -448,7 +467,8 @@ body {
   .animate-drift-a,
   .animate-drift-b,
   .animate-floaty,
-  .text-gold-shimmer {
+  .text-gold-shimmer,
+  .animate-area-pulse {
     animation: none !important;
   }
   .img-grade-wash {
