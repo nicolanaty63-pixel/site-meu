@@ -34,3 +34,4 @@ next-env.d.ts
 # scripts themselves are committed in scripts/ for re-runnable diagnostics;
 # their output isn't.
 /verify-out/
+/.screenshots/

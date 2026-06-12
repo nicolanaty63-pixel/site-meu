@@ -254,9 +254,19 @@ The repo ships a Playwright harness pattern for exactly this.
   ⚠️ Headless desktop (even throttled) **cannot fully reproduce a real low-end
   phone's main thread** — trust the structural reasoning, not just synthetic numbers.
 
-**Windows / PowerShell gotchas (this dev machine):**
+**Windows / PowerShell gotchas (apply only when developing on Windows):**
 - Kill the dev/prod server with PowerShell, not git-bash: `Get-Process node | Stop-Process -Force`. `pkill` from bash does **not** reliably kill Node on Windows, which leaves a **stale server on port 3000** (causes `EADDRINUSE` and tests hitting an old build). Always confirm the port owner before trusting results.
 - Use PowerShell syntax in the PowerShell tool (`$null`, `$env:VAR`, backtick continuation).
+
+**macOS notes (project migrated to a MacBook in June 2026):**
+- Standard Unix tooling applies (`lsof -i :3000`, `kill`); the PowerShell notes above are historical.
+- The verify harnesses launch headless **Edge** via `channel: "msedge"` in
+  `playwright-core`. If Edge isn't installed on the Mac, either install it or
+  switch the harness `channel` to `"chrome"` — the scripts have no other
+  Windows dependency.
+- Image-optimiser scripts (`scripts/optimize-*.mjs`) read source photos from a
+  hardcoded `SRC` folder (historically the Windows `Downloads` folder) — adjust
+  the path per machine before running.
 
 ---
 
@@ -278,8 +288,8 @@ npx tsc --noEmit # type-check (strict)
 
 **Deploy:** push to `main` → Vercel builds & deploys automatically.
 - This is a **production deploy**; only push when the change is verified and the
-  user has asked to deploy. End commit messages with the standard
-  `Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>` trailer.
+  user has asked to deploy. End commit messages with the standard Claude
+  co-author trailer (e.g. `Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>`).
 
 **After deployment, verify production:**
 1. Confirm the new build is actually live (e.g. diff a known DOM/asset signature,
@@ -298,11 +308,12 @@ node scripts/verify-counter.mjs`.
 These are real, confirmed gaps. Treat them as the backlog; fixing them beats adding
 new things.
 
-1. **Lead forms are demo-only — leads are silently lost.** `ContactForm.tsx` and
-   `QuoteForm.tsx` just set a "sent" state; there is **no API route, email, or CRM
-   post**. The only live endpoint is `api/reviews`. **Highest-impact fix on the
-   site.** Wire to a real endpoint (Resend/Formspree/CRM) and keep the existing
-   honeypot + `FormConsent`.
+1. **Lead forms are demo-only in production — leads are silently lost.** On
+   `main`, `ContactForm.tsx` and `QuoteForm.tsx` just set a "sent" state; the
+   only live endpoint is `api/reviews`. **The complete fix is already built**
+   on branch **`lead-capture`** (commit `d9597ba`, pushed to origin) — see §16
+   for what it contains and the hard deployment gate. Do **not** rebuild this;
+   merge the branch once the gate is satisfied.
 2. **RESOLVED (June 2026): testimonials are now genuine.** `data.ts` carries
    nine real MyBuilder reviews (lightly brand-edited per the owner's explicit
    12 Jun 2026 direction; provenance comment on the array) and
@@ -337,3 +348,84 @@ performance, brand, or SEO?* If not, don't do it.
 
 > The objective is not to add more things. The objective is to make the website
 > **better** — through many small, verified, justified refinements.
+
+---
+
+## 15. Environment variables & external services
+
+**No secrets in the repo — ever.** Local secrets go in `.env.local`
+(gitignored); production secrets live in the Vercel dashboard.
+
+| Variable | Used by | Status |
+|---|---|---|
+| `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` | `api/reviews` store | should exist in Vercel env (verify there — not needed locally; dev uses an in-memory fallback) |
+| `RESEND_API_KEY` | `api/lead` (branch `lead-capture`) | ❌ not created yet — blocks lead-capture deploy |
+| `LEAD_TO_EMAIL` / `LEAD_FROM_EMAIL` | `api/lead` recipient/sender | documented in `.env.example` on the `lead-capture` branch |
+| `RESEND_API_URL` | test-only endpoint override | leave unset in production |
+
+There is **no `.env.example` on `main`** — it arrives with the `lead-capture`
+branch. The site runs locally with **zero env vars** (reviews fall back to
+in-memory; lead forms on `main` are demo-only).
+
+External services: **Vercel** (hosting, auto-deploy from `main`),
+**Upstash Redis** (review store), **Resend** (lead email — account not yet
+created), **GitHub** (`nicolanaty63-pixel/site-meu`).
+
+---
+
+## 16. Lead capture — implementation & deployment gate
+
+Branch **`lead-capture`** (commit `d9597ba`, on origin) contains the complete,
+e2e-verified implementation (11/11 assertions against a mock provider):
+
+- `src/app/api/lead/route.ts` — server-side validation, honeypot + time-trap +
+  per-IP rate limit (in-memory, per-instance — fine at current traffic),
+  GDPR consent recorded in the delivery email, Reply-To set to the customer.
+- `src/lib/lead.ts` — Resend HTTP API client (no SDK).
+- `ContactForm.tsx` / `QuoteForm.tsx` upgraded: real submission, honest error
+  states with direct-contact fallbacks. Honeypot + `FormConsent` preserved.
+- `.env.example` — setup instructions for the three env vars.
+
+**DNS / Resend status (as of 12 Jun 2026): nothing started.** No Resend
+account exists, the domain is not verified, no API key has been issued.
+
+**Hard gate — do not merge/deploy until, in order:**
+1. Resend account created and domain `nicollacontractors.co.uk` verified (DNS
+   records added at the registrar; or use `onboarding@resend.dev` as
+   `LEAD_FROM_EMAIL` for testing only).
+2. `RESEND_API_KEY`, `LEAD_TO_EMAIL`, `LEAD_FROM_EMAIL` set in `.env.local`
+   (local) **and** Vercel env (production + preview).
+3. A real end-to-end inbox test: submit the form locally → email arrives at
+   the real inbox with Reply-To = customer address. Re-run the mock e2e suite.
+
+Never reintroduce fake form success.
+
+---
+
+## 17. Cost guides (`/guides`)
+
+- Content lives in `src/lib/guides.ts` (per-guide cost tables, factors, FAQs);
+  pages render via `guides/page.tsx` + `guides/[slug]/page.tsx`.
+- `src/components/BudgetCalculator.tsx` is the instant calculator on the hub —
+  its ranges **mirror the `guides.ts` tables**; keep them in sync when prices
+  change.
+- ⚠️ Two modelling choices were derived by Claude and have **not** been
+  explicitly confirmed by the owner: the quality multipliers
+  (standard ×1 / premium ×1.25 / luxury ×1.55) and the Home Refurbishment
+  small/medium/large ranges. Confirm with the owner before treating them as
+  business-approved figures.
+
+---
+
+## 18. Next priorities (June 2026)
+
+1. **Activate lead capture** — the Resend gate in §16, then merge
+   `lead-capture` → `main`. Highest-value open item; production forms
+   currently lose every lead.
+2. **Complete NAP for local SEO** — real `streetAddress`, `postalCode`, `geo`,
+   `sameAs` in `site.ts` (per `BUSINESS-DATA.md`); zero code risk, high ROI.
+3. **Owner confirmation** of the budget-calculator modelling choices (§17).
+4. **Real trust marks** (accreditations, insurer, platform badges) only when
+   the real credentials are supplied.
+5. **Google Business Profile** — work the checklist in
+   `GOOGLE-BUSINESS-PROFILE.md` (status unconfirmed).
