@@ -8,8 +8,6 @@ import StickyQuoteBar from "@/components/lp/StickyQuoteBar";
 import QuoteForm from "@/components/QuoteForm";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import FAQ from "@/components/FAQ";
-import BeforeAfterSlider from "@/components/BeforeAfterSlider";
-import Photo from "@/components/ui/Photo";
 import Icon from "@/components/ui/Icon";
 import { services, process, stats } from "@/lib/data";
 import { site } from "@/lib/site";
@@ -20,11 +18,6 @@ export const metadata = pageMeta({
     "Get a free, no-obligation renovation quote from Nicolla Contractors Ltd. Premium bathrooms, kitchens, tiling & flooring across Hertfordshire & North London. Rated 4.9/5 — we reply within 24 hours.",
   path: "/free-quote",
 });
-
-const beforeAfters = [
-  { icon: "bath" as const, before: 2, after: 0, label: "Bathroom renovation" },
-  { icon: "kitchen" as const, before: 3, after: 1, label: "Kitchen renovation" },
-];
 
 const reasons = [
   {
@@ -125,31 +118,6 @@ export default function FreeQuotePage() {
                     </p>
                   </div>
                 </div>
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* Before / after */}
-      <section className="border-y border-white/10 bg-charcoal/40 py-20">
-        <Container>
-          <SectionHeading
-            center
-            eyebrow="Real transformations"
-            title="See the difference for yourself"
-            subtitle="Drag each slider to reveal the finished result."
-          />
-          <div className="mt-12 grid gap-8 md:grid-cols-2">
-            {beforeAfters.map((b) => (
-              <Reveal key={b.label}>
-                <BeforeAfterSlider
-                  before={<Photo tone="before" variant={b.before} icon={b.icon} />}
-                  after={<Photo tone="after" variant={b.after} icon={b.icon} />}
-                />
-                <p className="mt-3 text-center text-sm text-concrete">
-                  {b.label}
-                </p>
               </Reveal>
             ))}
           </div>
