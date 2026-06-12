@@ -23,7 +23,7 @@ const item = {
 
 const chips = [
   { icon: "star", label: `${site.rating}/5 rated` },
-  { icon: "check", label: `${site.reviewCount}+ homeowners` },
+  { icon: "check", label: `${site.clientsServed}+ homeowners` },
   { icon: "shield", label: "Fully insured" },
   { icon: "clock", label: "24-hr response" },
 ] as const;

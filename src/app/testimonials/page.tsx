@@ -96,7 +96,7 @@ export default function TestimonialsPage() {
         <Container>
           <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-gold/15 via-charcoal to-charcoal px-8 py-16 text-center">
             <h2 className="mx-auto max-w-2xl text-3xl font-bold text-white sm:text-4xl">
-              Join {site.reviewCount}+ happy customers
+              Join {site.clientsServed}+ happy clients
             </h2>
             <Link
               href="/contact"

@@ -49,6 +49,11 @@ export const site = {
   // Reputation
   rating: 4.9,
   reviewCount: 115, // matches the public MyBuilder profile count
+  /** Total happy clients served — owner-attested figure (12 Jun 2026
+   *  direction). Distinct from reviewCount and NOT interchangeable with it:
+   *  anything phrased "rated by…", "reviews" or fed to aggregateRating must
+   *  keep using reviewCount so it matches the public MyBuilder profile. */
+  clientsServed: 350,
   yearsExperience: 15,
   projectsCompleted: 100,
 

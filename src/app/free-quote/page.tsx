@@ -27,7 +27,7 @@ const reasons = [
   {
     icon: "star" as const,
     title: "Premium craftsmanship",
-    desc: `A high quality finish in every detail. Rated ${site.rating}/5 by ${site.reviewCount}+ happy homeowners.`,
+    desc: `A high quality finish in every detail. Rated ${site.rating}/5 by ${site.reviewCount}+ homeowners.`,
   },
   {
     icon: "clock" as const,
@@ -265,7 +265,7 @@ export default function FreeQuotePage() {
               Let&apos;s build something you&apos;ll love
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-concrete">
-              Join over {site.reviewCount} happy homeowners across {site.region}{" "}
+              Join over {site.clientsServed} happy homeowners across {site.region}{" "}
               and North London.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">

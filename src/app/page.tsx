@@ -304,7 +304,7 @@ export default function HomePage() {
               Start your transformation today
             </h2>
             <p className="mx-auto mt-5 max-w-xl text-lg text-concrete">
-              Free, no-obligation quotes. Join {site.reviewCount}+ homeowners who
+              Free, no-obligation quotes. Join {site.clientsServed}+ homeowners who
               trusted us with their renovation.
             </p>
             <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">

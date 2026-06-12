@@ -1028,7 +1028,7 @@ export type Stat = {
 // verified business data) so they can never drift from the MyBuilder profile.
 export const stats: Stat[] = [
   { value: site.rating, decimals: 1, suffix: "/5", label: "Average rating" },
-  { value: site.reviewCount, suffix: "+", label: "Happy customers" },
+  { value: site.clientsServed, suffix: "+", label: "Happy clients" },
   { value: site.yearsExperience, suffix: "+", label: "Years experience" },
   { value: site.projectsCompleted, suffix: "+", label: "Projects completed" },
 ];

@@ -26,7 +26,7 @@ export default function Footer() {
           </p>
           <div className="mt-5 flex items-center gap-2 text-sm text-gold">
             <Icon name="star" className="h-4 w-4" />
-            {site.rating} / 5 · {site.reviewCount}+ happy customers
+            {site.rating} / 5 on MyBuilder · {site.clientsServed}+ happy clients
           </div>
         </div>
 

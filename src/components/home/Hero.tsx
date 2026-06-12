@@ -127,7 +127,7 @@ export default function Hero() {
             className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-concrete"
           >
             <Stars />
-            <span>Trusted by {site.reviewCount}+ homeowners</span>
+            <span>Trusted by {site.clientsServed}+ homeowners</span>
             <span className="text-concrete-dark">•</span>
             <span>{site.rating}★ rated craftsmanship</span>
           </motion.div>
@@ -215,7 +215,7 @@ export default function Hero() {
             className="animate-floaty glass-strong absolute -bottom-5 left-3 z-20 hidden items-center gap-3 rounded-2xl px-5 py-3.5 shadow-xl lg:flex"
           >
             <div className="font-display text-2xl font-extrabold leading-none text-gold-gradient">
-              {site.reviewCount}+
+              {site.clientsServed}+
             </div>
             <div className="text-xs leading-tight text-concrete">
               Homeowners
