@@ -30,7 +30,28 @@ export type Guide = {
   faqs: Array<{ q: string; a: string }>;
   /** Short label used in service-pillar CTAs. */
   ctaLabel: string;
+  /** Compact "typical cost" badge for the guides hub card — must summarise
+   *  this guide's own headline price table (never a number the guide doesn't
+   *  back up). */
+  costBadge: string;
 };
+
+/** Reading time derived from the guide's actual word count (220 wpm) — never
+ *  a hand-typed number that drifts when content is edited. */
+export function guideReadMinutes(g: Guide): number {
+  const text = [
+    g.intro,
+    ...g.sections.flatMap((s) => [
+      s.heading,
+      ...s.paragraphs,
+      ...(s.bullets ?? []),
+      ...(s.priceTable?.rows.map((r) => `${r.label} ${r.range} ${r.notes ?? ""}`) ?? []),
+    ]),
+    ...g.faqs.flatMap((f) => [f.q, f.a]),
+  ].join(" ");
+  const words = text.split(/\s+/).filter(Boolean).length;
+  return Math.max(3, Math.round(words / 220));
+}
 
 export const guides: Guide[] = [
   // ────────────────────────────────────────────────────────────────────
@@ -47,6 +68,7 @@ export const guides: Guide[] = [
     publishedDate: "2026-05-29",
     lastUpdated: "2026-05-29",
     ctaLabel: "See bathroom renovation cost guide",
+    costBadge: "£5k – £30k+",
     sections: [
       {
         heading: "Typical UK bathroom renovation costs (indicative)",
@@ -166,6 +188,7 @@ export const guides: Guide[] = [
     publishedDate: "2026-05-29",
     lastUpdated: "2026-05-29",
     ctaLabel: "See kitchen renovation cost guide",
+    costBadge: "£8k – £60k+",
     sections: [
       {
         heading: "Typical UK kitchen renovation costs (indicative)",
@@ -283,6 +306,7 @@ export const guides: Guide[] = [
     publishedDate: "2026-05-29",
     lastUpdated: "2026-05-29",
     ctaLabel: "See tiling cost guide",
+    costBadge: "£30 – £110/sqm",
     sections: [
       {
         heading: "Typical UK tiling costs (per sqm, indicative)",
@@ -414,6 +438,7 @@ export const guides: Guide[] = [
     publishedDate: "2026-05-29",
     lastUpdated: "2026-05-29",
     ctaLabel: "See flooring installation cost guide",
+    costBadge: "£10 – £70/sqm",
     sections: [
       {
         heading: "Typical UK flooring costs (per sqm, indicative)",
@@ -559,6 +584,7 @@ export const guides: Guide[] = [
     publishedDate: "2026-05-29",
     lastUpdated: "2026-05-29",
     ctaLabel: "See home refurbishment cost guide",
+    costBadge: "£500 – £1,800/sqm",
     sections: [
       {
         heading: "Typical UK whole-house refurbishment costs",
