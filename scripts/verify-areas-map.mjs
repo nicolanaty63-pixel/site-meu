@@ -103,7 +103,9 @@ try {
       await page.screenshot({ path: `${OUT}/areas-desktop-hover.png` });
 
       // Hovering a list row highlights its marker (cross-highlight)
-      const row = page.locator('ul a[href="/areas/st-albans"]');
+      // The index renders twice (desktop glass overlay + hidden mobile block);
+      // hover the visible one.
+      const row = page.locator('ul a[href="/areas/st-albans"]:visible').first();
       await row.hover();
       await page.waitForTimeout(400);
       await page.screenshot({ path: `${OUT}/areas-desktop-listhover.png` });

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { EASE_OUT, VIEWPORT } from "@/components/motion/tokens";
@@ -130,9 +130,16 @@ const MAP_AREAS = TOWNS.map((t) => {
 const BASE_TOWN = MAP_AREAS.find((t) => t.base)!;
 
 // Constellation lines derived from each area's real `nearby` relations.
+// Lines that radiate from the base are drawn brighter than the rest, so the
+// first read is "everything reaches out from Kings Langley".
 const slugByName = new Map(areas.map((a) => [a.name, a.slug]));
 const pointBySlug = new Map(MAP_AREAS.map((t) => [t.slug, t]));
-const LINKS: { a: { x: number; y: number }; b: { x: number; y: number }; key: string }[] = [];
+const LINKS: {
+  a: { x: number; y: number };
+  b: { x: number; y: number };
+  key: string;
+  fromBase: boolean;
+}[] = [];
 {
   const seen = new Set<string>();
   for (const area of areas) {
@@ -144,16 +151,28 @@ const LINKS: { a: { x: number; y: number }; b: { x: number; y: number }; key: st
       const b = pointBySlug.get(other);
       if (!a || !b || seen.has(key)) continue;
       seen.add(key);
-      LINKS.push({ a, b, key });
+      LINKS.push({ a, b, key, fromBase: key.includes(BASE_TOWN.slug) });
     }
   }
 }
 
 const LABEL_POS: Record<LabelSide, string> = {
-  top: "bottom-full left-1/2 -translate-x-1/2 mb-1.5",
-  bottom: "top-full left-1/2 -translate-x-1/2 mt-1.5",
-  left: "right-full top-1/2 -translate-y-1/2 mr-2 text-right",
-  right: "left-full top-1/2 -translate-y-1/2 ml-2",
+  top: "bottom-full left-1/2 -translate-x-1/2 mb-2",
+  bottom: "top-full left-1/2 -translate-x-1/2 mt-2",
+  left: "right-full top-1/2 -translate-y-1/2 mr-2.5 text-right",
+  right: "left-full top-1/2 -translate-y-1/2 ml-2.5",
+};
+
+// Panel-wide backdrop: faint architectural grid + ambient glows. Lives on the
+// panel (not the SVG) so the texture runs edge-to-edge behind the glass index.
+const PANEL_BG: CSSProperties = {
+  backgroundImage: [
+    "radial-gradient(circle 480px at 22% 46%, rgba(200, 162, 76, 0.10), transparent 70%)",
+    "radial-gradient(circle 440px at 80% 6%, rgba(63, 74, 107, 0.30), transparent 70%)",
+    "linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px)",
+    "linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px)",
+  ].join(", "),
+  backgroundSize: "auto, auto, 64px 64px, 64px 64px",
 };
 
 /* ------------------------------------------------------------------ */
@@ -188,6 +207,10 @@ const markerV: Variants = {
     transition: { duration: 0.55, delay: 0.6 + i * 0.07, ease: EASE_OUT },
   }),
 };
+const overlayV: Variants = {
+  hidden: { opacity: 0, x: 28 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.9, delay: 0.35, ease: EASE_OUT } },
+};
 const asideV: Variants = {
   hidden: { opacity: 0, y: 16 },
   show: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.25, ease: EASE_OUT } },
@@ -200,242 +223,239 @@ export default function AreasMap() {
   const ring10 = 10 / KM_PER_UNIT;
   const ring20 = 20 / KM_PER_UNIT;
 
+  // compact: the desktop glass column has a fixed height budget (the panel),
+  // so rows are single-line; the mobile/tablet stack keeps the county line.
+  const renderIndex = (compact: boolean) => (
+    <>
+      <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+        <Icon name="pin" className="h-4 w-4" />
+        Browse by area
+      </div>
+      <p className="mt-3 text-sm leading-relaxed text-concrete">
+        Based in {site.baseTown}, serving homeowners across Hertfordshire &amp; North London.
+      </p>
+      <ul className="mt-5 divide-y divide-white/[0.06] border-y border-white/[0.06]">
+        {MAP_AREAS.map((t) => {
+          const isActive = active === t.slug;
+          return (
+            <li key={t.slug}>
+              <Link
+                href={`/areas/${t.slug}`}
+                className={`group flex items-center justify-between gap-4 ${compact ? "py-2.5" : "py-3"}`}
+                onMouseEnter={() => setActive(t.slug)}
+                onMouseLeave={() => setActive(null)}
+              >
+                <span className="flex min-w-0 items-center gap-3">
+                  <span
+                    className={`h-1.5 w-1.5 shrink-0 rounded-full transition-all duration-300 ${
+                      isActive ? "bg-gold shadow-[0_0_8px_2px_rgba(200,162,76,0.5)]" : "bg-white/25"
+                    }`}
+                  />
+                  <span className="min-w-0">
+                    <span
+                      className={`block truncate text-[15px] font-medium transition-colors duration-300 ${
+                        isActive ? "text-gold-light" : "text-white"
+                      }`}
+                    >
+                      {t.name}
+                    </span>
+                    {!compact && (
+                      <span className="block text-[10px] uppercase tracking-[0.16em] text-concrete-dark">
+                        {t.county}
+                      </span>
+                    )}
+                  </span>
+                </span>
+                <Icon
+                  name="arrow"
+                  className={`h-4 w-4 shrink-0 text-gold transition-all duration-300 ${
+                    isActive ? "translate-x-0 opacity-100" : "-translate-x-1 opacity-0"
+                  }`}
+                />
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </>
+  );
+
   return (
     <motion.div
       initial={reduce ? false : "hidden"}
       whileInView="show"
       viewport={VIEWPORT}
       variants={rootV}
-      className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(280px,340px)] lg:items-center lg:gap-14"
+      className="relative"
       onMouseLeave={() => setActive(null)}
     >
-      {/* ---- Map panel ---- */}
-      <div className="relative min-w-0 overflow-hidden rounded-3xl border border-white/10 bg-charcoal/60">
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,rgba(49,58,82,0.22),transparent_55%)]" />
+      {/* ---- Immersive full-width panel ---- */}
+      <div
+        className="relative overflow-hidden rounded-3xl border border-white/10 bg-charcoal/60 lg:aspect-[16/10] xl:aspect-[16/9]"
+        style={PANEL_BG}
+      >
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,rgba(49,58,82,0.18),transparent_55%)]" />
         <div className="grain pointer-events-none absolute inset-0 opacity-[0.05]" />
 
-        <svg viewBox={`0 0 ${VB_W} ${VB_H}`} className="block h-auto w-full" aria-hidden="true">
-          <defs>
-            <radialGradient id="am-glow-gold">
-              <stop offset="0%" stopColor="rgba(200, 162, 76, 0.13)" />
-              <stop offset="100%" stopColor="rgba(200, 162, 76, 0)" />
-            </radialGradient>
-            <radialGradient id="am-glow-navy">
-              <stop offset="0%" stopColor="rgba(63, 74, 107, 0.35)" />
-              <stop offset="100%" stopColor="rgba(63, 74, 107, 0)" />
-            </radialGradient>
-            <pattern id="am-grid" width="62.5" height="62.5" patternUnits="userSpaceOnUse">
-              <path d="M 62.5 0 H 0 V 62.5" fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
-            </pattern>
-          </defs>
-
-          <rect width={VB_W} height={VB_H} fill="url(#am-grid)" />
-          <circle cx={820} cy={110} r={320} fill="url(#am-glow-navy)" />
-          <circle cx={BASE_TOWN.x} cy={BASE_TOWN.y} r={330} fill="url(#am-glow-gold)" />
-
-          {/* True-to-scale distance rings around our base */}
-          {[ring10, ring20].map((r, i) => (
-            <motion.circle
-              key={r}
-              custom={i}
-              variants={ringV}
-              cx={BASE_TOWN.x}
-              cy={BASE_TOWN.y}
-              r={r}
-              fill="none"
-              stroke="rgba(255,255,255,0.08)"
-              strokeWidth="1"
-              strokeDasharray="3 7"
-            />
-          ))}
-          <motion.text
-            custom={2}
-            variants={ringV}
-            x={BASE_TOWN.x}
-            y={BASE_TOWN.y - ring10 - 10}
-            textAnchor="middle"
-            fontSize="11"
-            letterSpacing="0.12em"
-            fill="rgba(255,255,255,0.28)"
+        {/* Map stage — natural aspect on mobile/tablet, pinned left on desktop */}
+        <div className="relative aspect-[1000/806] w-full lg:absolute lg:inset-y-0 lg:left-0 lg:w-auto">
+          <svg
+            viewBox={`0 0 ${VB_W} ${VB_H}`}
+            className="absolute inset-0 h-full w-full"
+            aria-hidden="true"
           >
-            10 KM
-          </motion.text>
-          <motion.text
-            custom={2}
-            variants={ringV}
-            x={BASE_TOWN.x + ring20 + 14}
-            y={BASE_TOWN.y + 4}
-            fontSize="11"
-            letterSpacing="0.12em"
-            fill="rgba(255,255,255,0.28)"
-          >
-            20 KM
-          </motion.text>
+            {/* True-to-scale distance rings around our base — pure radar calm,
+                no annotation */}
+            {[ring10, ring20].map((r, i) => (
+              <motion.circle
+                key={r}
+                custom={i}
+                variants={ringV}
+                cx={BASE_TOWN.x}
+                cy={BASE_TOWN.y}
+                r={r}
+                fill="none"
+                stroke="rgba(255,255,255,0.06)"
+                strokeWidth="1"
+                strokeDasharray="3 8"
+              />
+            ))}
 
-          {/* Constellation lines between neighbouring service areas */}
-          {LINKS.map((l, i) => (
-            <motion.line
-              key={l.key}
-              custom={i}
-              variants={lineV}
-              x1={l.a.x}
-              y1={l.a.y}
-              x2={l.b.x}
-              y2={l.b.y}
-              stroke="rgba(200, 162, 76, 0.16)"
-              strokeWidth="1"
-            />
-          ))}
-        </svg>
+            {/* Constellation: brighter strokes radiate from the base */}
+            {LINKS.map((l, i) => (
+              <motion.line
+                key={l.key}
+                custom={i}
+                variants={lineV}
+                x1={l.a.x}
+                y1={l.a.y}
+                x2={l.b.x}
+                y2={l.b.y}
+                stroke={l.fromBase ? "rgba(200, 162, 76, 0.28)" : "rgba(200, 162, 76, 0.10)"}
+                strokeWidth="1"
+              />
+            ))}
+          </svg>
 
-        {/* ---- Interactive markers (real links to each area page) ---- */}
-        <div className="absolute inset-0">
-          {MAP_AREAS.map((t, i) => {
-            const isActive = active === t.slug;
-            const tipAlign =
-              t.tipAlign === "left"
-                ? "-left-3"
-                : t.tipAlign === "right"
-                  ? "-right-3"
-                  : "left-1/2 -translate-x-1/2";
-            return (
-              <Link
-                key={t.slug}
-                href={`/areas/${t.slug}`}
-                aria-label={`Renovations in ${t.name}`}
-                className="absolute -translate-x-1/2 -translate-y-1/2"
-                style={{ left: `${(t.x / VB_W) * 100}%`, top: `${(t.y / VB_H) * 100}%`, zIndex: isActive ? 30 : 10 }}
-                onMouseEnter={() => setActive(t.slug)}
-                onMouseLeave={() => setActive(null)}
-                onFocus={() => setActive(t.slug)}
-                onBlur={() => setActive(null)}
-              >
-                <motion.span custom={i} variants={markerV} className="relative grid h-9 w-9 place-items-center">
-                  {/* Soft radar pulse (desktop only — gated in globals.css) */}
-                  <span
-                    className="animate-area-pulse absolute h-3 w-3 rounded-full bg-gold/70 opacity-0"
-                    style={{ animationDelay: `${i * 0.4}s` }}
-                  />
-                  {t.base && <span className="absolute h-6 w-6 rounded-full border border-gold/40" />}
-                  <span
-                    className={`relative rounded-full bg-gold-light shadow-[0_0_14px_3px_rgba(200,162,76,0.5)] transition-transform duration-300 ${
-                      t.base ? "h-3 w-3" : "h-2 w-2"
-                    } ${isActive ? "scale-150" : ""}`}
-                  />
-                  <span
-                    className={`absolute hidden whitespace-nowrap text-[11px] font-medium tracking-wide transition-colors duration-300 sm:block md:text-xs ${
-                      LABEL_POS[t.labelSide]
-                    } ${isActive ? "text-gold-light" : "text-white/80"}`}
-                  >
-                    {t.name}
-                    {t.base && (
-                      <span className="block text-[9px] font-semibold uppercase tracking-[0.18em] text-gold">
-                        Our base
-                      </span>
-                    )}
-                  </span>
-                </motion.span>
-
-                {/* Hover / focus tooltip (pointer devices) */}
-                <span
-                  data-tip
-                  className={`pointer-events-none absolute hidden w-60 rounded-2xl border border-white/10 bg-[#11162a]/95 p-4 shadow-2xl backdrop-blur-md transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] sm:block ${
-                    t.tipBelow ? "top-[calc(100%+10px)]" : "bottom-[calc(100%+10px)]"
-                  } ${tipAlign} ${
-                    isActive
-                      ? "translate-y-0 opacity-100"
-                      : `opacity-0 ${t.tipBelow ? "-translate-y-1.5" : "translate-y-1.5"}`
-                  }`}
-                >
-                  <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-gold">
-                    {t.county}
-                  </span>
-                  <span className="mt-1 block font-display text-base font-semibold text-white">{t.name}</span>
-                  <span className="mt-1.5 block text-xs leading-relaxed text-concrete">{t.blurb}</span>
-                  <span className="mt-2.5 inline-flex items-center gap-1 text-xs font-medium text-gold-light">
-                    Renovations in {t.name}
-                    <Icon name="arrow" className="h-3 w-3" />
-                  </span>
-                </span>
-              </Link>
-            );
-          })}
-        </div>
-
-        {/* Compass */}
-        <div className="pointer-events-none absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full border border-white/10 text-[10px] font-semibold tracking-widest text-white/40 sm:right-5 sm:top-5">
-          <span className="absolute top-1 h-1 w-px bg-gold/60" />N
-        </div>
-
-        {/* Legend */}
-        <div className="pointer-events-none absolute bottom-4 left-4 hidden items-center gap-5 text-[11px] text-concrete sm:flex sm:bottom-5 sm:left-5">
-          <span className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-gold-light shadow-[0_0_8px_2px_rgba(200,162,76,0.5)]" />
-            Service area
-          </span>
-          <span className="flex items-center gap-2">
-            <span className="relative grid h-4 w-4 place-items-center">
-              <span className="absolute h-4 w-4 rounded-full border border-gold/40" />
-              <span className="h-2 w-2 rounded-full bg-gold-light" />
-            </span>
-            Our base
-          </span>
-        </div>
-
-        {/* Caption */}
-        <div className="pointer-events-none absolute bottom-4 right-4 hidden text-[10px] uppercase tracking-[0.2em] text-white/25 md:block sm:bottom-5 sm:right-5">
-          Hertfordshire &amp; North London · to scale
-        </div>
-      </div>
-
-      {/* ---- Area index ---- */}
-      <motion.div variants={asideV}>
-        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-gold">
-          <Icon name="pin" className="h-4 w-4" />
-          Browse by area
-        </div>
-        <p className="mt-2 text-sm leading-relaxed text-concrete">
-          Based in {site.baseTown}, serving homeowners across Hertfordshire &amp; North London.
-        </p>
-        <ul className="mt-5 divide-y divide-white/[0.06] border-y border-white/[0.06]">
-          {MAP_AREAS.map((t) => {
-            const isActive = active === t.slug;
-            return (
-              <li key={t.slug}>
+          {/* ---- Interactive markers (real links to each area page) ---- */}
+          <div className="absolute inset-0">
+            {MAP_AREAS.map((t, i) => {
+              const isActive = active === t.slug;
+              const tipAlign =
+                t.tipAlign === "left"
+                  ? "-left-3"
+                  : t.tipAlign === "right"
+                    ? "-right-3"
+                    : "left-1/2 -translate-x-1/2";
+              return (
                 <Link
+                  key={t.slug}
                   href={`/areas/${t.slug}`}
-                  className="group flex items-center justify-between gap-4 py-3"
+                  aria-label={`Renovations in ${t.name}`}
+                  className="absolute -translate-x-1/2 -translate-y-1/2"
+                  style={{
+                    left: `${(t.x / VB_W) * 100}%`,
+                    top: `${(t.y / VB_H) * 100}%`,
+                    zIndex: isActive ? 30 : 10,
+                  }}
                   onMouseEnter={() => setActive(t.slug)}
                   onMouseLeave={() => setActive(null)}
+                  onFocus={() => setActive(t.slug)}
+                  onBlur={() => setActive(null)}
                 >
-                  <span className="flex min-w-0 items-center gap-3">
+                  <motion.span custom={i} variants={markerV} className="relative grid h-9 w-9 place-items-center">
+                    {/* Soft radar pulse (desktop only — gated in globals.css) */}
                     <span
-                      className={`h-1.5 w-1.5 shrink-0 rounded-full transition-all duration-300 ${
-                        isActive ? "bg-gold shadow-[0_0_8px_2px_rgba(200,162,76,0.5)]" : "bg-white/25"
-                      }`}
+                      className="animate-area-pulse absolute h-3 w-3 rounded-full bg-gold/70 opacity-0"
+                      style={{ animationDelay: `${i * 0.4}s` }}
                     />
-                    <span className="min-w-0">
+                    {t.base && (
+                      <>
+                        <span className="absolute h-9 w-9 rounded-full border border-gold/15" />
+                        <span className="absolute h-6 w-6 rounded-full border border-gold/40" />
+                      </>
+                    )}
+                    <span
+                      className={`relative rounded-full bg-gold-light transition-transform duration-300 ${
+                        t.base
+                          ? "h-3.5 w-3.5 shadow-[0_0_18px_5px_rgba(200,162,76,0.55)]"
+                          : "h-2 w-2 shadow-[0_0_14px_3px_rgba(200,162,76,0.5)]"
+                      } ${isActive ? "scale-150" : ""}`}
+                    />
+                    {/* Small-caps cartographic label; only the base shows below sm,
+                        where it sits centered under the marker so it can't clip
+                        the panel edge on narrow screens */}
+                    <span
+                      className={`absolute whitespace-nowrap transition-colors duration-300 ${
+                        t.base
+                          ? "left-1/2 top-full mt-2 -translate-x-1/2 text-center sm:left-auto sm:right-full sm:top-1/2 sm:mr-2.5 sm:mt-0 sm:translate-x-0 sm:-translate-y-1/2 sm:text-right"
+                          : `hidden sm:block ${LABEL_POS[t.labelSide]}`
+                      }`}
+                    >
+                      {t.base && (
+                        <span className="block text-[8px] font-semibold uppercase tracking-[0.22em] text-gold md:text-[9px]">
+                          Our base
+                        </span>
+                      )}
                       <span
-                        className={`block truncate font-medium transition-colors duration-300 ${
-                          isActive ? "text-gold-light" : "text-white"
+                        className={`block text-[10px] font-semibold uppercase tracking-[0.16em] md:text-[11px] ${
+                          isActive ? "text-gold-light" : t.base ? "text-white" : "text-white/70"
                         }`}
                       >
                         {t.name}
                       </span>
-                      <span className="block text-xs text-concrete-dark">{t.county}</span>
+                    </span>
+                  </motion.span>
+
+                  {/* Hover / focus tooltip (pointer devices) */}
+                  <span
+                    data-tip
+                    className={`pointer-events-none absolute hidden w-60 rounded-2xl border border-white/10 bg-[#11162a]/95 p-4 shadow-2xl backdrop-blur-md transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] sm:block ${
+                      t.tipBelow ? "top-[calc(100%+10px)]" : "bottom-[calc(100%+10px)]"
+                    } ${tipAlign} ${
+                      isActive
+                        ? "translate-y-0 opacity-100"
+                        : `opacity-0 ${t.tipBelow ? "-translate-y-1.5" : "translate-y-1.5"}`
+                    }`}
+                  >
+                    <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-gold">
+                      {t.county}
+                    </span>
+                    <span className="mt-1 block font-display text-base font-semibold text-white">{t.name}</span>
+                    <span className="mt-1.5 block text-xs leading-relaxed text-concrete">{t.blurb}</span>
+                    <span className="mt-2.5 inline-flex items-center gap-1 text-xs font-medium text-gold-light">
+                      Renovations in {t.name}
+                      <Icon name="arrow" className="h-3 w-3" />
                     </span>
                   </span>
-                  <Icon
-                    name="arrow"
-                    className={`h-4 w-4 shrink-0 text-gold transition-all duration-300 ${
-                      isActive ? "translate-x-0 opacity-100" : "-translate-x-1 opacity-0"
-                    }`}
-                  />
                 </Link>
-              </li>
-            );
-          })}
-        </ul>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Compass */}
+        <div className="pointer-events-none absolute left-4 top-4 grid h-9 w-9 place-items-center rounded-full border border-white/10 text-[10px] font-semibold tracking-widest text-white/40 sm:left-5 sm:top-5">
+          <span className="absolute top-1 h-1 w-px bg-gold/60" />N
+        </div>
+
+        {/* Caption */}
+        <div className="pointer-events-none absolute bottom-4 left-4 hidden text-[10px] uppercase tracking-[0.2em] text-white/25 sm:bottom-5 sm:left-5 md:block">
+          Hertfordshire &amp; North London
+        </div>
+
+        {/* ---- Desktop: glass index column floating over the panel ---- */}
+        <motion.div
+          variants={overlayV}
+          className="glass absolute inset-y-0 right-0 z-20 hidden w-[36%] max-w-[400px] flex-col justify-center border-l border-white/10 p-8 lg:flex xl:p-10"
+        >
+          {renderIndex(true)}
+        </motion.div>
+      </div>
+
+      {/* ---- Mobile / tablet: index below the map ---- */}
+      <motion.div variants={asideV} className="mt-10 lg:hidden">
+        {renderIndex(false)}
       </motion.div>
     </motion.div>
   );
