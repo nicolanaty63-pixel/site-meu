@@ -13,9 +13,8 @@ import { services, process, stats } from "@/lib/data";
 import { site } from "@/lib/site";
 
 export const metadata = pageMeta({
-  title: "Free Renovation Quote — Bathrooms, Kitchens, Tiling & Flooring",
-  description:
-    "Get a free, no-obligation renovation quote from Nicolla Contractors Ltd. Premium bathrooms, kitchens, tiling & flooring across Hertfordshire & North London. Rated 4.9/5 — we reply within 24 hours.",
+  title: "Free Renovation Quote — Bathrooms, Kitchens & More",
+  description: `Get a free, no-obligation renovation quote. Premium bathrooms, kitchens, tiling & flooring across Hertfordshire & North London. Rated ${site.rating}/5.`,
   path: "/free-quote",
 });
 
@@ -28,7 +27,7 @@ const reasons = [
   {
     icon: "star" as const,
     title: "Premium craftsmanship",
-    desc: "A high quality finish in every detail. Rated 4.9/5 by over 350 happy homeowners.",
+    desc: `A high quality finish in every detail. Rated ${site.rating}/5 by ${site.reviewCount}+ happy homeowners.`,
   },
   {
     icon: "clock" as const,

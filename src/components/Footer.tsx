@@ -34,11 +34,13 @@ export default function Footer() {
         <div className="md:col-span-2">
           <h4 className="text-sm font-semibold text-white">Explore</h4>
           <ul className="mt-4 space-y-3">
+            {/* -my-1 + py-1 keeps the visual rhythm while growing the tap
+                target to ~28px (WCAG 2.5.8) */}
             {nav.map((l) => (
               <li key={l.href}>
                 <Link
                   href={l.href}
-                  className="text-sm text-concrete transition-colors hover:text-gold"
+                  className="-my-1 inline-block py-1 text-sm text-concrete transition-colors hover:text-gold"
                 >
                   {l.label}
                 </Link>
@@ -47,7 +49,7 @@ export default function Footer() {
             <li>
               <Link
                 href="/areas"
-                className="text-sm text-concrete transition-colors hover:text-gold"
+                className="-my-1 inline-block py-1 text-sm text-concrete transition-colors hover:text-gold"
               >
                 Areas we cover
               </Link>
@@ -55,7 +57,7 @@ export default function Footer() {
             <li>
               <Link
                 href="/guides"
-                className="text-sm text-concrete transition-colors hover:text-gold"
+                className="-my-1 inline-block py-1 text-sm text-concrete transition-colors hover:text-gold"
               >
                 Cost guides
               </Link>
@@ -63,7 +65,7 @@ export default function Footer() {
             <li>
               <Link
                 href="/free-quote"
-                className="text-sm text-concrete transition-colors hover:text-gold"
+                className="-my-1 inline-block py-1 text-sm text-concrete transition-colors hover:text-gold"
               >
                 Free quote
               </Link>
@@ -79,7 +81,7 @@ export default function Footer() {
               <li key={s.slug}>
                 <Link
                   href={`/services/${s.slug}`}
-                  className="text-sm text-concrete transition-colors hover:text-gold"
+                  className="-my-1 inline-block py-1 text-sm text-concrete transition-colors hover:text-gold"
                 >
                   {s.title}
                 </Link>
@@ -105,7 +107,7 @@ export default function Footer() {
             <li>
               <a
                 href={site.phoneHref}
-                className="flex items-center gap-3 transition-colors hover:text-gold"
+                className="-my-1 flex items-center gap-3 py-1 transition-colors hover:text-gold"
               >
                 <Icon name="phone" className="h-4 w-4 shrink-0 text-gold" />
                 {site.phoneDisplay}
@@ -114,7 +116,7 @@ export default function Footer() {
             <li>
               <a
                 href={`mailto:${site.email}`}
-                className="flex items-center gap-3 transition-colors hover:text-gold"
+                className="-my-1 flex items-center gap-3 py-1 transition-colors hover:text-gold"
               >
                 <Icon name="mail" className="h-4 w-4 shrink-0 text-gold" />
                 {site.email}
@@ -149,12 +151,12 @@ export default function Footer() {
               <Link
                 key={p.href}
                 href={p.href}
-                className="transition-colors hover:text-gold"
+                className="-my-1.5 inline-block py-1.5 transition-colors hover:text-gold"
               >
                 {p.label}
               </Link>
             ))}
-            <ManageCookiesButton className="transition-colors hover:text-gold">
+            <ManageCookiesButton className="-my-1.5 inline-block py-1.5 transition-colors hover:text-gold">
               Cookie preferences
             </ManageCookiesButton>
           </nav>

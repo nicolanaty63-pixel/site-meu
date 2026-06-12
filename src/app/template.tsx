@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { EASE_OUT } from "@/components/motion/tokens";
+import useReducedMotionSafe from "@/components/motion/useReducedMotionSafe";
 
 /**
  * Page-transition wrapper. `template.tsx` re-mounts on every navigation (unlike
@@ -10,7 +11,7 @@ import { EASE_OUT } from "@/components/motion/tokens";
  * and fully skipped for reduced-motion users.
  */
 export default function Template({ children }: { children: React.ReactNode }) {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   if (reduce) return <>{children}</>;
 
   // Opacity-only: no transform on the page wrapper, so text is never rasterized

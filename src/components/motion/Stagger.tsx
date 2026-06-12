@@ -1,8 +1,9 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
 import { EASE_OUT, DURATION } from "@/components/motion/tokens";
+import useReducedMotionSafe from "@/components/motion/useReducedMotionSafe";
 
 /** Parent: orchestrates a gentle stagger when scrolled into view. */
 export const containerV: Variants = {
@@ -60,7 +61,7 @@ export function StaggerItem({
   className?: string;
   variant?: "item" | "tile";
 }) {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   if (reduce) return <div className={className}>{children}</div>;
 
   return (

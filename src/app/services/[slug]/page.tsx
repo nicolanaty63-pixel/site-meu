@@ -32,8 +32,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const s = getService(slug);
   if (!s) return {};
   return pageMeta({
-    title: `${s.title} — London, North London & Hertfordshire`,
-    description: `${s.description} Trusted ${s.keyword}, rated ${site.rating}/5 by ${site.reviewCount}+ homeowners. Free quotes across London, North London & ${site.region}.`,
+    title: `${s.title} — Hertfordshire & North London`,
+    // s.short keeps this inside Google's ~160-char snippet window; the full
+    // s.description (200-280 chars) was being truncated mid-sentence.
+    description: `${s.short} Rated ${site.rating}/5 by ${site.reviewCount}+ homeowners — free quotes across Hertfordshire & North London.`,
     path: `/services/${s.slug}`,
   });
 }
@@ -65,17 +67,9 @@ export default async function ServicePage({ params }: Params) {
           ...areas.map((a) => ({ "@type": "City", name: a.name })),
           ...site.serviceRegions.map((r) => ({ "@type": "Place", name: r })),
         ],
-        provider: {
-          "@type": "GeneralContractor",
-          name: site.name,
-          telephone: site.phoneHref.replace("tel:", ""),
-          aggregateRating: {
-            "@type": "AggregateRating",
-            ratingValue: site.rating,
-            reviewCount: site.reviewCount,
-            bestRating: 5,
-          },
-        },
+        // Reference the single sitewide business entity instead of embedding
+        // an anonymous clone — keeps one consolidated aggregateRating.
+        provider: { "@id": `${site.url}/#business` },
       },
       {
         "@type": "BreadcrumbList",

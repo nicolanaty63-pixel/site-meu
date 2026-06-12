@@ -303,18 +303,18 @@ new things.
    post**. The only live endpoint is `api/reviews`. **Highest-impact fix on the
    site.** Wire to a real endpoint (Resend/Formspree/CRM) and keep the existing
    honeypot + `FormConsent`.
-2. **Invented testimonials conflict with the "no fake reviews" rule.** The
-   `testimonials` array in `data.ts` is admittedly written copy (not real
-   customers), yet renders with "Verified review" / "via MyBuilder" labelling, and
-   `site.reviewCount` (350) feeds `aggregateRating` in schema. This is both an
-   integrity issue and a Google rich-results manual-action risk. **Replace with real
-   reviews** (the `reviews/` + `api/reviews` system is built and ready to collect
-   them) or remove the unsubstantiated claims/`aggregateRating`. Never add more
+2. **RESOLVED (June 2026): testimonials are now genuine.** `data.ts` carries
+   nine real MyBuilder reviews (lightly brand-edited per the owner's explicit
+   12 Jun 2026 direction; provenance comment on the array) and
+   `site.reviewCount` is 115, matching the public MyBuilder profile. All
+   reputation figures (stats, badges, metas) derive from `site.ts` — never
+   hardcode a rating/review/experience number anywhere else. Never add
    fabricated testimonials.
-3. **Service-list ambiguity.** The site ships 10 services in `data.ts` (incl.
-   `tiling` and `laminate-flooring`); some briefs list only 8. Confirm the canonical
-   list with the owner before editing service copy/metas, then make every surface
-   (home featured set, `/services`, footer, area intros, metas, schema) consistent.
+3. **Service list is canonical at 9 services** (the `services` array in
+   `data.ts`: bathroom-renovations, kitchen-renovations, tiling,
+   laminate-flooring, home-extensions, loft-conversions, roofing, landscaping,
+   driveways-paving). Footer, sitemap, schema and `/services` all derive from
+   it — keep it that way.
 4. **Incomplete NAP for local SEO.** `streetAddress`, `postalCode`, `geo`, `sameAs`
    in `site.ts` are intentionally `undefined`. Filling them with **real** values
    (per `BUSINESS-DATA.md`) lights up local schema with zero code risk — high local

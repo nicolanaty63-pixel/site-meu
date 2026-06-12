@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useConsent } from "./ConsentProvider";
@@ -52,6 +52,7 @@ export default function CookieBanner() {
 
   const [analytics, setAnalytics] = useState(false);
   const [marketing, setMarketing] = useState(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   // Reflect current choices (or unticked defaults) when opening preferences.
   useEffect(() => {
@@ -60,6 +61,20 @@ export default function CookieBanner() {
       setMarketing(prefs?.marketing ?? false);
     }
   }, [showPreferences, prefs]);
+
+  // Dialog keyboard support: Escape closes, focus moves into the modal on
+  // open so keyboard users aren't stranded behind the overlay.
+  useEffect(() => {
+    if (!showPreferences) return;
+    requestAnimationFrame(() => {
+      dialogRef.current?.querySelector<HTMLElement>("button:not([disabled])")?.focus();
+    });
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closePreferences();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [showPreferences, closePreferences]);
 
   return (
     <>
@@ -126,6 +141,7 @@ export default function CookieBanner() {
             aria-label="Cookie preferences"
           >
             <motion.div
+              ref={dialogRef}
               className="glass-strong w-full max-w-lg rounded-2xl p-6 sm:p-8"
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}

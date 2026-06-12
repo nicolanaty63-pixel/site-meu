@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { testimonials as defaultData, type Testimonial } from "@/lib/data";
 import Icon from "@/components/ui/Icon";
 import { EASE_OUT } from "@/components/motion/tokens";
@@ -29,6 +29,7 @@ export default function Testimonials({
 }) {
   const [[index, direction], setState] = useState<[number, number]>([0, 0]);
   const [paused, setPaused] = useState(false);
+  const reduce = useReducedMotion();
 
   const paginate = useCallback(
     (dir: number) =>
@@ -37,11 +38,13 @@ export default function Testimonials({
   );
   const goTo = (i: number) => setState(([prev]) => [i, i > prev ? 1 : -1]);
 
+  // Auto-advance pauses for hover, keyboard focus AND touch (WCAG 2.2.2),
+  // and never runs for reduced-motion users.
   useEffect(() => {
-    if (paused) return;
+    if (paused || reduce) return;
     const id = setInterval(() => paginate(1), 6000);
     return () => clearInterval(id);
-  }, [paused, paginate]);
+  }, [paused, reduce, paginate]);
 
   const t = items[index];
 
@@ -50,6 +53,11 @@ export default function Testimonials({
       className="relative mx-auto max-w-3xl"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node)) setPaused(false);
+      }}
+      onTouchStart={() => setPaused(true)}
     >
       <div className="glass-strong relative min-h-[22rem] overflow-hidden rounded-3xl p-8 sm:p-12">
         <Icon
@@ -118,11 +126,13 @@ export default function Testimonials({
           type="button"
           onClick={() => paginate(-1)}
           aria-label="Previous testimonial"
-          className="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-white transition-colors hover:border-gold hover:text-gold"
+          className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/15 text-white transition-colors hover:border-gold hover:text-gold"
         >
           <Icon name="arrow" className="h-4 w-4 rotate-180" />
         </button>
-        <div className="flex">
+        {/* Wraps on narrow screens so the 36px dot hit-areas and the arrow
+            buttons never get flex-shrunk below tappable size */}
+        <div className="flex max-w-full flex-wrap justify-center">
           {items.map((_, i) => (
             <button
               key={i}
@@ -149,7 +159,7 @@ export default function Testimonials({
           type="button"
           onClick={() => paginate(1)}
           aria-label="Next testimonial"
-          className="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-white transition-colors hover:border-gold hover:text-gold"
+          className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/15 text-white transition-colors hover:border-gold hover:text-gold"
         >
           <Icon name="arrow" className="h-4 w-4" />
         </button>

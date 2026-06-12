@@ -2,6 +2,8 @@
 // Testimonials are genuine customer reviews quoted verbatim from the
 // company's public MyBuilder profile (see the source comment on the array).
 
+import { site } from "@/lib/site";
+
 export type IconName =
   | "bath"
   | "kitchen"
@@ -380,6 +382,12 @@ export function serviceSlugFor(label: string): string | null {
   if (l.includes("tiling") || l.includes("tile")) return "tiling";
   if (l.includes("flooring") || l.includes("wood") || l.includes("herringbone"))
     return "laminate-flooring";
+  if (l.includes("landscap") || l.includes("garden")) return "landscaping";
+  if (l.includes("driveway") || l.includes("paving") || l.includes("patio"))
+    return "driveways-paving";
+  if (l.includes("roof")) return "roofing";
+  if (l.includes("loft")) return "loft-conversions";
+  if (l.includes("extension")) return "home-extensions";
   if (l.includes("refurb") || l.includes("building")) return "home-extensions";
   return null;
 }
@@ -1016,17 +1024,19 @@ export type Stat = {
   label: string;
 };
 
+// All reputation figures derive from src/lib/site.ts (the single source of
+// verified business data) so they can never drift from the MyBuilder profile.
 export const stats: Stat[] = [
-  { value: 4.9, decimals: 1, suffix: "/5", label: "Average rating" },
-  { value: 115, suffix: "+", label: "Happy customers" },
-  { value: 15, suffix: "+", label: "Years experience" },
-  { value: 100, suffix: "%", label: "Recommended" },
+  { value: site.rating, decimals: 1, suffix: "/5", label: "Average rating" },
+  { value: site.reviewCount, suffix: "+", label: "Happy customers" },
+  { value: site.yearsExperience, suffix: "+", label: "Years experience" },
+  { value: site.projectsCompleted, suffix: "+", label: "Projects completed" },
 ];
 
 export type Badge = { icon: IconName; title: string; sub: string };
 
 export const badges: Badge[] = [
-  { icon: "star", title: "4.9 / 5 Rated", sub: "115+ reviews" },
+  { icon: "star", title: `${site.rating} / 5 Rated`, sub: `${site.reviewCount}+ reviews` },
   { icon: "shield", title: "Fully Insured", sub: "Workmanship guaranteed" },
   { icon: "clock", title: "Always On Time", sub: "Reliable & punctual" },
   { icon: "broom", title: "Clean & Tidy", sub: "We respect your home" },

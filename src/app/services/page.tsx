@@ -11,8 +11,7 @@ import { serviceImages, servicePositions } from "@/lib/service-images";
 
 export const metadata = pageMeta({
   title: "Services — Renovations, Extensions, Lofts & Roofing",
-  description:
-    "Bathroom & kitchen renovations, tiling and flooring, plus house extensions, loft conversions, roofing, landscaping and driveways across London, North London and Hertfordshire. Fully-insured contractors rated 4.9/5.",
+  description: `Bathroom & kitchen renovations, tiling, flooring, extensions, lofts, roofing and driveways across Hertfordshire & North London. Rated ${site.rating}/5.`,
   path: "/services",
 });
 
@@ -44,6 +43,7 @@ export default function ServicesPage() {
                         variant={i}
                         icon={s.icon}
                         caption={s.title}
+                        alt={`${s.title} by Nicolla Contractors — finished work`}
                         // Same Chromium quirk as the project gallery: native
                         // lazy-load never fires for below-fold images on
                         // small viewports, leaving tiles blank on mobile.

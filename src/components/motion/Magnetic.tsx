@@ -1,13 +1,9 @@
 "use client";
 
 import { useRef, type ReactNode } from "react";
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  useReducedMotion,
-} from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useIsMobile } from "@/components/motion/useIsMobile";
+import useReducedMotionSafe from "@/components/motion/useReducedMotionSafe";
 
 /**
  * Subtle "magnetic" pull toward the cursor — a hallmark of high-end agency
@@ -28,7 +24,7 @@ export default function Magnetic({
   radius?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const isMobile = useIsMobile();
   const mx = useMotionValue(0);
   const my = useMotionValue(0);

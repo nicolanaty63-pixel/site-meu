@@ -197,6 +197,9 @@ export default function HomePage() {
                   variant={p.variant}
                   icon={p.icon}
                   image={p.image}
+                  // Deep-link straight to the case study when one exists —
+                  // the generic /projects hub is only the fallback.
+                  href={p.slug && p.detail ? `/projects/${p.slug}` : "/projects"}
                 />
               </StaggerItem>
             ))}
@@ -223,6 +226,7 @@ export default function HomePage() {
                     variant={2}
                     icon="bath"
                     src="/before.jpg"
+                    alt="Bathroom before renovation — dated suite and worn tiling"
                     sizes="(max-width: 1023px) 100vw, 50vw"
                     quality={90}
                   />
@@ -232,6 +236,7 @@ export default function HomePage() {
                     variant={1}
                     icon="bath"
                     src="/after.jpg"
+                    alt="The same bathroom after renovation — premium modern finish"
                     sizes="(max-width: 1023px) 100vw, 50vw"
                     quality={90}
                   />

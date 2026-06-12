@@ -1,13 +1,9 @@
 "use client";
 
 import { useRef, type ReactNode } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useReducedMotion,
-} from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useIsMobile } from "@/components/motion/useIsMobile";
+import useReducedMotionSafe from "@/components/motion/useReducedMotionSafe";
 
 /**
  * A clipping fill layer that gently parallaxes its children as the page
@@ -26,7 +22,7 @@ export default function ParallaxImage({
   amount?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const isMobile = useIsMobile();
   const { scrollYProgress } = useScroll({
     target: ref,

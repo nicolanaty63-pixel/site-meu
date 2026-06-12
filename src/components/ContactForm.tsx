@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { motion } from "framer-motion";
 import { services } from "@/lib/data";
 import Icon from "@/components/ui/Icon";
@@ -65,8 +65,11 @@ export default function ContactForm() {
         />
       </div>
       <div className="mt-5">
-        <label className="mb-2 block text-sm text-concrete">Service</label>
+        <label htmlFor="contact-service" className="mb-2 block text-sm text-concrete">
+          Service
+        </label>
         <select
+          id="contact-service"
           name="service"
           required
           defaultValue=""
@@ -84,10 +87,11 @@ export default function ContactForm() {
         </select>
       </div>
       <div className="mt-5">
-        <label className="mb-2 block text-sm text-concrete">
+        <label htmlFor="contact-message" className="mb-2 block text-sm text-concrete">
           Project details
         </label>
         <textarea
+          id="contact-message"
           name="message"
           required
           rows={5}
@@ -123,10 +127,14 @@ function Field({
   type?: string;
   placeholder?: string;
 }) {
+  const id = useId();
   return (
     <div>
-      <label className="mb-2 block text-sm text-concrete">{label}</label>
+      <label htmlFor={id} className="mb-2 block text-sm text-concrete">
+        {label}
+      </label>
       <input
+        id={id}
         name={name}
         type={type}
         required

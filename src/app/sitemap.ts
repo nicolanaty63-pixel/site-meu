@@ -1,4 +1,4 @@
-import type { MetadataRoute } from "next";
+﻿import type { MetadataRoute } from "next";
 import { site } from "@/lib/site";
 import { services } from "@/lib/data";
 import { areas } from "@/lib/areas";
@@ -33,7 +33,7 @@ const ROUTES: Array<{
 
 const SERVICE_PRIORITY = 0.8; // per-service detail = high commercial intent
 const AREA_PRIORITY = 0.7; // per-area detail = high local intent
-const GUIDE_PRIORITY = 0.7; // cost guides — high informational + supports pillars
+const GUIDE_PRIORITY = 0.7; // cost guides â€” high informational + supports pillars
 const PROJECT_PRIORITY = 0.7; // per-project case studies (substantial trust assets)
 const LEGAL_PRIORITY = 0.3;
 const LEGAL_PATHS = [
@@ -44,25 +44,21 @@ const LEGAL_PATHS = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
 
   const core = ROUTES.map((r) => ({
     url: `${site.url}${r.path}`,
-    lastModified,
     changeFrequency: r.changeFrequency,
     priority: r.priority,
   }));
 
   const servicePages = services.map((s) => ({
     url: `${site.url}/services/${s.slug}`,
-    lastModified,
     changeFrequency: "monthly" as ChangeFreq,
     priority: SERVICE_PRIORITY,
   }));
 
   const areaPages = areas.map((a) => ({
     url: `${site.url}/areas/${a.slug}`,
-    lastModified,
     changeFrequency: "monthly" as ChangeFreq,
     priority: AREA_PRIORITY,
   }));
@@ -75,20 +71,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: GUIDE_PRIORITY,
   }));
 
-  // Only projects with a slug AND detail block become routes — see
+  // Only projects with a slug AND detail block become routes â€” see
   // src/app/projects/[slug]/page.tsx. Filter mirrors generateStaticParams.
   const projectPages = projects
     .filter((p) => p.slug && p.detail)
     .map((p) => ({
       url: `${site.url}/projects/${p.slug}`,
-      lastModified,
-      changeFrequency: "monthly" as ChangeFreq,
+        changeFrequency: "monthly" as ChangeFreq,
       priority: PROJECT_PRIORITY,
     }));
 
   const legalPages = LEGAL_PATHS.map((path) => ({
     url: `${site.url}${path}`,
-    lastModified,
     changeFrequency: "yearly" as ChangeFreq,
     priority: LEGAL_PRIORITY,
   }));

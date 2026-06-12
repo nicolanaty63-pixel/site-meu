@@ -8,9 +8,10 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import CustomerReviews from "@/components/reviews/CustomerReviews";
 import Icon from "@/components/ui/Icon";
 import { testimonials } from "@/lib/data";
+import { site } from "@/lib/site";
 
 export const metadata = pageMeta({
-  title: "Testimonials — 4.9/5 from 350+ Customers",
+  title: `Testimonials — ${site.rating}/5 from ${site.reviewCount}+ Customers`,
   description:
     "Read reviews for Nicolla Contractors Ltd. Homeowners across Hertfordshire praise our professionalism, punctuality, attention to detail and high-quality workmanship.",
   path: "/testimonials",
@@ -95,7 +96,7 @@ export default function TestimonialsPage() {
         <Container>
           <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-gold/15 via-charcoal to-charcoal px-8 py-16 text-center">
             <h2 className="mx-auto max-w-2xl text-3xl font-bold text-white sm:text-4xl">
-              Join 350+ happy customers
+              Join {site.reviewCount}+ happy customers
             </h2>
             <Link
               href="/contact"

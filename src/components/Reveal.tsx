@@ -1,8 +1,9 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { EASE_OUT, DURATION, VIEWPORT } from "@/components/motion/tokens";
+import useReducedMotionSafe from "@/components/motion/useReducedMotionSafe";
 
 export default function Reveal({
   children,
@@ -22,7 +23,7 @@ export default function Reveal({
   once?: boolean;
   className?: string;
 }) {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   if (reduce) return <div className={className}>{children}</div>;
 
   // ONE consistent transform path (opacity + translate, optional scale), with

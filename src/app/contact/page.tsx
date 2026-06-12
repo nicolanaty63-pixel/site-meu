@@ -71,9 +71,11 @@ export default function ContactPage() {
               </div>
 
               <div className="mt-6 rounded-xl border border-white/10 bg-surface/40 p-5">
-                <h3 className="text-sm font-semibold text-white">
+                {/* h2 (visually small): the page had no h2 at all, so this h3
+                    skipped a heading level straight from the h1 */}
+                <h2 className="text-sm font-semibold text-white">
                   Areas we cover
-                </h3>
+                </h2>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {site.serves.map((a) => (
                     <span

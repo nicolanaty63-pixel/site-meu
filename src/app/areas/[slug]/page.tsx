@@ -25,8 +25,8 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const area = getArea(slug);
   if (!area) return {};
   return pageMeta({
-    title: `Builders in ${area.name} — Bathrooms, Kitchens, Tiling & Flooring`,
-    description: `Trusted builders & renovation specialists in ${area.name}, ${area.county}. Bathroom & kitchen renovations, tiling and flooring installation. Rated ${site.rating}/5 — free quotes.`,
+    title: `Builders in ${area.name} — Premium Renovations`,
+    description: `Trusted builders & renovation specialists in ${area.name}, ${area.county}. Bathrooms, kitchens, tiling and flooring. Rated ${site.rating}/5 — free quotes.`,
     path: `/areas/${area.slug}`,
   });
 }
@@ -40,6 +40,11 @@ export default async function AreaPage({ params }: Params) {
     "@context": "https://schema.org",
     "@graph": [
       {
+        // Local landing node. Deliberately NO aggregateRating here: the one
+        // review pool belongs to the single sitewide /#business entity —
+        // cloning it onto 10 area entities multiplies the same 115 reviews
+        // across 11 rated businesses, which Google's review-snippet
+        // guidelines treat as spammy markup.
         "@type": "GeneralContractor",
         "@id": `${site.url}/areas/${area.slug}/#business`,
         name: `${site.name} — ${area.name}`,
@@ -47,17 +52,12 @@ export default async function AreaPage({ params }: Params) {
         telephone: site.phoneHref.replace("tel:", ""),
         email: site.email,
         areaServed: { "@type": "City", name: area.name },
+        parentOrganization: { "@id": `${site.url}/#business` },
         address: {
           "@type": "PostalAddress",
           addressLocality: site.baseTown,
           addressRegion: site.region,
           addressCountry: "GB",
-        },
-        aggregateRating: {
-          "@type": "AggregateRating",
-          ratingValue: site.rating,
-          reviewCount: site.reviewCount,
-          bestRating: 5,
         },
       },
       {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { motion } from "framer-motion";
 import { services } from "@/lib/data";
 import { site } from "@/lib/site";
@@ -11,6 +11,9 @@ import FormConsent from "@/components/FormConsent";
 // route, Resend/Formspree, or a CRM to capture leads in production.
 export default function QuoteForm() {
   const [sent, setSent] = useState(false);
+  // This form renders more than once per page (hero + #quote section), so
+  // every control id must be instance-unique.
+  const uid = useId();
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -92,10 +95,11 @@ export default function QuoteForm() {
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-sm text-concrete">
+          <label htmlFor={`${uid}-service`} className="mb-1.5 block text-sm text-concrete">
             What do you need?
           </label>
           <select
+            id={`${uid}-service`}
             name="service"
             required
             defaultValue=""
@@ -113,11 +117,12 @@ export default function QuoteForm() {
           </select>
         </div>
         <div>
-          <label className="mb-1.5 block text-sm text-concrete">
+          <label htmlFor={`${uid}-message`} className="mb-1.5 block text-sm text-concrete">
             Project details{" "}
             <span className="text-concrete-dark">(optional)</span>
           </label>
           <textarea
+            id={`${uid}-message`}
             name="message"
             rows={3}
             placeholder="Tell us a little about your project and timescale…"
@@ -155,10 +160,14 @@ function Field({
   placeholder?: string;
   required?: boolean;
 }) {
+  const id = useId();
   return (
     <div>
-      <label className="mb-1.5 block text-sm text-concrete">{label}</label>
+      <label htmlFor={id} className="mb-1.5 block text-sm text-concrete">
+        {label}
+      </label>
       <input
+        id={id}
         name={name}
         type={type}
         required={required}

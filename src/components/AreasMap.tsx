@@ -2,7 +2,8 @@
 
 import { useState, type CSSProperties } from "react";
 import Link from "next/link";
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
+import useReducedMotionSafe from "@/components/motion/useReducedMotionSafe";
 import { EASE_OUT, VIEWPORT } from "@/components/motion/tokens";
 import Icon from "@/components/ui/Icon";
 import { areas } from "@/lib/areas";
@@ -217,7 +218,7 @@ const asideV: Variants = {
 };
 
 export default function AreasMap() {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const [active, setActive] = useState<string | null>(null);
 
   const ring10 = 10 / KM_PER_UNIT;

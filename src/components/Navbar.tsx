@@ -21,7 +21,13 @@ export default function Navbar() {
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
     return () => {
+      window.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
     };
   }, [open]);

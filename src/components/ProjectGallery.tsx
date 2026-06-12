@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import {
@@ -47,21 +47,57 @@ export default function ProjectGallery({
   // Reset selection whenever the filter changes
   useEffect(() => setIndex(null), [filter]);
 
-  // Keyboard navigation + body scroll lock while the modal is open
+  const open = index !== null;
+  const panelRef = useRef<HTMLDivElement>(null);
+  const restoreFocusRef = useRef<HTMLElement | null>(null);
+
+  // Body scroll lock + dialog focus management: move focus into the modal on
+  // open, give it back to the card that opened it on close.
   useEffect(() => {
-    if (index === null) return;
+    if (!open) return;
     document.body.style.overflow = "hidden";
+    restoreFocusRef.current = document.activeElement as HTMLElement | null;
+    requestAnimationFrame(() => {
+      panelRef.current
+        ?.querySelector<HTMLElement>('button[aria-label="Close"]')
+        ?.focus();
+    });
+    return () => {
+      document.body.style.overflow = "";
+      restoreFocusRef.current?.focus?.();
+    };
+  }, [open]);
+
+  // Keyboard navigation + a simple Tab trap so keyboard users can't tab into
+  // the page behind the overlay.
+  useEffect(() => {
+    if (!open) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") close();
       if (e.key === "ArrowRight") next();
       if (e.key === "ArrowLeft") prev();
+      if (e.key === "Tab") {
+        const panel = panelRef.current;
+        if (!panel) return;
+        const focusables = panel.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+        if (!focusables.length) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        const current = document.activeElement;
+        if (e.shiftKey && (current === first || !panel.contains(current))) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && (current === last || !panel.contains(current))) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
     window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [index, close, next, prev]);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, close, next, prev]);
 
   return (
     <div>
@@ -199,6 +235,10 @@ export default function ProjectGallery({
             onClick={close}
           >
             <motion.div
+              ref={panelRef}
+              role="dialog"
+              aria-modal="true"
+              aria-label={active.title}
               className="glass-strong relative max-h-[92vh] w-full max-w-5xl overflow-y-auto rounded-2xl"
               initial={{ scale: 0.94, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}

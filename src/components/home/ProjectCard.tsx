@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import Photo from "@/components/ui/Photo";
 import Icon from "@/components/ui/Icon";
