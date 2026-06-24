@@ -9,7 +9,7 @@ import Photo from "@/components/ui/Photo";
 import Icon from "@/components/ui/Icon";
 import ParallaxImage from "@/components/motion/ParallaxImage";
 import { Stagger, StaggerItem } from "@/components/motion/Stagger";
-import { stats } from "@/lib/data";
+import { stats, process } from "@/lib/data";
 import { site } from "@/lib/site";
 
 export const metadata = pageMeta({
@@ -206,6 +206,33 @@ export default function AboutPage() {
               </Reveal>
             ))}
           </div>
+        </Container>
+      </section>
+
+      {/* Process — moved from the homepage to keep the homepage concise. */}
+      <section className="section-band py-20">
+        <Container>
+          <SectionHeading
+            center
+            eyebrow="How it works"
+            title="A simple, transparent process"
+            subtitle="No surprises — just a clear path from first call to finished room."
+          />
+          <Stagger className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
+            {process.map((step, i) => (
+              <StaggerItem key={step.title} className="relative">
+                <span className="font-display text-3xl font-extrabold text-gold/30">
+                  0{i + 1}
+                </span>
+                <h3 className="mt-2 text-lg font-semibold text-white">
+                  {step.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-concrete">
+                  {step.desc}
+                </p>
+              </StaggerItem>
+            ))}
+          </Stagger>
         </Container>
       </section>
 
