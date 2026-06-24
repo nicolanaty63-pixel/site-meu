@@ -111,7 +111,7 @@ export default function HomePage() {
             title="Premium services, delivered properly"
             subtitle="From a single room to a complete refurbishment, every project gets the same meticulous standard of workmanship."
           />
-          <Stagger className="mt-12 grid gap-6 sm:grid-cols-2">
+          <Stagger className="mt-12 grid gap-8 sm:grid-cols-2 lg:gap-10">
             {featuredServices.map((s, i) => {
               // Centre a lone final card so an odd count stays balanced and
               // equally sized within the 2-column grid (no left-aligned orphan).
@@ -124,13 +124,13 @@ export default function HomePage() {
                   variant="tile"
                   className={
                     isLoneLast
-                      ? "sm:col-span-2 sm:mx-auto sm:w-[calc(50%_-_0.75rem)]"
+                      ? "sm:col-span-2 sm:mx-auto sm:w-[calc(50%_-_1rem)] lg:w-[calc(50%_-_1.25rem)]"
                       : ""
                   }
                 >
                   <Link
                     href={`/services/${s.slug}`}
-                    className="group flex h-full flex-col rounded-2xl border border-white/10 bg-surface/40 p-7 transition-all duration-500 hover:-translate-y-1.5 hover:border-gold/40 hover:bg-surface hover:shadow-[0_28px_70px_-30px_rgba(200,162,76,0.4)]"
+                    className="service-card group flex h-full flex-col rounded-2xl p-7"
                   >
                     <h3 className="text-xl font-semibold text-white">
                       {s.title}
