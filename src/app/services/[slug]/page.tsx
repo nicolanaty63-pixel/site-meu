@@ -191,7 +191,7 @@ export default async function ServicePage({ params }: Params) {
       </section>
 
       {/* Why us */}
-      <section className="border-y border-white/10 bg-charcoal/40 py-20">
+      <section className="section-band py-20">
         <Container>
           <SectionHeading
             center

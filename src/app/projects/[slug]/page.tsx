@@ -303,7 +303,7 @@ export default async function ProjectPage({ params }: Params) {
 
       {/* Related services */}
       {relatedServices.length > 0 && (
-        <section className="border-t border-white/10 py-20">
+        <section className="seam-top py-20">
           <Container>
             <SectionHeading
               center

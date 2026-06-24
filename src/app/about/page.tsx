@@ -159,7 +159,7 @@ export default function AboutPage() {
       </section>
 
       {/* Stats */}
-      <section className="border-y border-white/10 bg-charcoal/40 py-16">
+      <section className="section-band py-16">
         <Container>
           <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
             {stats.map((s) => (

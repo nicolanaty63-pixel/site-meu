@@ -59,7 +59,7 @@ export default function HomePage() {
       <Hero />
 
       {/* Trust badges */}
-      <section className="border-y border-white/10 bg-charcoal/60">
+      <section className="section-band">
         <Stagger className="mx-auto grid w-full max-w-6xl grid-cols-2 gap-px px-5 py-2 sm:px-6 lg:grid-cols-4">
           {badges.map((b) => (
             <StaggerItem key={b.title} className="flex items-center gap-3 p-5">
@@ -248,7 +248,7 @@ export default function HomePage() {
       </section>
 
       {/* Process timeline */}
-      <section className="border-y border-white/10 bg-charcoal/40 py-20">
+      <section className="section-band py-20">
         <Container>
           <SectionHeading
             center

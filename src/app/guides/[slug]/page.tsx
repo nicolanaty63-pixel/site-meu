@@ -239,7 +239,7 @@ export default async function GuidePage({ params }: Params) {
       </section>
 
       {/* Other guides */}
-      <section className="border-t border-white/10 py-20">
+      <section className="seam-top py-20">
         <Container className="text-center">
           <h2 className="text-xl font-semibold text-white">Other cost guides</h2>
           <div className="mt-5 flex flex-wrap justify-center gap-2">

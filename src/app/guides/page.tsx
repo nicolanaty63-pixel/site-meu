@@ -140,7 +140,7 @@ export default function GuidesIndexPage() {
       </section>
 
       {/* ---- Section 3: trust & transparency ---- */}
-      <section className="border-y border-white/10 bg-charcoal/40 py-16 sm:py-20">
+      <section className="section-band py-16 sm:py-20">
         <Container>
           <SectionHeading
             center

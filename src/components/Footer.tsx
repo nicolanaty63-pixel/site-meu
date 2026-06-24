@@ -8,7 +8,7 @@ import Logo from "@/components/Logo";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-charcoal">
+    <footer className="footer-blend">
       <div className="mx-auto grid max-w-6xl gap-12 px-5 py-16 sm:px-6 md:grid-cols-12">
         {/* Brand */}
         <div className="md:col-span-4">

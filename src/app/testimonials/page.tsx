@@ -85,7 +85,7 @@ export default function TestimonialsPage() {
       </section>
 
       {/* Customer-submitted reviews: form + live feed (newest first) */}
-      <section className="bg-charcoal/30">
+      <section className="section-band">
         <Container>
           <CustomerReviews />
         </Container>
