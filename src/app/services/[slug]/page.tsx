@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { jsonLdHtml } from "@/lib/jsonld";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Container from "@/components/Container";
@@ -109,7 +110,7 @@ export default async function ServicePage({ params }: Params) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdHtml(ld) }}
       />
 
       <PageHero eyebrow="Service" title={s.title} subtitle={s.description} />

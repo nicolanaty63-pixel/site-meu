@@ -1,4 +1,5 @@
 import { site } from "@/lib/site";
+import { jsonLdHtml } from "@/lib/jsonld";
 import { services } from "@/lib/data";
 
 // LocalBusiness / GeneralContractor structured data for local SEO + rich results.
@@ -115,7 +116,7 @@ export default function Schema() {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: jsonLdHtml(data) }}
     />
   );
 }
