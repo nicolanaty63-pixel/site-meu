@@ -1,42 +1,53 @@
 import Image from "next/image";
 
 /**
- * Brand logo — single source of truth for the company's visual identity.
+ * Brand logo lockup. The gold puzzle-house MARK is the only image
+ * (`/logo-mark.png`); the wordmark and the "Simply Perfection" tagline are
+ * LIVE TEXT so their typography can be controlled with Tailwind classes.
  *
- * To use your real artwork: replace `public/logo-nicolla.webp` with your file.
- * - Keep the same filename (logo-nicolla.webp) for zero code changes, OR
- * - Update LOGO_SRC / dimensions below if you use a different file or format.
- *
- * The image keeps its aspect ratio (height is fixed via className, width auto),
- * so it never stretches. If your real logo has different proportions, update
- * LOGO_WIDTH / LOGO_HEIGHT to match it.
+ * The wordmark is stacked (NICOLLA / CONTRACTORS) so the lockup stays narrow
+ * enough to sit beside the nav links. `compact` is the footer variant.
  */
-export const LOGO_SRC = "/logo-nicolla-mark.png";
-
-// Intrinsic dimensions of the artwork (used for aspect ratio).
-// Source PNG is capped at 384px on the long edge (see scripts/resize-logo.mjs)
-// which is the retina target for the largest navbar display (h-48 = 192px).
-const LOGO_WIDTH = 379;
-const LOGO_HEIGHT = 384;
+export const LOGO_SRC = "/logo-mark.png";
+const MARK_W = 80;
+const MARK_H = 80;
 
 export default function Logo({
-  className = "h-9 w-auto",
   priority = false,
+  compact = false,
+  className = "",
 }: {
-  className?: string;
   priority?: boolean;
+  compact?: boolean;
+  className?: string;
 }) {
+  const wordmark = `font-display font-semibold uppercase leading-[1.08] text-white [text-shadow:0_1px_10px_rgba(0,0,0,0.45)] ${
+    compact
+      ? "text-sm tracking-[0.13em]"
+      : "text-[13px] tracking-[0.1em] sm:text-[15px] sm:tracking-[0.13em]"
+  }`;
+
   return (
-    <Image
-      src={LOGO_SRC}
-      alt="Nicolla Contractors Ltd"
-      width={LOGO_WIDTH}
-      height={LOGO_HEIGHT}
-      priority={priority}
-      // sizes drives the srcset next/image generates; explicit pixel-density
-      // hints keep the logo from over-serving on small navbar/footer renders.
-      sizes="(min-width: 640px) 192px, 96px"
-      className={className}
-    />
+    <span
+      className={`inline-flex items-center ${compact ? "gap-2.5" : "gap-2.5 sm:gap-3"} ${className}`}
+    >
+      <Image
+        src={LOGO_SRC}
+        alt=""
+        width={MARK_W}
+        height={MARK_H}
+        priority={priority}
+        sizes={compact ? "40px" : "48px"}
+        className={`${compact ? "h-10" : "h-10 sm:h-12"} w-auto`}
+      />
+      <span className="flex flex-col items-center">
+        <span className={wordmark}>Nicolla</span>
+        <span className={wordmark}>Contractors</span>
+        {/* Tagline — minimalist architectural styling (live text) */}
+        <span className="mt-1.5 text-xs font-light uppercase tracking-widest text-zinc-500">
+          Simply Perfection
+        </span>
+      </span>
+    </span>
   );
 }
