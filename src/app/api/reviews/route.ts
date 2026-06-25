@@ -53,32 +53,23 @@ export async function GET() {
 export async function POST(req: Request) {
   // Enforce JSON content-type + same-origin before doing any work.
   if ((req.headers.get("content-type") ?? "").split(";")[0].trim() !== "application/json") {
-    return NextResponse.json(
-      { ok: false, error: "Unsupported media type." },
-      { status: 415 },
-    );
+    return fail(415, "Unsupported media type.");
   }
   if (!sameOrigin(req)) {
-    return NextResponse.json({ ok: false, error: "Forbidden." }, { status: 403 });
+    return fail(403, "Forbidden.");
   }
 
   // Bounded read (defends against missing / forged Content-Length).
   const raw = await req.text();
   if (raw.length > MAX_BODY) {
-    return NextResponse.json(
-      { ok: false, error: "Payload too large." },
-      { status: 413 },
-    );
+    return fail(413, "Payload too large.");
   }
 
   let body: ReviewInput;
   try {
     body = JSON.parse(raw) as ReviewInput;
   } catch {
-    return NextResponse.json(
-      { ok: false, error: "Invalid request." },
-      { status: 400 },
-    );
+    return fail(400, "Invalid request.");
   }
 
   // 1. Validation + bot traps (cheap, no network) — so a user fixing a field
