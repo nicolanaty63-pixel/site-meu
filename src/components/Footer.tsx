@@ -17,7 +17,7 @@ export default function Footer() {
             className="inline-block"
             aria-label={`${site.name} home`}
           >
-            <Logo compact />
+            <Logo className="h-16 w-auto" />
           </Link>
           <p className="mt-5 max-w-xs text-sm leading-relaxed text-concrete">
             {site.tagline} in {site.baseTown}, {site.region}. Bathrooms,
