@@ -1,0 +1,6 @@
+title = "nicolla-gitleaks"
+[extend]
+useDefault = true
+[allowlist]
+description = "Ignore the committed env manifest (placeholders only)"
+paths = ['''\.env\.example$''']

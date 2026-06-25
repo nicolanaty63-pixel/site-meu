@@ -1,0 +1,8 @@
+# Block any commit that contains a secret (skips gracefully if gitleaks absent).
+if command -v gitleaks >/dev/null 2>&1; then
+  gitleaks protect --staged --redact -v || {
+    echo "🛑 Potential secret in staged changes — commit blocked. (override: SKIP=1 git commit)"; exit 1;
+  }
+else
+  echo "ℹ️  gitleaks not installed — skipping local secret scan (CI still enforces). brew install gitleaks"
+fi
