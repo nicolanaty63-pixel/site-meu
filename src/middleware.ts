@@ -1,24 +1,70 @@
 import { NextRequest, NextResponse } from "next/server";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 
 /**
- * Content-Security-Policy with a per-request nonce (Vector 3).
+ * Edge middleware — Perimeter (Vector 3) + DDoS/bot mitigation (Vector 4).
  *
- * Shipped in REPORT-ONLY mode: the browser logs would-be violations to the
- * console without blocking anything, so this is safe to deploy. Once the
- * console is clean (home/framer, consent-gated GA, review submit), rename the
- * header below `Content-Security-Policy-Report-Only` -> `Content-Security-Policy`
- * to enforce. (Vector 4 will extend this same file with edge rate-limiting.)
+ * Vector 4: a two-tier per-IP edge limiter rejects abuse BEFORE the serverless
+ * function or Upstash quota is touched (the in-route limiter in api/reviews
+ * stays as the second wall). Fails open if Upstash creds are absent (dev).
  *
- * Notes:
- * - `script-src` uses a nonce + `strict-dynamic`: only nonce'd scripts and the
- *   scripts THEY load run — defeats injected <script>. Thread the nonce into
- *   your own next/script tags (GA) via the `x-nonce` request header.
- * - `style-src 'unsafe-inline'` is required by framer-motion / next-image inline
- *   styles (low risk; script injection is the real threat and is locked down).
+ * Vector 3: a per-request nonce CSP, shipped REPORT-ONLY (safe). Flip the
+ * header name below to `Content-Security-Policy` to enforce once the console
+ * is clean and the GA next/script tags carry the `x-nonce`.
  */
-export function middleware(request: NextRequest) {
-  const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
 
+const redis =
+  process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
+    ? new Redis({
+        url: process.env.UPSTASH_REDIS_REST_URL,
+        token: process.env.UPSTASH_REDIS_REST_TOKEN,
+      })
+    : null;
+
+const burst = redis
+  ? new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(20, "10 s"), prefix: "rl:burst", analytics: true })
+  : null;
+const writes = redis
+  ? new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(5, "60 s"), prefix: "rl:write", analytics: true })
+  : null;
+
+function clientIp(req: NextRequest): string {
+  return (
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    req.headers.get("x-real-ip") ??
+    "0.0.0.0"
+  );
+}
+function tooMany(resetMs: number) {
+  const retry = Math.max(1, Math.ceil((resetMs - Date.now()) / 1000));
+  return NextResponse.json(
+    { ok: false, error: "Too many requests. Please slow down." },
+    { status: 429, headers: { "retry-after": String(retry) } },
+  );
+}
+
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // ── Vector 4: edge abuse filter for API routes (before compute) ──
+  if (pathname.startsWith("/api/")) {
+    if (request.method === "POST" && !request.headers.get("user-agent")) {
+      return NextResponse.json({ ok: false, error: "Forbidden." }, { status: 403 });
+    }
+    if (burst) {
+      const ip = clientIp(request);
+      const b = await burst.limit(ip);
+      if (!b.success) return tooMany(b.reset);
+      if (request.method === "POST" && writes) {
+        const w = await writes.limit(`${ip}:${pathname}`);
+        if (!w.success) return tooMany(w.reset);
+      }
+    }
+  }
+
+  // ── Vector 3: nonce CSP (Report-Only) ──
+  const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
   const csp = [
     `default-src 'self'`,
     `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https:`,
@@ -36,7 +82,6 @@ export function middleware(request: NextRequest) {
 
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-nonce", nonce);
-
   const response = NextResponse.next({ request: { headers: requestHeaders } });
   response.headers.set("Content-Security-Policy-Report-Only", csp);
   return response;

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { fail } from "@/lib/http";
 import {
   addReview,
   checkRateLimit,
@@ -44,11 +45,7 @@ export async function GET() {
     const reviews = await listReviews(100);
     return NextResponse.json({ ok: true, reviews });
   } catch (err) {
-    console.error("[api/reviews] GET failed", err);
-    return NextResponse.json(
-      { ok: false, error: "Could not load reviews." },
-      { status: 500 },
-    );
+    return fail(500, "Could not load reviews.", err);
   }
 }
 
@@ -133,10 +130,6 @@ export async function POST(req: Request) {
     const review = await addReview(result.value);
     return NextResponse.json({ ok: true, review }, { status: 201 });
   } catch (err) {
-    console.error("[api/reviews] POST failed", err);
-    return NextResponse.json(
-      { ok: false, error: "Something went wrong. Please try again." },
-      { status: 500 },
-    );
+    return fail(500, "Something went wrong. Please try again.", err);
   }
 }
