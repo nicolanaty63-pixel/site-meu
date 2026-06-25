@@ -1,4 +1,5 @@
 import { pageMeta } from "@/lib/seo";
+import { jsonLdHtml } from "@/lib/jsonld";
 import Link from "next/link";
 import Container from "@/components/Container";
 import PageHero from "@/components/PageHero";
@@ -76,7 +77,7 @@ export default function ProjectsPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectsLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdHtml(projectsLd) }}
       />
 
       <PageHero

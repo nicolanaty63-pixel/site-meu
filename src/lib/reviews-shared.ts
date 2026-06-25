@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { services } from "@/lib/data";
 
 /**
@@ -60,8 +61,44 @@ export type ValidationResult =
   | { ok: true; value: Omit<Review, "id" | "createdAt"> }
   | { ok: false; code: "validation" | "bot"; error: string; field?: string };
 
+/**
+ * Strict Zod schema for a review submission.
+ * - `.strictObject` rejects ANY unexpected key (mass-assignment defence:
+ *   `id`, `createdAt`, `__proto__`, `isAdmin`, … can never sneak in).
+ * - `company` / `elapsedMs` are allowed through (bot traps handled below) so
+ *   strict mode doesn't reject the real payload.
+ * - `clean()` runs inside the transform, then bounds are re-checked via pipe.
+ */
+const reviewSchema = z.strictObject({
+  name: z
+    .string()
+    .transform(clean)
+    .pipe(z.string().min(REVIEW_RULES.nameMin).max(REVIEW_RULES.nameMax)),
+  rating: z.coerce.number().int().min(1).max(5),
+  text: z
+    .string()
+    .transform(clean)
+    .pipe(z.string().min(REVIEW_RULES.textMin).max(REVIEW_RULES.textMax)),
+  service: z
+    .string()
+    .trim()
+    .refine((v) => VALID_SERVICES.has(v))
+    .optional()
+    .catch(undefined),
+  company: z.unknown().optional(), // honeypot — validated as a bot trap below
+  elapsedMs: z.unknown().optional(), // time-trap — validated as a bot trap below
+});
+
+const FIELD_MSG: Record<string, string> = {
+  name: `Please enter your name (${REVIEW_RULES.nameMin}–${REVIEW_RULES.nameMax} characters).`,
+  rating: "Please select a star rating from 1 to 5.",
+  text: `Please write a review of ${REVIEW_RULES.textMin}–${REVIEW_RULES.textMax} characters.`,
+  service: "Please choose a valid service.",
+};
+
 /** Authoritative validation. Runs on the server; mirrored on the client for UX. */
 export function validateReview(input: ReviewInput): ValidationResult {
+  // 1) Bot traps first — generic rejection so bots learn nothing.
   if (typeof input.company === "string" && input.company.trim() !== "") {
     return { ok: false, code: "bot", error: "Submission rejected." };
   }
@@ -70,48 +107,18 @@ export function validateReview(input: ReviewInput): ValidationResult {
     return { ok: false, code: "bot", error: "Submission rejected." };
   }
 
-  const name = typeof input.name === "string" ? clean(input.name) : "";
-  if (name.length < REVIEW_RULES.nameMin || name.length > REVIEW_RULES.nameMax) {
+  // 2) Strict, typed structured validation.
+  const parsed = reviewSchema.safeParse(input);
+  if (!parsed.success) {
+    const field = parsed.error.issues[0]?.path[0]?.toString() ?? "text";
     return {
       ok: false,
       code: "validation",
-      field: "name",
-      error: `Please enter your name (${REVIEW_RULES.nameMin}–${REVIEW_RULES.nameMax} characters).`,
+      field,
+      error: FIELD_MSG[field] ?? "Please check your details and try again.",
     };
   }
 
-  const rating = Number(input.rating);
-  if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
-    return {
-      ok: false,
-      code: "validation",
-      field: "rating",
-      error: "Please select a star rating from 1 to 5.",
-    };
-  }
-
-  const text = typeof input.text === "string" ? clean(input.text) : "";
-  if (text.length < REVIEW_RULES.textMin) {
-    return {
-      ok: false,
-      code: "validation",
-      field: "text",
-      error: `Your review is a little short — please write at least ${REVIEW_RULES.textMin} characters.`,
-    };
-  }
-  if (text.length > REVIEW_RULES.textMax) {
-    return {
-      ok: false,
-      code: "validation",
-      field: "text",
-      error: `Please keep your review under ${REVIEW_RULES.textMax} characters.`,
-    };
-  }
-
-  let service: string | undefined;
-  if (typeof input.service === "string" && input.service.trim() !== "") {
-    service = VALID_SERVICES.has(input.service) ? input.service : undefined;
-  }
-
+  const { name, rating, text, service } = parsed.data;
   return { ok: true, value: { name, rating, text, service } };
 }

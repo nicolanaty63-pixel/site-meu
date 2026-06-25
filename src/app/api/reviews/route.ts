@@ -18,6 +18,26 @@ function clientIp(req: Request): string {
   return req.headers.get("x-real-ip") ?? "unknown";
 }
 
+// Reviews are tiny; bound the parse so a giant body can't exhaust memory.
+const MAX_BODY = 16 * 1024;
+
+// Same-origin filter (cheap CSRF/abuse defence; this is a public, session-less
+// endpoint, but it blocks trivial cross-site form spam).
+function sameOrigin(req: Request): boolean {
+  const origin = req.headers.get("origin");
+  if (!origin) return true; // genuine same-origin fetches may omit Origin
+  try {
+    const allowed = new Set([
+      "nicollacontractors.co.uk",
+      "www.nicollacontractors.co.uk",
+      new URL(req.url).host, // covers *.vercel.app preview hosts
+    ]);
+    return allowed.has(new URL(origin).host);
+  } catch {
+    return false;
+  }
+}
+
 // GET /api/reviews — newest-first feed (used as a fallback / for refreshes).
 export async function GET() {
   try {
@@ -34,9 +54,29 @@ export async function GET() {
 
 // POST /api/reviews — submit a review (validated + spam-protected).
 export async function POST(req: Request) {
+  // Enforce JSON content-type + same-origin before doing any work.
+  if ((req.headers.get("content-type") ?? "").split(";")[0].trim() !== "application/json") {
+    return NextResponse.json(
+      { ok: false, error: "Unsupported media type." },
+      { status: 415 },
+    );
+  }
+  if (!sameOrigin(req)) {
+    return NextResponse.json({ ok: false, error: "Forbidden." }, { status: 403 });
+  }
+
+  // Bounded read (defends against missing / forged Content-Length).
+  const raw = await req.text();
+  if (raw.length > MAX_BODY) {
+    return NextResponse.json(
+      { ok: false, error: "Payload too large." },
+      { status: 413 },
+    );
+  }
+
   let body: ReviewInput;
   try {
-    body = (await req.json()) as ReviewInput;
+    body = JSON.parse(raw) as ReviewInput;
   } catch {
     return NextResponse.json(
       { ok: false, error: "Invalid request." },
