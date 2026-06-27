@@ -8,6 +8,7 @@ import ScrollProgress from "@/components/ScrollProgress";
 import ConsentProvider from "@/components/consent/ConsentProvider";
 import CookieBanner from "@/components/consent/CookieBanner";
 import Analytics from "@/components/consent/Analytics";
+import VercelAnalytics from "@/components/consent/VercelAnalytics";
 import Schema from "@/components/Schema";
 import { site } from "@/lib/site";
 
@@ -119,6 +120,7 @@ export default function RootLayout({
           <WhatsAppButton />
           <CookieBanner />
           <Analytics />
+          <VercelAnalytics />
         </ConsentProvider>
       </body>
     </html>
