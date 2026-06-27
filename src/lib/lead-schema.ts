@@ -34,15 +34,16 @@ export const leadSchema = z.strictObject({
     .min(1, "Please choose a service")
     .max(80, "That service name is too long"),
 
+  // Optional at the schema level so quick-quote forms can submit a short/empty
+  // note; the Contact form enforces a 10-char minimum client-side via the hook.
   message: z
     .string()
     .transform(clean)
-    .pipe(
-      z
-        .string()
-        .min(10, "Please add a few details about your project (10+ characters)")
-        .max(2000, "Please keep your message under 2000 characters"),
-    ),
+    .pipe(z.string().max(2000, "Please keep your message under 2000 characters"))
+    .optional(),
+
+  // Optional — the quote forms collect a postcode to scope the estimate.
+  postcode: z.string().trim().max(12, "That postcode looks too long").optional(),
 
   // GDPR: explicit, unticked-by-default consent. Must be a real boolean `true`.
   consent: z

@@ -1,55 +1,33 @@
 "use client";
 
-import { useId, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { services } from "@/lib/data";
 import { site } from "@/lib/site";
 import Icon from "@/components/ui/Icon";
-import FormConsent from "@/components/FormConsent";
+import { useLeadForm } from "@/lib/use-lead-form";
+import {
+  TextField,
+  SelectField,
+  TextareaField,
+  ConsentCheckbox,
+  Honeypot,
+  SubmitButton,
+  LeadErrorBanner,
+  LeadSuccess,
+} from "@/components/lead/fields";
 
-// Conversion-focused quote form. Front-end demo — wire `FormData` to an API
-// route, Resend/Formspree, or a CRM to capture leads in production.
+// Conversion-focused quote form. Renders more than once per page (hero +
+// #quote section) — each instance gets its own hook state, so that's fine.
 export default function QuoteForm() {
-  const [sent, setSent] = useState(false);
-  // This form renders more than once per page (hero + #quote section), so
-  // every control id must be instance-unique.
-  const uid = useId();
+  const f = useLeadForm({ source: "free-quote" });
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    // Honeypot anti-spam: silently ignore if the hidden field was filled.
-    const hp = e.currentTarget.elements.namedItem("_hp") as HTMLInputElement | null;
-    if (hp?.value) return;
-    setSent(true);
-  }
-
-  if (sent) {
+  if (f.status === "success") {
     return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.96 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="glass-strong grid min-h-[28rem] place-items-center rounded-3xl p-8 text-center"
-      >
-        <div>
-          <div className="mx-auto grid h-16 w-16 place-items-center rounded-full border border-gold/40 bg-gold/10 text-gold">
-            <Icon name="check" className="h-8 w-8" />
-          </div>
-          <h3 className="mt-6 text-2xl font-bold text-white">
-            Request received — thank you!
-          </h3>
-          <p className="mx-auto mt-3 max-w-sm text-concrete">
-            One of our team will call you within 24 hours to arrange your free,
-            no-obligation consultation. Prefer to talk now?
-          </p>
-          <a
-            href={site.phoneHref}
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 font-semibold text-ink transition-transform hover:scale-[1.03]"
-          >
-            <Icon name="phone" className="h-4 w-4" />
-            Call {site.phoneDisplay}
-          </a>
-        </div>
-      </motion.div>
+      <LeadSuccess
+        className="glass-strong min-h-[28rem] rounded-3xl p-8"
+        title="Request received — thank you!"
+        message="One of our team will call you within 24 hours to arrange your free, no-obligation consultation. Prefer to talk now?"
+      />
     );
   }
 
@@ -70,110 +48,39 @@ export default function QuoteForm() {
         Rated {site.rating}/5 by {site.reviewCount}+ homeowners
       </div>
 
-      <form onSubmit={onSubmit} className="mt-6 space-y-4">
+      <form onSubmit={f.onSubmit} noValidate className="mt-6 space-y-4">
         <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="Full name" name="name" placeholder="John Smith" />
-          <Field
-            label="Phone"
-            name="phone"
-            type="tel"
-            placeholder="07848 484088"
-          />
+          <TextField label="Full name" value={f.values.name} onChange={(v) => f.setField("name", v)} error={f.errors.name} placeholder="John Smith" autoComplete="name" disabled={f.busy} />
+          <TextField label="Phone" type="tel" value={f.values.phone} onChange={(v) => f.setField("phone", v)} error={f.errors.phone} placeholder="07848 484088" autoComplete="tel" disabled={f.busy} />
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
-          <Field
-            label="Email"
-            name="email"
-            type="email"
-            placeholder="you@email.co.uk"
-          />
-          <Field
-            label="Postcode"
-            name="postcode"
-            placeholder="WD4 8AB"
-            required={false}
-          />
+          <TextField label="Email" type="email" value={f.values.email} onChange={(v) => f.setField("email", v)} error={f.errors.email} placeholder="you@email.co.uk" autoComplete="email" disabled={f.busy} />
+          <TextField label="Postcode" value={f.values.postcode} onChange={(v) => f.setField("postcode", v)} error={f.errors.postcode} placeholder="WD4 8AB" autoComplete="postal-code" disabled={f.busy} />
         </div>
-        <div>
-          <label htmlFor={`${uid}-service`} className="mb-1.5 block text-sm text-concrete">
-            What do you need?
-          </label>
-          <select
-            id={`${uid}-service`}
-            name="service"
-            required
-            defaultValue=""
-            className="w-full rounded-xl border border-white/10 bg-ink px-4 py-3 text-base text-white outline-none transition-colors focus:border-gold/60 focus:ring-2 focus:ring-gold/25"
-          >
-            <option value="" disabled>
-              Select a service…
-            </option>
-            {services.map((s) => (
-              <option key={s.slug} value={s.title}>
-                {s.title}
-              </option>
-            ))}
-            <option value="Multiple / not sure">Multiple / not sure</option>
-          </select>
-        </div>
-        <div>
-          <label htmlFor={`${uid}-message`} className="mb-1.5 block text-sm text-concrete">
-            Project details{" "}
-            <span className="text-concrete-dark">(optional)</span>
-          </label>
-          <textarea
-            id={`${uid}-message`}
-            name="message"
-            rows={3}
-            placeholder="Tell us a little about your project and timescale…"
-            className="w-full resize-none rounded-xl border border-white/10 bg-ink px-4 py-3 text-base text-white placeholder-concrete-dark outline-none transition-colors focus:border-gold/60 focus:ring-2 focus:ring-gold/25"
-          />
-        </div>
-        <FormConsent />
-        <button
-          type="submit"
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-6 py-4 text-base font-bold text-ink transition-transform hover:scale-[1.02]"
-        >
-          Get my free quote
-          <Icon name="arrow" className="h-4 w-4" />
-        </button>
+
+        <SelectField label="What do you need?" value={f.values.service} onChange={(v) => f.setField("service", v)} error={f.errors.service} disabled={f.busy}>
+          {services.map((s) => (
+            <option key={s.slug} value={s.title}>{s.title}</option>
+          ))}
+          <option value="Multiple / not sure">Multiple / not sure</option>
+        </SelectField>
+
+        <TextareaField label="Project details" hint="(optional)" rows={3} value={f.values.message} onChange={(v) => f.setField("message", v)} error={f.errors.message} placeholder="Tell us a little about your project and timescale…" disabled={f.busy} />
+
+        <Honeypot inputRef={f.honeypotRef} />
+        <ConsentCheckbox checked={f.values.consent} onChange={(v) => f.setField("consent", v)} error={f.errors.consent} disabled={f.busy} />
+
+        <AnimatePresence>
+          {f.formError && <LeadErrorBanner message={f.formError} />}
+        </AnimatePresence>
+
+        <SubmitButton busy={f.busy} label="Get my free quote" busyLabel="Sending…" className="px-6 py-4 text-base font-bold" />
+
         <p className="flex items-center justify-center gap-2 text-center text-xs text-concrete-dark">
           <Icon name="shield" className="h-3.5 w-3.5 text-gold" />
-          Free &amp; no-obligation · We reply within 24 hours · Your details stay
-          private
+          Free &amp; no-obligation · We reply within 24 hours · Your details stay private
         </p>
       </form>
-    </div>
-  );
-}
-
-function Field({
-  label,
-  name,
-  type = "text",
-  placeholder,
-  required = true,
-}: {
-  label: string;
-  name: string;
-  type?: string;
-  placeholder?: string;
-  required?: boolean;
-}) {
-  const id = useId();
-  return (
-    <div>
-      <label htmlFor={id} className="mb-1.5 block text-sm text-concrete">
-        {label}
-      </label>
-      <input
-        id={id}
-        name={name}
-        type={type}
-        required={required}
-        placeholder={placeholder}
-        className="w-full rounded-xl border border-white/10 bg-ink px-4 py-3 text-base text-white placeholder-concrete-dark outline-none transition-colors focus:border-gold/60 focus:ring-2 focus:ring-gold/25"
-      />
     </div>
   );
 }

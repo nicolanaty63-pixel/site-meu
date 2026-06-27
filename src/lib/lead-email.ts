@@ -78,7 +78,9 @@ export function buildLeadEmail(lead: Lead, meta: LeadMeta): LeadEmail {
   const email = esc(lead.email);
   const phone = esc(lead.phone);
   const service = esc(lead.service);
-  const message = esc(lead.message).replace(/\n/g, "<br />");
+  const messageRaw = (lead.message ?? "").trim();
+  const message = messageRaw ? esc(messageRaw).replace(/\n/g, "<br />") : "(none provided)";
+  const postcode = lead.postcode ? esc(lead.postcode) : "";
   const phoneDigits = lead.phone.replace(/[^\d+]/g, "");
 
   const row = (label: string, value: string, href?: string) => `
@@ -108,6 +110,7 @@ export function buildLeadEmail(lead: Lead, meta: LeadMeta): LeadEmail {
             ${row("Name", name)}
             ${row("Phone", phone, phoneDigits ? `tel:${phoneDigits}` : undefined)}
             ${row("Email", email, `mailto:${email}`)}
+            ${postcode ? row("Postcode", postcode) : ""}
             ${row("Service", service)}
           </table>
         </td></tr>
@@ -149,10 +152,11 @@ export function buildLeadEmail(lead: Lead, meta: LeadMeta): LeadEmail {
     `Name:    ${lead.name}`,
     `Phone:   ${lead.phone}`,
     `Email:   ${lead.email}`,
+    ...(lead.postcode ? [`Postcode: ${lead.postcode}`] : []),
     `Service: ${lead.service}`,
     ``,
     `Project details:`,
-    lead.message,
+    messageRaw || "(none provided)",
     ``,
     `—`,
     `GDPR consent given at ${meta.receivedAt}`,
