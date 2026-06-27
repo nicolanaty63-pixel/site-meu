@@ -2,25 +2,61 @@ import { z } from "zod";
 import { clean } from "@/lib/reviews-shared";
 
 /**
- * Strict, isomorphic Zod schema for a lead/contact submission.
- * Reuse for the Server Action (authoritative) AND mirror on the client for UX.
- * `.strictObject` rejects unknown keys; `clean()` strips tags/control chars.
+ * Single, isomorphic Zod schema for a contact / lead submission.
+ *
+ * Used in TWO places so the rules can never drift:
+ *   • client (ContactForm) — instant inline field errors before any network hop
+ *   • server (/api/lead)   — the AUTHORITATIVE gate; the client check is only UX
+ *
+ * `.strictObject` rejects unknown keys; `clean()` strips HTML tags + control
+ * chars (defence-in-depth before the value is ever placed in an email).
+ * Every rule carries a human message so the same text drives the inline UI.
  */
 export const leadSchema = z.strictObject({
-  name: z.string().transform(clean).pipe(z.string().min(2).max(80)),
-  email: z.email().max(254).transform((s) => s.trim().toLowerCase()),
+  name: z
+    .string()
+    .transform(clean)
+    .pipe(z.string().min(2, "Please enter your name").max(80, "That name is too long")),
+
+  email: z
+    .email("Enter a valid email address")
+    .max(254, "That email is too long")
+    .transform((s) => s.trim().toLowerCase()),
+
   phone: z
     .string()
     .trim()
-    .regex(/^[0-9 +()\-]{7,32}$/, "Enter a valid phone number")
-    .optional()
-    .or(z.literal("")),
-  service: z.string().trim().max(60).optional(),
-  message: z.string().transform(clean).pipe(z.string().min(10).max(2000)),
-  consent: z.literal(true), // GDPR: explicit, unticked-by-default consent
-  company: z.unknown().optional(), // honeypot — validated as a bot trap
-  elapsedMs: z.coerce.number().optional(), // time-trap
+    .regex(/^[0-9 +()\-]{7,20}$/, "Enter a valid phone number"),
+
+  service: z
+    .string()
+    .trim()
+    .min(1, "Please choose a service")
+    .max(80, "That service name is too long"),
+
+  message: z
+    .string()
+    .transform(clean)
+    .pipe(
+      z
+        .string()
+        .min(10, "Please add a few details about your project (10+ characters)")
+        .max(2000, "Please keep your message under 2000 characters"),
+    ),
+
+  // GDPR: explicit, unticked-by-default consent. Must be a real boolean `true`.
+  consent: z
+    .boolean()
+    .refine((v) => v === true, "Please tick the consent box so we can reply"),
+
+  // Anti-spam — never shown to humans; validated purely as a bot trap.
+  company: z.unknown().optional(), // honeypot (must be empty)
+  elapsedMs: z.coerce.number().optional(), // ms since the form mounted (time-trap)
 });
 
 export type LeadInput = z.input<typeof leadSchema>;
 export type Lead = z.output<typeof leadSchema>;
+
+/** The user-facing fields, in display order — handy for the client form. */
+export const LEAD_FIELDS = ["name", "phone", "email", "service", "message", "consent"] as const;
+export type LeadField = (typeof LEAD_FIELDS)[number];
