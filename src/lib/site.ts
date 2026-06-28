@@ -55,7 +55,7 @@ export const site = {
    *  keep using reviewCount so it matches the public MyBuilder profile. */
   clientsServed: 350,
   yearsExperience: 15,
-  projectsCompleted: 100,
+  projectsCompleted: 150,
 
   // URLs — primary canonical domain is the non-www apex (www redirects to it).
   url: "https://nicollacontractors.co.uk",
