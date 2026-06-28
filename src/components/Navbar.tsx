@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { nav, site } from "@/lib/site";
 import Icon from "@/components/ui/Icon";
 import Logo from "@/components/Logo";
-import GooeyNav from "@/components/GooeyNav";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -57,17 +56,25 @@ export default function Navbar() {
           <Logo className="h-20 w-auto sm:h-48" priority />
         </Link>
 
-        {/* Desktop nav — GooeyNav (premium gold gooey). Phone/tablet keep the
-            hamburger menu below (lg:hidden) to protect mobile/tablet UX. */}
-        <div className="hidden lg:block">
-          <GooeyNav
-            items={nav.map((l) => ({ label: l.label, href: l.href }))}
-            colors={[1, 2, 3, 4]}
-            initialActiveIndex={Math.max(
-              0,
-              nav.findIndex((l) => l.href === pathname),
-            )}
-          />
+        {/* Desktop links */}
+        <div className="hidden items-center gap-2 lg:flex">
+          {nav.map((link) => {
+            const active = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`relative px-4 py-2 text-sm tracking-wide transition-colors ${
+                  active ? "text-white" : "text-concrete hover:text-white"
+                }`}
+              >
+                {link.label}
+                {active && (
+                  <span className="absolute inset-x-4 -bottom-0.5 h-px bg-gold" />
+                )}
+              </Link>
+            );
+          })}
         </div>
 
         <div className="flex items-center gap-4">
