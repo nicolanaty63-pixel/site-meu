@@ -1030,7 +1030,7 @@ export const stats: Stat[] = [
   { value: site.rating, decimals: 1, suffix: "/5", label: "Average rating" },
   { value: site.clientsServed, suffix: "+", label: "Happy clients" },
   { value: site.yearsExperience, suffix: "+", label: "Years experience" },
-  { value: site.projectsCompleted, suffix: "+", label: "MAJOR PROJECTS COMPLETED" },
+  { value: site.projectsCompleted, suffix: "+", label: "Major projects completed" },
 ];
 
 export type Badge = { icon: IconName; title: string; sub: string };
