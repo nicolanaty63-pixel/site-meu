@@ -1,0 +1,89 @@
+/* Custom cursor + film grain — ported from the reference ".cur / .dot / .grain". */
+
+.hv2 .hv-cur,
+.hv2 .hv-dot {
+  position: fixed;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  z-index: 99;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+.hv2 .hv-cur {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--hv-gold);
+  transition:
+    width 0.35s var(--hv-out),
+    height 0.35s var(--hv-out),
+    background 0.35s,
+    border-color 0.35s;
+}
+.hv2 .hv-cur.hv-big {
+  width: 64px;
+  height: 64px;
+  background: rgba(201, 162, 77, 0.12);
+  border-color: var(--hv-goldT);
+}
+.hv2 .hv-cur.hv-drag {
+  width: 74px;
+  height: 74px;
+  background: rgba(30, 39, 64, 0.55);
+  border-color: var(--hv-goldT);
+}
+.hv2 .hv-cur.hv-drag::after {
+  content: "swipe";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font: 500 10px var(--hv-caps);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--hv-goldL);
+  padding-left: 0.3em;
+}
+.hv2 .hv-dot {
+  width: 5px;
+  height: 5px;
+  background: var(--hv-goldL);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hv2 .hv-cur.hv-show,
+  .hv2 .hv-dot.hv-show {
+    display: block;
+  }
+  /* native cursor hidden on Home while the custom one runs — the text
+     I-beam stays in text fields */
+  html:has(.hv2.hv-cursor-on),
+  html:has(.hv2.hv-cursor-on) * {
+    cursor: none !important;
+  }
+  html:has(.hv2.hv-cursor-on)
+    :is(
+      textarea,
+      input:not([type="range"], [type="checkbox"], [type="radio"], [type="button"], [type="submit"])
+    ) {
+    cursor: text !important;
+  }
+}
+
+/* Film grain — desktop GPUs only (mix-blend-mode is costly on phones). */
+.hv2 .hv-grain {
+  display: none;
+}
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+  .hv2 .hv-grain {
+    display: block;
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 30;
+    opacity: 0.055;
+    mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>");
+  }
+}

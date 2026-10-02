@@ -1,0 +1,34 @@
+/* Below-the-fold reveals (spec 4.17): opacity 0 → 1, translateY(24px) → 0,
+   1.1s --hv-out, stagger .12s. Hidden only when scripting is on, so the
+   content is never lost without JS; reduced motion shows everything at once. */
+@media (scripting: enabled) {
+  .hv2 .hv-rv {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 1.1s var(--hv-out),
+      transform 1.1s var(--hv-out);
+  }
+  .hv2 .hv-rv.hv-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+.hv2 .hv-rv.hv-d1 {
+  transition-delay: 0.12s;
+}
+.hv2 .hv-rv.hv-d2 {
+  transition-delay: 0.24s;
+}
+.hv2 .hv-rv.hv-d3 {
+  transition-delay: 0.36s;
+}
+.hv2 .hv-rv.hv-d4 {
+  transition-delay: 0.48s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hv2 .hv-rv {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
