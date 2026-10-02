@@ -1,0 +1,198 @@
+/* Recent projects — ported from the reference ".lv-projects" + ".ag" rules. */
+
+.hv2 .hv-lv-projects {
+  position: relative;
+  overflow: hidden;
+  padding: 80px 0;
+}
+.hv2 .hv-lv-projects .hv-lv-orb {
+  right: -8%;
+  top: 25%;
+  width: 416px;
+  height: 416px;
+  background: rgba(49, 58, 82, 0.3);
+  filter: blur(140px);
+}
+.hv2 .hv-lv-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+.hv2 .hv-lv-projects .hv-lv-head h2 {
+  font-family: var(--hv-display);
+  font-style: italic;
+  font-weight: 800;
+  font-size: clamp(38px, 3.9vw, 58px);
+  line-height: 1.04;
+  letter-spacing: -0.005em;
+  color: #efe6ce;
+  text-wrap: initial;
+}
+.hv2 .hv-lv-projects .hv-lv-head h2 .hv-gd {
+  font-style: italic;
+  color: #d2ae5e;
+}
+
+/* AccordionGallery */
+.hv2 .hv-ag {
+  --ag-accent: #c9a24d;
+  --ag-overlay: #1e2740;
+  --ag-text: #efe6ce;
+  --ag-gap: 10px;
+  --ag-radius: 16px;
+  --ag-media: 320px;
+  display: flex;
+  flex-direction: row;
+  gap: var(--ag-gap);
+  width: 100%;
+  height: 460px;
+  perspective: 1400px;
+  perspective-origin: 50% 50%;
+  margin-top: 48px;
+}
+.hv2 .hv-ag-panel {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: var(--ag-radius);
+  display: block;
+  background: #161c2e;
+  box-shadow: 0 10px 30px -18px rgba(0, 0, 0, 0.8);
+  transform: rotateY(var(--rot, 0deg));
+  transform-style: preserve-3d;
+  transform-origin: center center;
+  transition:
+    flex-grow 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: flex-grow, transform;
+  outline: 0;
+}
+.hv2 .hv-ag-panel.hv-on {
+  flex-grow: var(--grow, 5);
+}
+.hv2 .hv-ag-panel:focus-visible {
+  box-shadow:
+    0 0 0 2px var(--ag-accent),
+    0 10px 30px -18px rgba(0, 0, 0, 0.8);
+}
+.hv2 .hv-ag-frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.hv2 .hv-ag-media {
+  --g: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--ag-media);
+  height: 100%;
+  transform: translate(-50%, -50%) translateX(var(--sx, 0px));
+  filter: grayscale(var(--g));
+  transition:
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hv2 .hv-ag-panel.hv-on .hv-ag-media {
+  --g: 0;
+}
+.hv2 .hv-ag-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 45%, rgba(30, 39, 64, 0.78) 100%);
+}
+.hv2 .hv-ag-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ag-overlay);
+  opacity: 0.35;
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hv2 .hv-ag-panel.hv-on .hv-ag-overlay::after {
+  opacity: 0;
+}
+.hv2 .hv-ag-label {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  pointer-events: none;
+  z-index: 2;
+}
+.hv2 .hv-ag-bar {
+  flex: 0 0 auto;
+  width: 3px;
+  height: 34px;
+  border-radius: 3px;
+  background: var(--ag-accent);
+  opacity: 0;
+  transform: translateX(-14px);
+  box-shadow: 0 0 12px rgba(201, 162, 77, 0.6);
+  transition:
+    opacity 0.36s,
+    transform 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hv2 .hv-ag-text {
+  color: var(--ag-text);
+  opacity: 0;
+  transform: translateX(-14px);
+  transition:
+    opacity 0.36s,
+    transform 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
+  min-width: 0;
+}
+.hv2 .hv-ag-text b {
+  display: block;
+  font: 600 clamp(16px, 1.4vw, 22px) / 1.2 var(--hv-sans);
+  letter-spacing: 0.01em;
+  color: #fff;
+}
+.hv2 .hv-ag-text small {
+  display: block;
+  margin-top: 3px;
+  font: 600 11px/1.3 var(--hv-sans);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hv-lv-gold);
+}
+.hv2 .hv-ag-panel.hv-on .hv-ag-bar {
+  opacity: 1;
+  transform: none;
+  transition-duration: 0.6s;
+}
+.hv2 .hv-ag-panel.hv-on .hv-ag-text {
+  opacity: 1;
+  transform: none;
+  transition-duration: 0.6s;
+  transition-delay: 0.06s;
+}
+@media (max-width: 640px) {
+  .hv2 .hv-ag {
+    flex-direction: column;
+    height: 640px;
+    perspective: none;
+  }
+  .hv2 .hv-ag-panel {
+    transform: none !important;
+    min-height: 64px;
+  }
+  .hv2 .hv-ag-media {
+    width: 100%;
+    height: var(--ag-media);
+    transform: translate(-50%, -50%) translateY(var(--sy, 0px));
+  }
+}

@@ -1,0 +1,49 @@
+/* Stats — ported from the reference ".lv-stats" rules. */
+
+.hv2 .hv-lv-stats {
+  padding: 72px 0 56px;
+}
+.hv2 .hv-lv-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+.hv2 .hv-lv-tile {
+  padding: 24px;
+  text-align: center;
+}
+.hv2 .hv-lv-num {
+  font-family: var(--hv-lv-display);
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  background: var(--hv-gold-number);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-variant-numeric: tabular-nums;
+}
+.hv2 .hv-lv-lbl {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--hv-lv-concrete);
+}
+@media (min-width: 640px) {
+  .hv2 .hv-lv-num {
+    font-size: 48px;
+  }
+}
+@media (max-width: 1023px) {
+  .hv2 .hv-lv-stats-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .hv2 .hv-lv-tile {
+    padding: 24px 8px;
+  }
+}
+@media (max-width: 520px) {
+  .hv2 .hv-lv-stats-grid {
+    gap: 16px;
+  }
+}

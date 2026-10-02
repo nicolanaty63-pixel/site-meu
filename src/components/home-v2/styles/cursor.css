@@ -69,6 +69,10 @@
     ) {
     cursor: text !important;
   }
+  /* the before/after range keeps its resize cursor, as in the prototype */
+  html:has(.hv2.hv-cursor-on) .hv2 .hv-lv-ba-range {
+    cursor: ew-resize !important;
+  }
 }
 
 /* Film grain — desktop GPUs only (mix-blend-mode is costly on phones). */

@@ -1,0 +1,164 @@
+/* What we do — ScrollStack, ported from the reference ".ss" rules
+   (incl. the "ScrollStack overrides" that win over the live-section base). */
+
+.hv2 .hv-ss {
+  position: relative;
+  padding: clamp(80px, 9vw, 120px) 0 40px;
+  font-family: var(--hv-serif);
+  color: var(--hv-ci);
+}
+.hv2 .hv-ss-head {
+  max-width: var(--hv-max);
+  margin: 0 auto 54px;
+  padding: 0 var(--hv-pad);
+}
+.hv2 .hv-ss .hv-lab {
+  margin-bottom: 20px;
+}
+.hv2 .hv-ss h2.hv-hook {
+  font-family: var(--hv-display);
+  font-style: italic;
+  font-weight: 800;
+  font-size: clamp(40px, 4.4vw, 66px);
+  line-height: 1.04;
+  letter-spacing: -0.005em;
+  color: var(--hv-ci);
+}
+.hv2 .hv-ss h2.hv-hook em {
+  color: var(--hv-goldT);
+}
+.hv2 .hv-ss .hv-sub {
+  margin-top: 14px;
+  font: italic 400 19px/1.5 var(--hv-serif);
+  color: var(--hv-c55);
+  max-width: 56ch;
+}
+
+.hv2 .hv-ss-stack {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 var(--hv-pad) 22vh;
+}
+.hv2 .hv-ss .hv-ss-card {
+  position: sticky;
+  top: calc(20vh + var(--i, 0) * 30px);
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+  min-height: 400px;
+  padding: clamp(28px, 3.4vw, 48px);
+  margin-bottom: 110px;
+  border-radius: 20px;
+  transform-origin: top center;
+  will-change: transform;
+  box-shadow: 0 30px 70px -30px rgba(10, 14, 28, 0.7);
+}
+.hv2 .hv-ss-card::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border-radius: 12px;
+  border: 1px solid;
+  pointer-events: none;
+  opacity: 0.5;
+}
+.hv2 .hv-ss-card .hv-rn {
+  font: italic 800 26px/1 var(--hv-display);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.hv2 .hv-ss-card .hv-rn::after {
+  content: "";
+  width: 40px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.5;
+}
+.hv2 .hv-ss .hv-ss-card h3 {
+  font: italic 800 clamp(30px, 3.2vw, 44px) / 1.06 var(--hv-display);
+  letter-spacing: -0.005em;
+  margin-bottom: 16px;
+  text-wrap: balance;
+  color: inherit;
+}
+.hv2 .hv-ss .hv-ss-card p {
+  font: 400 18px/1.55 var(--hv-serif);
+  max-width: 46ch;
+  margin-bottom: 22px;
+}
+.hv2 .hv-ss-frame {
+  position: relative;
+  aspect-ratio: 4/3;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.hv2 .hv-ss-frame img {
+  transition: transform 1.2s var(--hv-out);
+}
+.hv2 .hv-ss-card:hover .hv-ss-frame img {
+  transform: scale(1.05);
+}
+
+/* colourways: cream / navy (never gold on Home) */
+.hv2 .hv-ss-card.hv-cream {
+  background: var(--hv-cream-surface);
+  color: var(--hv-ink);
+}
+.hv2 .hv-ss-card.hv-cream::after {
+  border-color: rgba(156, 122, 47, 0.45);
+}
+.hv2 .hv-ss-card.hv-cream .hv-rn {
+  color: var(--hv-goldD);
+}
+.hv2 .hv-ss .hv-ss-card.hv-cream h3 {
+  color: var(--hv-navy);
+}
+.hv2 .hv-ss .hv-ss-card.hv-cream p {
+  color: var(--hv-muted);
+}
+.hv2 .hv-ss-card.hv-cream .hv-link {
+  color: var(--hv-goldD);
+}
+.hv2 .hv-ss-card.hv-cream .hv-link::after {
+  background: var(--hv-goldD);
+}
+.hv2 .hv-ss-card.hv-navy {
+  background: var(--hv-navy-surface);
+  color: var(--hv-ci);
+}
+.hv2 .hv-ss-card.hv-navy::after {
+  border-color: rgba(201, 162, 77, 0.45);
+}
+.hv2 .hv-ss-card.hv-navy .hv-rn {
+  color: var(--hv-goldT);
+}
+.hv2 .hv-ss .hv-ss-card.hv-navy h3 {
+  color: var(--hv-ci);
+}
+.hv2 .hv-ss .hv-ss-card.hv-navy p {
+  color: var(--hv-c70);
+}
+
+.hv2 .hv-ss-end {
+  height: 1px;
+}
+.hv2 .hv-ss-more {
+  max-width: 1100px;
+  margin: 20px auto 0;
+  padding: 0 var(--hv-pad);
+}
+
+@media (max-width: 860px) {
+  .hv2 .hv-ss .hv-ss-card {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    margin-bottom: 80px;
+  }
+  .hv2 .hv-ss-frame {
+    order: -1;
+    aspect-ratio: 16/10;
+  }
+}

@@ -135,13 +135,13 @@ export const beforeAfterCopy = {
     "Drag the slider to see the difference our team makes. Tired, dated spaces become bright, premium rooms built to last.",
   before: {
     src: "/before.jpg",
-    alt: "Bathroom before renovation — dated suite and worn tiling",
+    alt: "Rear of a semi-detached house before work — pebbledash walls and an open carport",
     tag: "Before",
     caption: "Dated & tired",
   },
   after: {
     src: "/after.jpg",
-    alt: "The same bathroom after renovation — premium modern finish",
+    alt: "The same house after extension and rendering — white render, bi-fold doors and a new patio",
     tag: "After",
     caption: "Premium finish",
   },

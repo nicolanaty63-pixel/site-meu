@@ -4,6 +4,10 @@ import HomeFooter from "@/components/home-v2/chrome/HomeFooter";
 import HomeCursor from "@/components/home-v2/chrome/HomeCursor";
 import RevealObserver from "@/components/home-v2/motion/RevealObserver";
 import HeroSection from "@/components/home-v2/hero/HeroSection";
+import StatsSection from "@/components/home-v2/sections/StatsSection";
+import ServicesStack from "@/components/home-v2/sections/ServicesStack";
+import ProjectsGallery from "@/components/home-v2/sections/ProjectsGallery";
+import BeforeAfter from "@/components/home-v2/sections/BeforeAfter";
 import LegacyHome from "@/components/home-v2/legacy/LegacyHome";
 
 // Home (`/`) renders its own chrome (see components/SiteChrome). Sections not
@@ -19,8 +23,12 @@ export default function HomePage() {
       <main id="main">
         <HomeRoot>
           <HeroSection />
+          <StatsSection />
+          <ServicesStack />
+          <ProjectsGallery />
+          <BeforeAfter />
         </HomeRoot>
-        <LegacyHome only={["badges", "stats", "services", "projects", "beforeAfter", "process", "testimonials", "cta", "faq", "contact"]} />
+        <LegacyHome only={["process", "testimonials", "cta", "faq", "contact"]} />
       </main>
       <HomeRoot>
         <HomeFooter />
