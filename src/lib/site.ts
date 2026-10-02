@@ -11,6 +11,9 @@ export const site = {
   // Contact
   phoneDisplay: "07848 484088",
   phoneHref: "tel:+447848484088",
+  /** Second line — currently surfaced on the Home page only. */
+  phone2Display: "07848 526349",
+  phone2Href: "tel:+447848526349",
   whatsapp: "447848484088",
   email: "info@nicollacontractors.co.uk",
 

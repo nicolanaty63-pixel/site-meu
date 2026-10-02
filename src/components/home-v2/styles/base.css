@@ -1,0 +1,428 @@
+/* ==========================================================================
+   Home v2 — scoped tokens + shared primitives.
+
+   Everything in components/home-v2 is scoped twice so it can never touch
+   another route, even if this sheet lingers after a client-side navigation:
+     1. every selector sits under the `.hv2` root (rendered only by `/`);
+     2. every class name carries an `hv-` prefix, so nothing collides with
+        the global utilities in app/globals.css (.grain, .glass, …) or with
+        Tailwind's own class names (.hidden, .sticky, …).
+   Values are ported 1:1 from documentation/design-handoff/home-design-system.css
+   (`--x` there → `--hv-x` here; `.x` there → `.hv-x` here).
+   ========================================================================== */
+
+.hv2 {
+  /* colours */
+  --hv-navy: #1e2740;
+  --hv-navy2: #2a3550;
+  --hv-navy3: #354063;
+  --hv-deep: #161c2e;
+  --hv-deep2: #121728;
+  --hv-footer: #182036;
+  --hv-gold: #c9a24d;
+  --hv-goldT: #d2ae5e;
+  --hv-goldD: #9c7a2f;
+  --hv-goldL: #f0de9c;
+  --hv-cream: #f4efe4;
+  --hv-ci: #efe6ce;
+  --hv-ink: #1b2236;
+  --hv-muted: #4b536b;
+  --hv-c70: rgba(239, 230, 206, 0.7);
+  --hv-c55: rgba(239, 230, 206, 0.55);
+  --hv-c30: rgba(239, 230, 206, 0.28);
+  --hv-c14: rgba(239, 230, 206, 0.14);
+  --hv-c08: rgba(239, 230, 206, 0.08);
+  --hv-g30: rgba(201, 162, 77, 0.3);
+  --hv-g14: rgba(201, 162, 77, 0.14);
+  /* "live" set — buttons, eyebrows, numbers */
+  --hv-lv-ink: #1e2740;
+  --hv-lv-charcoal: #182036;
+  --hv-lv-surface: #2a3550;
+  --hv-lv-surface2: #354063;
+  --hv-lv-deep: #161c2e;
+  --hv-lv-navy: #313a52;
+  --hv-lv-concrete: #9aa1b8;
+  --hv-lv-concrete-d: #697089;
+  --hv-lv-gold: #c8a24c;
+  --hv-lv-gold-l: #e7cd8c;
+  --hv-lv-gold-d: #9c7a30;
+  /* surfaces */
+  --hv-cream-surface: radial-gradient(120% 90% at 30% 20%, #f8f0da, #f1e7cc 60%, #e4d7b4);
+  --hv-navy-surface: linear-gradient(140deg, #354063, #2a3550 60%, #1e2740);
+  --hv-gold-number: linear-gradient(100deg, #e7cd8c, #c8a24c 50%, #9c7a30);
+  /* layout */
+  --hv-pad: clamp(22px, 5.4vw, 84px);
+  --hv-max: 1380px;
+  /* motion */
+  --hv-ease: cubic-bezier(0.77, 0, 0.18, 1);
+  --hv-out: cubic-bezier(0.16, 1, 0.3, 1);
+  /* type — the reference's families mapped onto next/font variables.
+     EB Garamond 800 italic lives in its own face (--hv-display); every
+     other EB Garamond use (400 / 400 italic) is --hv-serif. */
+  --hv-display: var(--hv-font-display), Georgia, "Times New Roman", serif;
+  --hv-serif: var(--hv-font-serif), Georgia, "Times New Roman", serif;
+  --hv-caps: var(--hv-font-caps), Georgia, serif;
+  --hv-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  --hv-num: var(--font-sora), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --hv-lv-display: var(--font-sora), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  position: relative;
+  background: var(--hv-navy);
+  color: var(--hv-ci);
+  font: 400 18px/1.6 var(--hv-serif);
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  /* clip (not hidden): stops stray horizontal overflow without creating a
+     scroll container, so position:sticky inside keeps working. */
+  overflow-x: clip;
+}
+
+/* The page behind the Home root takes the Home navy (overscroll, gaps), and
+   the body's global overflow-x:hidden — which would make <body> the sticky
+   scroll container and silently disable position:sticky — becomes clip.
+   Scoped with :has() so it only applies while the Home tree is mounted. */
+body:has(.hv2) {
+  background-color: #1e2740;
+  overflow-x: clip;
+}
+
+/* ---- neutralise the global @layer base typography inside Home ---------- */
+.hv2 :where(h1, h2, h3, h4, h5, h6) {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  text-wrap: inherit;
+}
+.hv2 :where(p) {
+  line-height: inherit;
+  text-wrap: inherit;
+}
+.hv2 :where(a) {
+  color: inherit;
+  text-decoration: none;
+}
+.hv2 :where(ul, ol) {
+  list-style: none;
+}
+.hv2 :where(button) {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+}
+.hv2 ::selection {
+  background: var(--hv-gold);
+  color: var(--hv-navy);
+}
+.hv2 :focus-visible {
+  outline: 1px solid var(--hv-goldL);
+  outline-offset: 3px;
+}
+.hv2 section[id] {
+  scroll-margin-top: 100px;
+}
+
+/* ---- utilities ----------------------------------------------------------- */
+.hv2 .hv-wrap {
+  max-width: var(--hv-max);
+  margin: 0 auto;
+  padding: 0 var(--hv-pad);
+  position: relative;
+}
+.hv2 .hv-sec {
+  padding: clamp(96px, 11vw, 150px) 0;
+}
+.hv2 .hv-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+/* Eyebrow, cream/hero style (Playfair caps + 30px gradient rule) */
+.hv2 .hv-lab {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  font: 500 11.5px/1 var(--hv-caps);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--hv-goldT);
+}
+.hv2 .hv-lab::before {
+  content: "";
+  width: 30px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--hv-goldD), var(--hv-goldL));
+  flex: none;
+}
+/* Display titles */
+.hv2 .hv-hook {
+  font: italic 800 clamp(46px, 5.3vw, 86px) / 1 var(--hv-display);
+  letter-spacing: -0.006em;
+  color: var(--hv-ci);
+  text-wrap: balance;
+}
+.hv2 .hv-hook.hv-sm {
+  font-size: clamp(40px, 4.4vw, 68px);
+  line-height: 1.04;
+}
+.hv2 .hv-hook em {
+  font-style: italic;
+  color: var(--hv-goldT);
+}
+.hv2 .hv-p {
+  font-size: 19px;
+  line-height: 1.58;
+  color: var(--hv-c70);
+  max-width: 54ch;
+}
+.hv2 .hv-num {
+  font-variant-numeric: lining-nums tabular-nums;
+}
+/* Arrow text link (Playfair caps, underline 35% → 100%) */
+.hv2 .hv-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font: 500 11.5px/1 var(--hv-caps);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--hv-goldT);
+  padding-bottom: 8px;
+  transition: color 0.4s;
+}
+.hv2 .hv-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 100%;
+  background: var(--hv-gold);
+  transform: scaleX(0.35);
+  transform-origin: left;
+  transition: transform 0.6s var(--hv-ease);
+}
+.hv2 .hv-link:hover {
+  color: var(--hv-goldL);
+}
+.hv2 .hv-link:hover::after {
+  transform: scaleX(1);
+}
+.hv2 .hv-link svg {
+  width: 22px;
+  height: 9px;
+  transition: transform 0.5s var(--hv-ease);
+}
+.hv2 .hv-link:hover svg {
+  transform: translateX(5px);
+}
+
+/* ---- buttons: outlined gold with corner ticks ----------------------------- */
+.hv2 .hv-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  padding: 19px 32px;
+  border: 1px solid var(--hv-gold);
+  color: var(--hv-goldT);
+  font: 500 12px/1 var(--hv-caps);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  isolation: isolate;
+  overflow: hidden;
+  transition: color 0.5s var(--hv-ease);
+  white-space: nowrap;
+}
+.hv2 .hv-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, var(--hv-goldD), var(--hv-gold) 45%, var(--hv-goldL));
+  transform: translateX(-101%) skewX(-8deg);
+  transform-origin: left;
+  z-index: -1;
+  transition: transform 0.6s var(--hv-ease);
+}
+.hv2 .hv-btn:hover {
+  color: var(--hv-navy);
+}
+.hv2 .hv-btn:hover::before {
+  transform: translateX(0) skewX(0);
+}
+.hv2 .hv-btn .hv-tk {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  transition: transform 0.5s var(--hv-ease);
+}
+.hv2 .hv-btn .hv-tk.hv-a {
+  left: -1px;
+  top: -1px;
+  border-left: 1px solid var(--hv-goldL);
+  border-top: 1px solid var(--hv-goldL);
+}
+.hv2 .hv-btn .hv-tk.hv-b {
+  right: -1px;
+  bottom: -1px;
+  border-right: 1px solid var(--hv-goldL);
+  border-bottom: 1px solid var(--hv-goldL);
+}
+.hv2 .hv-btn:hover .hv-tk.hv-a {
+  transform: translate(-5px, -5px);
+}
+.hv2 .hv-btn:hover .hv-tk.hv-b {
+  transform: translate(5px, 5px);
+}
+.hv2 .hv-btn svg {
+  width: 26px;
+  height: 10px;
+  transition: transform 0.5s var(--hv-ease);
+}
+.hv2 .hv-btn:hover svg {
+  transform: translateX(6px);
+}
+.hv2 .hv-btn.hv-solid {
+  background: linear-gradient(100deg, var(--hv-goldD), var(--hv-gold) 45%, var(--hv-goldL));
+  color: var(--hv-navy);
+  border-color: transparent;
+}
+.hv2 .hv-btn.hv-solid::before {
+  background: var(--hv-ci);
+}
+.hv2 .hv-btn.hv-solid:hover {
+  color: var(--hv-navy);
+}
+.hv2 .hv-btn.hv-solid .hv-tk {
+  border-color: var(--hv-navy);
+  opacity: 0.5;
+}
+
+/* ---- "live" sections (stats, projects, before/after, FAQ, contact, footer)
+   — Inter body, Sora headings, the live gold set. ------------------------- */
+.hv2 .hv-lv {
+  background: var(--hv-lv-ink);
+  color: #c2c6d6;
+  font-family: var(--hv-sans);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+.hv2 .hv-lv-wrap {
+  max-width: 1152px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+}
+.hv2 .hv-lv :is(h2, h3, h4) {
+  font-family: var(--hv-lv-display);
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  text-wrap: balance;
+  color: #fff;
+}
+.hv2 .hv-lv h2 {
+  letter-spacing: -0.028em;
+}
+.hv2 .hv-lv p {
+  text-wrap: pretty;
+}
+.hv2 .hv-lv-head {
+  max-width: 672px;
+}
+.hv2 .hv-lv-head.hv-center {
+  margin: 0 auto;
+  text-align: center;
+}
+/* Eyebrow, live style (Inter 600 caps + 24px rule) */
+.hv2 .hv-lv-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--hv-lv-gold);
+}
+.hv2 .hv-lv-eyebrow i {
+  width: 24px;
+  height: 1px;
+  background: rgba(200, 162, 76, 0.6);
+}
+.hv2 .hv-lv-head h2 {
+  margin-top: 16px;
+  font-size: 30px;
+  font-weight: 700;
+}
+.hv2 .hv-lv-head p {
+  margin-top: 16px;
+  font-size: 16px;
+  line-height: 1.625;
+  color: var(--hv-lv-concrete);
+}
+@media (min-width: 640px) {
+  .hv2 .hv-lv-head h2 {
+    font-size: 36px;
+  }
+}
+.hv2 .hv-lv-ico {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+.hv2 .hv-lv-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  transition:
+    color 0.3s,
+    border-color 0.3s;
+  white-space: nowrap;
+}
+.hv2 .hv-lv-pill svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s;
+}
+.hv2 .hv-lv-pill:hover {
+  color: var(--hv-lv-gold);
+  border-color: var(--hv-lv-gold);
+}
+.hv2 .hv-lv-pill:hover svg {
+  transform: translateX(4px);
+}
+.hv2 .hv-lv-center {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+.hv2 .hv-lv-orb {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(150px);
+}
+
+/* ---- reduced motion: no animations or transitions anywhere in Home ------- */
+@media (prefers-reduced-motion: reduce) {
+  .hv2 *,
+  .hv2 *::before,
+  .hv2 *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

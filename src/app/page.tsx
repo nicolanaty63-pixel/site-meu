@@ -15,6 +15,9 @@ import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import Magnetic from "@/components/motion/Magnetic";
 import { projects, stats, badges, process } from "@/lib/data";
 import { site } from "@/lib/site";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import HomeRoot from "@/components/home-v2/HomeRoot";
 
 // Flagship services featured on the homepage with premium copy + photography.
 // The full set (incl. laminate flooring & refurbishment) lives on /services.
@@ -54,8 +57,12 @@ const featuredServices = [
 ] as const;
 
 export default function HomePage() {
+  // Home renders its own chrome (see components/SiteChrome). The redesign
+  // replaces these legacy sections phase by phase.
   return (
-    <>
+    <HomeRoot>
+      <Navbar />
+      <main className="pt-28 sm:pt-52">
       <Hero />
 
       {/* Trust badges */}
@@ -401,6 +408,8 @@ export default function HomePage() {
           </div>
         </Container>
       </section>
-    </>
+      </main>
+      <Footer />
+    </HomeRoot>
   );
 }

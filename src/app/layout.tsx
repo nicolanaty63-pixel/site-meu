@@ -9,6 +9,7 @@ import ConsentProvider from "@/components/consent/ConsentProvider";
 import CookieBanner from "@/components/consent/CookieBanner";
 import Analytics from "@/components/consent/Analytics";
 import Schema from "@/components/Schema";
+import { NotOnHome, SiteMain } from "@/components/SiteChrome";
 import { site } from "@/lib/site";
 
 const inter = Inter({
@@ -102,20 +103,28 @@ export default function RootLayout({
               tend to have more GPU headroom. Visual brand atmosphere is
               preserved at every viewport; the smaller mobile blur is
               imperceptible against a 32rem-wide blob. */}
-        <div
-          className="pointer-events-none fixed inset-0 -z-10 transform-gpu overflow-hidden"
-          style={{ transform: "translate3d(0, 0, 0)" }}
-        >
-          <div className="bg-grid absolute inset-0" />
-          <div className="absolute left-1/2 top-[-12rem] h-[32rem] w-[60rem] -translate-x-1/2 rounded-full bg-gold/10 blur-[80px] sm:blur-[160px]" />
-          <div className="absolute bottom-[-12rem] right-[-8rem] h-[32rem] w-[32rem] rounded-full bg-navy/50 blur-[80px] sm:blur-[150px]" />
-        </div>
+        <NotOnHome>
+          <div
+            className="pointer-events-none fixed inset-0 -z-10 transform-gpu overflow-hidden"
+            style={{ transform: "translate3d(0, 0, 0)" }}
+          >
+            <div className="bg-grid absolute inset-0" />
+            <div className="absolute left-1/2 top-[-12rem] h-[32rem] w-[60rem] -translate-x-1/2 rounded-full bg-gold/10 blur-[80px] sm:blur-[160px]" />
+            <div className="absolute bottom-[-12rem] right-[-8rem] h-[32rem] w-[32rem] rounded-full bg-navy/50 blur-[80px] sm:blur-[150px]" />
+          </div>
+        </NotOnHome>
 
         <ConsentProvider>
-          <ScrollProgress />
-          <Navbar />
-          <main className="pt-28 sm:pt-52">{children}</main>
-          <Footer />
+          {/* Home (`/`) renders its own nav, footer and <main> — see
+              components/SiteChrome. Every other route is unchanged. */}
+          <NotOnHome>
+            <ScrollProgress />
+            <Navbar />
+          </NotOnHome>
+          <SiteMain>{children}</SiteMain>
+          <NotOnHome>
+            <Footer />
+          </NotOnHome>
           <WhatsAppButton />
           <CookieBanner />
           <Analytics />
