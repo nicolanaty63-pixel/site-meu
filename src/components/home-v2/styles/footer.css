@@ -40,7 +40,7 @@
   width: 16px;
   height: 16px;
 }
-.hv2 .hv-lv-fcol h4 {
+.hv2 .hv-lv .hv-lv-fcol h4 {
   font-family: var(--hv-sans);
   font-size: 14px;
   font-weight: 600;

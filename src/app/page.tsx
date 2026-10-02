@@ -11,37 +11,27 @@ import BeforeAfter from "@/components/home-v2/sections/BeforeAfter";
 import ProcessThread from "@/components/home-v2/sections/ProcessThread";
 import TestimonialLetter from "@/components/home-v2/sections/TestimonialLetter";
 import FaqFolder from "@/components/home-v2/sections/FaqFolder";
-import LegacyHome from "@/components/home-v2/legacy/LegacyHome";
+import ContactSection from "@/components/home-v2/sections/ContactSection";
 
-// Home (`/`) renders its own chrome (see components/SiteChrome). Sections not
-// yet rebuilt still render from LegacyHome (temporary, removed in phase 6).
+// Home (`/`) renders its own chrome (see components/SiteChrome).
 export default function HomePage() {
   return (
-    <>
-      <HomeRoot>
-        <HomeCursor />
-        <RevealObserver />
-        <HomeNavbar />
-      </HomeRoot>
+    <HomeRoot>
+      <HomeCursor />
+      <RevealObserver />
+      <HomeNavbar />
       <main id="main">
-        <HomeRoot>
-          <HeroSection />
-          <StatsSection />
-          <ServicesStack />
-          <ProjectsGallery />
-          <BeforeAfter />
-          <ProcessThread />
-          <TestimonialLetter />
-        </HomeRoot>
-        <LegacyHome only={["cta"]} />
-        <HomeRoot>
-          <FaqFolder />
-        </HomeRoot>
-        <LegacyHome only={["contact"]} />
+        <HeroSection />
+        <StatsSection />
+        <ServicesStack />
+        <ProjectsGallery />
+        <BeforeAfter />
+        <ProcessThread />
+        <TestimonialLetter />
+        <FaqFolder />
+        <ContactSection />
       </main>
-      <HomeRoot>
-        <HomeFooter />
-      </HomeRoot>
-    </>
+      <HomeFooter />
+    </HomeRoot>
   );
 }

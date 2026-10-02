@@ -1,0 +1,204 @@
+/* SlideCommit — ported from the reference ".sc" rules. */
+
+.hv2 .hv-sc {
+  position: relative;
+  display: block;
+  flex: 1;
+  max-width: 290px;
+  min-width: 210px;
+  height: 56px;
+  margin-left: 16px;
+  --sc-r: 28px;
+  --sc-gr: 24px;
+}
+.hv2 .hv-sc-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--sc-r);
+  background: #151a2b;
+  box-shadow:
+    inset 0 0 0 1px rgba(240, 222, 156, 0.14),
+    inset 0 3px 10px rgba(0, 0, 0, 0.4);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.hv2 .hv-sc[data-held] .hv-sc-track {
+  cursor: grabbing;
+}
+.hv2 .hv-sc[data-phase="pending"] .hv-sc-track,
+.hv2 .hv-sc[data-phase="done"] .hv-sc-track {
+  cursor: default;
+}
+.hv2 .hv-sc-label {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding-left: 22px;
+  pointer-events: none;
+  font: 500 10.5px var(--hv-caps);
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.hv2 .hv-sc-text {
+  grid-area: 1/1;
+  color: rgba(239, 230, 206, 0.45);
+  transition:
+    opacity 0.2s,
+    filter 0.2s;
+}
+.hv2 .hv-sc-text.hv-err {
+  color: #e0b08a;
+  opacity: 0;
+  filter: blur(2px);
+}
+.hv2 .hv-sc[data-phase="error"] .hv-sc-text.hv-plain {
+  opacity: 0;
+  filter: blur(2px);
+}
+.hv2 .hv-sc[data-phase="error"] .hv-sc-text.hv-err {
+  opacity: 1;
+  filter: none;
+}
+.hv2 .hv-sc-cap {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(100% - 8px);
+  height: calc(100% - 8px);
+  background: linear-gradient(100deg, #9c7a2f, #c9a24d 45%, #f0de9c);
+  color: #1e2740;
+  outline: none;
+  transition:
+    background 0.2s,
+    color 0.2s;
+  will-change: clip-path, transform;
+  box-shadow: 0 6px 16px rgba(201, 162, 77, 0.28);
+}
+.hv2 .hv-sc[data-phase="done"] .hv-sc-cap {
+  background: linear-gradient(100deg, #c9a24d, #f0de9c 60%, #fff3c4);
+}
+.hv2 .hv-sc[data-phase="error"] .hv-sc-cap {
+  background: #b5583f;
+  color: #fff3e6;
+}
+.hv2 .hv-sc-cap:focus-visible {
+  box-shadow:
+    inset 0 0 0 2px #151a2b,
+    0 6px 16px rgba(201, 162, 77, 0.28);
+}
+.hv2 .hv-sc-content {
+  position: absolute;
+  inset: 0;
+}
+.hv2 .hv-sc-arrow,
+.hv2 .hv-sc-spin,
+.hv2 .hv-sc-done {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  pointer-events: none;
+  font: 500 10.5px var(--hv-caps);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.hv2 .hv-sc-arrow svg {
+  width: 20px;
+  height: 20px;
+}
+.hv2 .hv-sc-arrow,
+.hv2 .hv-sc-spin {
+  transition: filter 0.2s;
+}
+.hv2 .hv-sc[data-phase="pending"] .hv-sc-arrow {
+  filter: blur(2px);
+}
+.hv2 .hv-sc:not([data-phase="pending"]) .hv-sc-spin {
+  filter: blur(2px);
+}
+.hv2 .hv-sc-spin svg {
+  width: 20px;
+  height: 20px;
+  animation: hv-scspin 1s linear infinite;
+  animation-play-state: paused;
+}
+.hv2 .hv-sc[data-phase="pending"] .hv-sc-spin svg {
+  animation-play-state: running;
+}
+.hv2 .hv-sc-done {
+  opacity: 0;
+  transform: scale(0.95);
+  transition:
+    opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1),
+    transform 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.hv2 .hv-sc[data-phase="done"] .hv-sc-done {
+  opacity: 1;
+  transform: none;
+}
+.hv2 .hv-sc-done svg {
+  width: 18px;
+  height: 18px;
+}
+.hv2 .hv-sc-track.hv-shake {
+  animation: hv-scshake 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+}
+@keyframes hv-scshake {
+  0% {
+    transform: none;
+  }
+  17% {
+    transform: translateX(-5px);
+  }
+  34% {
+    transform: translateX(5px);
+  }
+  51% {
+    transform: translateX(-3px);
+  }
+  68% {
+    transform: translateX(3px);
+  }
+  85% {
+    transform: translateX(-1px);
+  }
+  100% {
+    transform: none;
+  }
+}
+.hv2 .hv-sc-track.hv-dip {
+  animation: hv-scdip 0.46s cubic-bezier(0.23, 1, 0.32, 1) 0.1s;
+}
+@keyframes hv-scdip {
+  0% {
+    transform: scale(1);
+  }
+  62% {
+    transform: scale(0.974);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes hv-scspin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (max-width: 640px) {
+  .hv2 .hv-sc {
+    min-width: 0;
+    max-width: none;
+    margin-left: 14px;
+  }
+}

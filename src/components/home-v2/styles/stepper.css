@@ -1,0 +1,548 @@
+/* Contact Stepper — ported from the reference ".stp / .chips / .stp-f" rules. */
+
+.hv2 .hv-stp {
+  position: relative;
+  align-self: start;
+  border-radius: 24px;
+  border: 1px solid rgba(240, 222, 156, 0.14);
+  background: linear-gradient(180deg, rgba(35, 45, 75, 0.85), rgba(22, 27, 46, 0.9));
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  padding: 28px 32px 30px;
+}
+.hv2 .hv-stp-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font: 500 10.5px var(--hv-caps);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--hv-goldT);
+}
+.hv2 .hv-stp-top span:last-child {
+  color: rgba(239, 230, 206, 0.42);
+}
+.hv2 .hv-stp-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 22px 0 26px;
+}
+.hv2 .hv-stp-ind {
+  position: relative;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(240, 222, 156, 0.14);
+  display: grid;
+  place-items: center;
+  color: rgba(239, 230, 206, 0.5);
+  font: 500 12px var(--hv-caps);
+  cursor: pointer;
+  transition:
+    background 0.35s,
+    border-color 0.35s,
+    color 0.35s,
+    transform 0.35s var(--hv-ease);
+}
+.hv2 .hv-stp-ind .hv-n,
+.hv2 .hv-stp-ind .hv-d,
+.hv2 .hv-stp-ind .hv-ck {
+  grid-area: 1/1;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+}
+.hv2 .hv-stp-ind .hv-n {
+  font-style: normal;
+}
+.hv2 .hv-stp-ind .hv-d {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #1e2740;
+  opacity: 0;
+  transform: scale(0.4);
+}
+.hv2 .hv-stp-ind .hv-ck {
+  width: 16px;
+  height: 16px;
+  color: #1e2740;
+  opacity: 0;
+  transform: scale(0.6);
+}
+.hv2 .hv-stp-ind .hv-ck path {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  transition: stroke-dashoffset 0.35s ease-out 0.1s;
+}
+.hv2 .hv-stp-ind.hv-active,
+.hv2 .hv-stp-ind.hv-complete {
+  background: linear-gradient(135deg, #f0de9c, #c9a24d 55%, #9c7a2f);
+  border-color: transparent;
+  color: #1e2740;
+  box-shadow: 0 6px 16px rgba(201, 162, 77, 0.25);
+}
+.hv2 .hv-stp-ind.hv-active .hv-n,
+.hv2 .hv-stp-ind.hv-complete .hv-n {
+  opacity: 0;
+}
+.hv2 .hv-stp-ind.hv-active .hv-d {
+  opacity: 1;
+  transform: scale(1);
+}
+.hv2 .hv-stp-ind.hv-complete .hv-ck {
+  opacity: 1;
+  transform: scale(1);
+}
+.hv2 .hv-stp-ind.hv-complete .hv-ck path {
+  stroke-dashoffset: 0;
+}
+.hv2 .hv-stp-ind.hv-locked {
+  cursor: default;
+}
+.hv2 .hv-stp-ind:not(.hv-locked):hover {
+  transform: scale(1.08);
+}
+.hv2 .hv-stp-con {
+  position: relative;
+  flex: 1;
+  height: 2px;
+  margin: 0 8px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+.hv2 .hv-stp-con i {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #9c7a2f, #d2ae5e);
+  transition: width 0.45s var(--hv-ease);
+}
+.hv2 .hv-stp-con.hv-done i {
+  width: 100%;
+}
+
+/* sliding steps + animated height */
+.hv2 .hv-stp-body {
+  position: relative;
+  overflow: hidden;
+  transition: height 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.hv2 .hv-stp-step {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.42s;
+}
+.hv2 .hv-stp-step.hv-live {
+  position: relative;
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+.hv2 .hv-stp-step:not(.hv-live) {
+  visibility: hidden;
+}
+.hv2 .hv-stp-step.hv-enter-f,
+.hv2 .hv-stp-step.hv-enter-b,
+.hv2 .hv-stp-step.hv-exit-f,
+.hv2 .hv-stp-step.hv-exit-b,
+.hv2 .hv-stp-step[style*="opacity"] {
+  visibility: visible;
+}
+.hv2 .hv-stp-step.hv-enter-f {
+  transform: translateX(-100%);
+}
+.hv2 .hv-stp-step.hv-enter-b {
+  transform: translateX(100%);
+}
+.hv2 .hv-stp-step.hv-exit-f {
+  transform: translateX(50%);
+  opacity: 0;
+}
+.hv2 .hv-stp-step.hv-exit-b {
+  transform: translateX(-50%);
+  opacity: 0;
+}
+.hv2 .hv-stp-step.hv-measure {
+  position: absolute;
+  visibility: hidden;
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+.hv2 .hv-stp-k {
+  display: block;
+  font: 500 10.5px var(--hv-caps);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(239, 230, 206, 0.42);
+  margin-bottom: 12px;
+}
+.hv2 .hv-lv .hv-stp h3 {
+  font: italic 800 clamp(24px, 2.2vw, 30px) / 1.15 var(--hv-display);
+  color: #efe6ce;
+  letter-spacing: -0.005em;
+  margin: 0 0 20px;
+}
+.hv2 .hv-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.hv2 .hv-chip {
+  border: 1px solid rgba(240, 222, 156, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  color: #efe6ce;
+  font: 400 16.5px/1 var(--hv-serif);
+  padding: 11px 18px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    border-color 0.3s,
+    background 0.3s,
+    color 0.3s,
+    transform 0.3s var(--hv-ease);
+}
+.hv2 .hv-chip:hover {
+  border-color: rgba(201, 162, 77, 0.6);
+  transform: translateY(-1px);
+}
+.hv2 .hv-chip.hv-on {
+  background: linear-gradient(135deg, #f0de9c, #c9a24d 55%, #9c7a2f);
+  color: #1e2740;
+  border-color: transparent;
+  font-weight: 500;
+  box-shadow: 0 8px 18px rgba(201, 162, 77, 0.22);
+}
+.hv2 .hv-stp-fields {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 14px;
+}
+.hv2 .hv-stp-f {
+  display: block;
+  font: 400 13px/1.4 var(--hv-sans);
+  color: var(--hv-lv-concrete);
+}
+.hv2 .hv-stp-f > span {
+  display: block;
+  margin-bottom: 8px;
+}
+.hv2 .hv-stp input:not([type="checkbox"]) {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--hv-lv-deep);
+  padding: 13px 16px;
+  font: 400 16px/1.5 var(--hv-sans);
+  color: #fff;
+  outline: 0;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.hv2 .hv-stp input::placeholder {
+  color: var(--hv-lv-concrete-d);
+}
+.hv2 .hv-stp input:not([type="checkbox"]):focus {
+  border-color: rgba(200, 162, 76, 0.6);
+  box-shadow: 0 0 0 2px rgba(200, 162, 76, 0.25);
+}
+.hv2 .hv-stp input.hv-bad {
+  border-color: rgba(214, 120, 90, 0.7);
+  box-shadow: 0 0 0 2px rgba(214, 120, 90, 0.2);
+}
+
+/* consent — the site's explicit, unticked GDPR checkbox in the Home look */
+.hv2 .hv-stp-consent {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-top: 16px;
+  font: 400 12px/1.55 var(--hv-sans);
+  color: var(--hv-lv-concrete);
+  cursor: pointer;
+}
+.hv2 .hv-stp-consent input {
+  position: absolute;
+  opacity: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+}
+.hv2 .hv-stp-consent .hv-box {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  border-radius: 6px;
+  border: 1px solid rgba(240, 222, 156, 0.3);
+  background: var(--hv-lv-deep);
+  color: #1e2740;
+  transition:
+    background 0.25s,
+    border-color 0.25s,
+    box-shadow 0.25s;
+}
+.hv2 .hv-stp-consent .hv-box svg {
+  width: 14px;
+  height: 14px;
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+.hv2 .hv-stp-consent input:checked + .hv-box {
+  background: linear-gradient(135deg, #f0de9c, #c9a24d 55%, #9c7a2f);
+  border-color: transparent;
+}
+.hv2 .hv-stp-consent input:checked + .hv-box svg {
+  opacity: 1;
+  transform: none;
+}
+.hv2 .hv-stp-consent input:focus-visible + .hv-box {
+  outline: 1px solid var(--hv-goldL);
+  outline-offset: 3px;
+}
+.hv2 .hv-stp-consent.hv-bad .hv-box {
+  border-color: rgba(214, 120, 90, 0.7);
+  box-shadow: 0 0 0 2px rgba(214, 120, 90, 0.2);
+}
+.hv2 .hv-stp-consent a {
+  color: var(--hv-lv-gold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.hv2 .hv-stp-err {
+  min-height: 18px;
+  margin: 10px 0 0;
+  font: italic 400 14px var(--hv-serif);
+  color: #e0b08a;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.hv2 .hv-stp-err.hv-show {
+  opacity: 1;
+}
+.hv2 .hv-stp-fine {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin: 14px 0 0;
+  font: 400 11.5px/1.55 var(--hv-sans);
+  color: var(--hv-lv-concrete-d);
+}
+.hv2 .hv-stp-fine svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  margin-top: 2px;
+  color: var(--hv-lv-gold);
+}
+
+/* footer: Back + Continue (SlideCommit replaces Continue on question 4) */
+.hv2 .hv-stp-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+.hv2 .hv-stp-back {
+  font: 500 11px var(--hv-caps);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(239, 230, 206, 0.45);
+  padding: 8px 0;
+  cursor: pointer;
+  transition:
+    color 0.3s,
+    opacity 0.3s;
+}
+.hv2 .hv-stp-back:hover {
+  color: #efe6ce;
+}
+.hv2 .hv-stp-back.hv-off {
+  opacity: 0;
+  pointer-events: none;
+}
+.hv2 .hv-stp-next {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 999px;
+  padding: 14px 26px 14px 28px;
+  background: linear-gradient(100deg, #9c7a2f, #c9a24d 45%, #f0de9c);
+  color: #1e2740;
+  font: 500 11.5px var(--hv-caps);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(201, 162, 77, 0.22);
+  transition:
+    transform 0.35s var(--hv-ease),
+    box-shadow 0.35s;
+}
+.hv2 .hv-stp-next:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(201, 162, 77, 0.3);
+}
+.hv2 .hv-stp-next svg {
+  width: 18px;
+  height: 10px;
+  transition: transform 0.4s var(--hv-ease);
+}
+.hv2 .hv-stp-next:hover svg {
+  transform: translateX(4px);
+}
+.hv2 .hv-stp[data-step="4"] .hv-stp-next {
+  display: none;
+}
+.hv2 .hv-stp:not([data-step="4"]) .hv-sc {
+  display: none;
+}
+.hv2 .hv-shake {
+  animation: hv-shk 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+@keyframes hv-shk {
+  10%,
+  90% {
+    transform: translateX(-1px);
+  }
+  20%,
+  80% {
+    transform: translateX(2px);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translateX(-4px);
+  }
+  40%,
+  60% {
+    transform: translateX(4px);
+  }
+}
+
+/* success */
+.hv2 .hv-stp-done {
+  display: none;
+  text-align: center;
+  padding: 26px 0 18px;
+}
+.hv2 .hv-stp.hv-done .hv-stp-row,
+.hv2 .hv-stp.hv-done .hv-stp-body,
+.hv2 .hv-stp.hv-done .hv-stp-foot {
+  display: none;
+}
+.hv2 .hv-stp.hv-done .hv-stp-done {
+  display: block;
+  animation: hv-stp-in 0.6s var(--hv-out) both;
+}
+.hv2 .hv-stp-done .hv-ok {
+  margin: 0 auto 22px;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f0de9c, #c9a24d 55%, #9c7a2f);
+  color: #1e2740;
+  box-shadow: 0 12px 30px rgba(201, 162, 77, 0.3);
+}
+.hv2 .hv-stp-done .hv-ok svg {
+  width: 28px;
+  height: 28px;
+}
+.hv2 .hv-stp-done .hv-ok path {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: hv-ckd 0.5s ease-out 0.35s forwards;
+}
+@keyframes hv-ckd {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes hv-stp-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hv2 .hv-stp-done .hv-ok path {
+    stroke-dashoffset: 0;
+  }
+}
+.hv2 .hv-lv .hv-stp-done h3 {
+  margin-bottom: 12px;
+}
+.hv2 .hv-stp-done p {
+  font: 400 17px/1.55 var(--hv-serif);
+  color: rgba(239, 230, 206, 0.72);
+  max-width: 40ch;
+  margin: 0 auto;
+}
+.hv2 .hv-stp-done .hv-sum {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+.hv2 .hv-stp-done .hv-sum span {
+  font: 500 10.5px var(--hv-caps);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--hv-goldT);
+  border: 1px solid rgba(201, 162, 77, 0.35);
+  border-radius: 999px;
+  padding: 8px 14px;
+}
+@media (max-width: 860px) {
+  .hv2 .hv-stp .hv-dsk {
+    display: none;
+  }
+}
+@media (max-width: 640px) {
+  .hv2 .hv-stp {
+    padding: 22px 20px 24px;
+  }
+  .hv2 .hv-stp-fields {
+    grid-template-columns: 1fr;
+  }
+  .hv2 .hv-stp-next {
+    padding: 13px 20px;
+  }
+  .hv2 .hv-stp-top {
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+  }
+}

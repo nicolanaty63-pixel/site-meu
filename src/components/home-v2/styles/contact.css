@@ -1,0 +1,229 @@
+/* Get in touch — ported from the reference ".lv-contact / .lv-rc / .bgl" rules. */
+
+.hv2 .hv-lv-contact {
+  padding: 80px 0;
+  overflow-x: clip;
+}
+.hv2 .hv-lv-contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+.hv2 .hv-stp-col {
+  align-self: start;
+}
+.hv2 .hv-lv-rows {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.hv2 .hv-lv-rc {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(22, 27, 46, 0.4);
+  padding: 16px;
+  transition: border-color 0.3s;
+}
+.hv2 .hv-lv-rc .hv-ci {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 50%;
+  background: rgba(200, 162, 76, 0.1);
+  color: var(--hv-lv-gold);
+}
+.hv2 .hv-lv-rc small {
+  display: block;
+  font-size: 12px;
+  color: var(--hv-lv-concrete);
+  line-height: 1.5;
+}
+.hv2 .hv-lv-rc b {
+  display: block;
+  font-weight: 500;
+  color: #fff;
+  line-height: 1.5;
+}
+.hv2 .hv-lv-rc b a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.hv2 .hv-lv-rc b a:hover {
+  color: var(--hv-lv-gold);
+}
+.hv2 .hv-lv-rc b .hv-sep {
+  font-style: normal;
+  color: var(--hv-lv-gold);
+  margin: 0 10px;
+  opacity: 0.8;
+}
+
+/* BorderGlow */
+.hv2 .hv-bgl {
+  --edge-proximity: 0;
+  --cursor-angle: 45deg;
+  --edge-sensitivity: 30;
+  --color-sensitivity: calc(var(--edge-sensitivity) + 20);
+  --border-radius: 12px;
+  --glow-padding: 40px;
+  --cone-spread: 25;
+  --fill-opacity: 0.5;
+  --card-bg: #1a2138;
+  --glow-color: hsl(43deg 62% 72% / 100%);
+  --glow-color-60: hsl(43deg 62% 72% / 60%);
+  --glow-color-50: hsl(43deg 62% 72% / 50%);
+  --glow-color-40: hsl(43deg 62% 72% / 40%);
+  --glow-color-30: hsl(43deg 62% 72% / 30%);
+  --glow-color-20: hsl(43deg 62% 72% / 20%);
+  --glow-color-10: hsl(43deg 62% 72% / 10%);
+  --gradient-one: radial-gradient(at 80% 55%, #f0de9c 0px, transparent 50%);
+  --gradient-two: radial-gradient(at 69% 34%, #c9a24d 0px, transparent 50%);
+  --gradient-three: radial-gradient(at 8% 6%, #9c7a2f 0px, transparent 50%);
+  --gradient-four: radial-gradient(at 41% 38%, #f0de9c 0px, transparent 50%);
+  --gradient-five: radial-gradient(at 86% 85%, #c9a24d 0px, transparent 50%);
+  --gradient-six: radial-gradient(at 82% 18%, #9c7a2f 0px, transparent 50%);
+  --gradient-seven: radial-gradient(at 51% 4%, #c9a24d 0px, transparent 50%);
+  --gradient-base: linear-gradient(#f0de9c 0 100%);
+  position: relative;
+  isolation: isolate;
+  transform: translate3d(0, 0, 0.01px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--card-bg);
+  overflow: visible;
+  border-radius: var(--border-radius);
+}
+.hv2 .hv-bgl::before,
+.hv2 .hv-bgl::after,
+.hv2 .hv-bgl > .hv-edge-light {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  transition: opacity 0.25s ease-out;
+  z-index: -1;
+  pointer-events: none;
+}
+.hv2 .hv-bgl::before {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--card-bg) 0 100%) padding-box,
+    linear-gradient(rgb(255 255 255 / 0%) 0% 100%) border-box,
+    var(--gradient-one) border-box,
+    var(--gradient-two) border-box,
+    var(--gradient-three) border-box,
+    var(--gradient-four) border-box,
+    var(--gradient-five) border-box,
+    var(--gradient-six) border-box,
+    var(--gradient-seven) border-box,
+    var(--gradient-base) border-box;
+  opacity: calc((var(--edge-proximity) - var(--color-sensitivity)) / (100 - var(--color-sensitivity)));
+  -webkit-mask-image: conic-gradient(
+    from var(--cursor-angle) at center,
+    black calc(var(--cone-spread) * 1%),
+    transparent calc((var(--cone-spread) + 15) * 1%),
+    transparent calc((100 - var(--cone-spread) - 15) * 1%),
+    black calc((100 - var(--cone-spread)) * 1%)
+  );
+  mask-image: conic-gradient(
+    from var(--cursor-angle) at center,
+    black calc(var(--cone-spread) * 1%),
+    transparent calc((var(--cone-spread) + 15) * 1%),
+    transparent calc((100 - var(--cone-spread) - 15) * 1%),
+    black calc((100 - var(--cone-spread)) * 1%)
+  );
+}
+.hv2 .hv-bgl::after {
+  border: 1px solid transparent;
+  background:
+    var(--gradient-one) padding-box,
+    var(--gradient-two) padding-box,
+    var(--gradient-three) padding-box,
+    var(--gradient-four) padding-box,
+    var(--gradient-five) padding-box,
+    var(--gradient-six) padding-box,
+    var(--gradient-seven) padding-box,
+    var(--gradient-base) padding-box;
+  -webkit-mask-image:
+    linear-gradient(to bottom, black, black),
+    radial-gradient(ellipse at 50% 50%, black 40%, transparent 65%),
+    radial-gradient(ellipse at 66% 66%, black 5%, transparent 40%),
+    radial-gradient(ellipse at 33% 33%, black 5%, transparent 40%),
+    radial-gradient(ellipse at 66% 33%, black 5%, transparent 40%),
+    radial-gradient(ellipse at 33% 66%, black 5%, transparent 40%),
+    conic-gradient(from var(--cursor-angle) at center, transparent 5%, black 15%, black 85%, transparent 95%);
+  mask-image:
+    linear-gradient(to bottom, black, black),
+    radial-gradient(ellipse at 50% 50%, black 40%, transparent 65%),
+    radial-gradient(ellipse at 66% 66%, black 5%, transparent 40%),
+    radial-gradient(ellipse at 33% 33%, black 5%, transparent 40%),
+    radial-gradient(ellipse at 66% 33%, black 5%, transparent 40%),
+    radial-gradient(ellipse at 33% 66%, black 5%, transparent 40%),
+    conic-gradient(from var(--cursor-angle) at center, transparent 5%, black 15%, black 85%, transparent 95%);
+  -webkit-mask-composite: source-out, source-over, source-over, source-over, source-over, source-over;
+  mask-composite: subtract, add, add, add, add, add;
+  opacity: calc(var(--fill-opacity) * (var(--edge-proximity) - var(--color-sensitivity)) / (100 - var(--color-sensitivity)));
+  mix-blend-mode: soft-light;
+}
+.hv2 .hv-bgl > .hv-edge-light {
+  inset: calc(var(--glow-padding) * -1);
+  z-index: 1;
+  -webkit-mask-image: conic-gradient(from var(--cursor-angle) at center, black 2.5%, transparent 10%, transparent 90%, black 97.5%);
+  mask-image: conic-gradient(from var(--cursor-angle) at center, black 2.5%, transparent 10%, transparent 90%, black 97.5%);
+  opacity: calc((var(--edge-proximity) - var(--edge-sensitivity)) / (100 - var(--edge-sensitivity)));
+  mix-blend-mode: plus-lighter;
+}
+.hv2 .hv-bgl > .hv-edge-light::before {
+  content: "";
+  position: absolute;
+  inset: var(--glow-padding);
+  border-radius: inherit;
+  box-shadow:
+    inset 0 0 0 1px var(--glow-color),
+    inset 0 0 1px 0 var(--glow-color-60),
+    inset 0 0 3px 0 var(--glow-color-50),
+    inset 0 0 6px 0 var(--glow-color-40),
+    inset 0 0 15px 0 var(--glow-color-30),
+    inset 0 0 25px 2px var(--glow-color-20),
+    inset 0 0 50px 2px var(--glow-color-10),
+    0 0 1px 0 var(--glow-color-60),
+    0 0 3px 0 var(--glow-color-50),
+    0 0 6px 0 var(--glow-color-40),
+    0 0 15px 0 var(--glow-color-30),
+    0 0 25px 2px var(--glow-color-20),
+    0 0 50px 2px var(--glow-color-10);
+}
+.hv2 .hv-bgl > *:not(.hv-edge-light) {
+  position: relative;
+  z-index: 1;
+}
+/* phones/tablets: no soft-light fill layer under the moving glow (the same
+   blend-mode perf gate as the site's .img-grade-wash) */
+@media (max-width: 1023px) {
+  .hv2 .hv-bgl::after {
+    display: none;
+  }
+  .hv2 .hv-lv-contact-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .hv2 .hv-lv-rc > span {
+    min-width: 0;
+  }
+  .hv2 .hv-lv-rc b {
+    overflow-wrap: anywhere;
+  }
+}
+@media (max-width: 420px) {
+  .hv2 .hv-lv-rc b .hv-sep {
+    display: none;
+  }
+  .hv2 .hv-lv-rc b a {
+    display: block;
+  }
+}
