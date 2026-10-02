@@ -1,0 +1,183 @@
+/* Hero — ported from the reference ".hero" rules. */
+
+.hv2 .hv-hero {
+  position: relative;
+  min-height: 88svh;
+  background: radial-gradient(120% 90% at 35% 40%, #fbf8f1 0%, var(--hv-cream) 55%, #e9e1cf 100%);
+  color: var(--hv-ink);
+  overflow: clip;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.hv2 .hv-cloud {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(64px);
+  pointer-events: none;
+}
+.hv2 .hv-cloud.hv-a {
+  left: -140px;
+  top: -120px;
+  width: 640px;
+  height: 460px;
+  background: #e9d9a8;
+  opacity: 0.34;
+}
+.hv2 .hv-cloud.hv-b {
+  left: -100px;
+  bottom: -220px;
+  width: 560px;
+  height: 400px;
+  background: #e9d9a8;
+  opacity: 0.28;
+}
+.hv2 .hv-cloud.hv-c {
+  right: -180px;
+  top: 10%;
+  width: 720px;
+  height: 560px;
+  background: #e6d6a6;
+  opacity: 0.34;
+}
+.hv2 .hv-cloud.hv-d {
+  right: -60px;
+  bottom: -200px;
+  width: 520px;
+  height: 380px;
+  background: #ead9a0;
+  opacity: 0.24;
+}
+
+.hv2 .hv-hero-in {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 64px);
+  padding: calc(238px + env(safe-area-inset-top, 0px) + 3vh) var(--hv-pad) clamp(50px, 7vh, 90px);
+  max-width: var(--hv-max);
+  margin: 0 auto;
+  width: 100%;
+}
+.hv2 .hv-hero-text {
+  position: relative;
+  min-width: 0;
+  /* the title sizes itself from this column's width (see wordmark.css) */
+  container-type: inline-size;
+}
+.hv2 .hv-hero-side {
+  position: relative;
+  min-width: 0;
+}
+.hv2 .hv-hero .hv-p {
+  margin-bottom: 36px;
+  color: var(--hv-muted);
+}
+.hv2 .hv-hero .hv-cta {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+
+/* "Get in touch": silver text with a passing gold glint */
+.hv2 .hv-btn-wave {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  font: 600 14px/1 var(--hv-caps);
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #7a8089;
+}
+.hv2 .hv-btn-wave svg {
+  width: 26px;
+  height: 10px;
+  color: var(--hv-goldD);
+  transition: transform 0.5s var(--hv-ease);
+}
+.hv2 .hv-btn-wave:hover svg {
+  transform: translateX(6px);
+}
+.hv2 .hv-btn-wave span {
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(100deg, #5f656e 0%, #b9bec6 38%, #6f757e 58%, #d2d6dc 82%, #666c75 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: filter 0.5s;
+}
+.hv2 .hv-btn-wave span::after {
+  content: attr(data-t);
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 32%,
+    #9c7a2f 42%,
+    #d2ae5e 47%,
+    #fff6d6 50%,
+    #d2ae5e 53%,
+    #9c7a2f 58%,
+    transparent 68%
+  );
+  background-size: 260% 100%;
+  background-repeat: no-repeat;
+  background-position: 130% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: hv-sheen 5.5s cubic-bezier(0.45, 0, 0.25, 1) infinite 1.2s;
+  pointer-events: none;
+}
+@keyframes hv-sheen {
+  0% {
+    background-position: 130% 0;
+  }
+  50% {
+    background-position: -130% 0;
+  }
+  100% {
+    background-position: -130% 0;
+  }
+}
+.hv2 .hv-btn-wave::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 6px;
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--hv-goldD), var(--hv-goldL));
+  transform: scaleX(0.32);
+  transform-origin: left;
+  transition: transform 0.6s var(--hv-ease);
+}
+.hv2 .hv-btn-wave:hover::after {
+  transform: scaleX(1);
+}
+.hv2 .hv-btn-wave:hover span {
+  filter: brightness(0.9);
+}
+
+@media (max-width: 860px) {
+  .hv2 .hv-hero {
+    min-height: 0;
+  }
+  .hv2 .hv-hero-in {
+    grid-template-columns: 1fr;
+    padding-top: calc(176px + env(safe-area-inset-top, 0px) + 20px);
+    padding-bottom: 64px;
+    gap: 44px;
+  }
+  .hv2 .hv-hero .hv-p {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+}

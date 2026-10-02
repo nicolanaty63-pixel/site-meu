@@ -1,0 +1,108 @@
+/* DepthCarousel — ported from the reference ".dc" rules + layout() in
+   home-interactions.js: depth 220, spread 90, tilt 22° (mobile 150/58/16°),
+   4 visible, blur 6, falloff .2, radius 18. --k is a card's depth index
+   (0 = front), --kk the same index clamped to the last visible slot. */
+
+.hv2 .hv-dc {
+  position: relative;
+  height: 560px;
+  perspective: 1400px;
+  perspective-origin: 50% 50%;
+  --cw: 360px;
+  --ch: 456px;
+  --dc-depth: 220px;
+  --dc-spread: 90px;
+  --dc-tilt: 22deg;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;
+  overscroll-behavior-x: contain;
+}
+.hv2 .hv-dc:focus-visible {
+  outline-offset: 6px;
+}
+.hv2 .hv-dc-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--cw);
+  height: var(--ch);
+  margin: calc(var(--ch) / -2) 0 0 calc(var(--cw) / -2);
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--hv-navy2);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  box-shadow: 0 34px 70px -28px rgba(27, 34, 54, 0.55);
+  z-index: calc(5 - var(--kk));
+  transform: translate3d(calc(var(--dc-spread) * var(--kk)), 0, calc(var(--dc-depth) * var(--kk) * -1))
+    rotateY(var(--dc-tilt));
+  opacity: max(0, 1 - 0.2 * var(--k));
+  filter: blur(calc(var(--kk) * 2px));
+  transition:
+    transform 0.7s var(--hv-out),
+    opacity 0.7s var(--hv-out),
+    filter 0.7s var(--hv-out);
+  will-change: transform;
+}
+.hv2 .hv-dc-card img {
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+.hv2 .hv-dc-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #05060a;
+  opacity: min(0.8, calc(var(--k) * 0.26));
+  transition: opacity 0.7s var(--hv-out);
+}
+.hv2 .hv-dc-card.hv-front {
+  cursor: grab;
+}
+.hv2 .hv-dc-card.hv-hidden {
+  opacity: 0 !important;
+  pointer-events: none;
+  filter: blur(6px);
+}
+.hv2 .hv-dc-card.hv-hidden::after {
+  opacity: 0.8;
+}
+.hv2 .hv-dc-cap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  padding: 18px 20px;
+  background: linear-gradient(180deg, rgba(18, 23, 40, 0), rgba(18, 23, 40, 0.75));
+  color: var(--hv-ci);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.hv2 .hv-dc-card.hv-front .hv-dc-cap {
+  opacity: 1;
+}
+.hv2 .hv-dc-cap b {
+  display: block;
+  font: 500 11px var(--hv-caps);
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--hv-goldL);
+  margin-bottom: 4px;
+}
+.hv2 .hv-dc-cap span {
+  font: italic 400 15px var(--hv-serif);
+  color: var(--hv-c70);
+}
+
+@media (max-width: 860px) {
+  .hv2 .hv-dc {
+    height: 430px;
+    --cw: 250px;
+    --ch: 317px;
+    --dc-depth: 150px;
+    --dc-spread: 58px;
+    --dc-tilt: 16deg;
+  }
+}

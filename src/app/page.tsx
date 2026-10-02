@@ -3,6 +3,7 @@ import HomeNavbar from "@/components/home-v2/chrome/HomeNavbar";
 import HomeFooter from "@/components/home-v2/chrome/HomeFooter";
 import HomeCursor from "@/components/home-v2/chrome/HomeCursor";
 import RevealObserver from "@/components/home-v2/motion/RevealObserver";
+import HeroSection from "@/components/home-v2/hero/HeroSection";
 import LegacyHome from "@/components/home-v2/legacy/LegacyHome";
 
 // Home (`/`) renders its own chrome (see components/SiteChrome). Sections not
@@ -16,7 +17,10 @@ export default function HomePage() {
         <HomeNavbar />
       </HomeRoot>
       <main id="main">
-        <LegacyHome only={["hero", "badges", "stats", "services", "projects", "beforeAfter", "process", "testimonials", "cta", "faq", "contact"]} />
+        <HomeRoot>
+          <HeroSection />
+        </HomeRoot>
+        <LegacyHome only={["badges", "stats", "services", "projects", "beforeAfter", "process", "testimonials", "cta", "faq", "contact"]} />
       </main>
       <HomeRoot>
         <HomeFooter />

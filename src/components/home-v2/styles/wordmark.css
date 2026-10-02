@@ -1,0 +1,117 @@
+/* Hero title + vector-outline wordmark — ported from the reference
+   ".hero .hook / .wm" rules. 1em of the <h1> = 100 glyph units, so the box
+   is exactly the prototype's SVG box (W × H glyph units, filling the text
+   column, capped at max-width W/S·86px). */
+
+.hv2 .hv-wm {
+  position: relative;
+  display: block;
+  margin-bottom: 20px;
+  font: italic 800 min(86px, calc(100cqw * 100 / 1011.9)) / 0.96 var(--hv-display);
+  width: calc(1011.9em / 100);
+  max-width: 100%;
+  height: calc(303.8em / 100);
+  color: var(--hv-navy);
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+/* Server-rendered lines, placed so each baseline sits on the SVG's
+   (first baseline Y0 = .76em, pitch LH = .96em, left inset PADX = .1em). */
+.hv2 .hv-wm-lines {
+  position: absolute;
+  left: 0.1em;
+  top: var(--hv-wm-top, -0.1145em);
+}
+/* each line clips its own slide-up; the clip box reaches from the
+   ascenders to below the descenders like the prototype's clip rects */
+.hv2 .hv-wm .hv-l {
+  display: block;
+  overflow: hidden;
+  /* (one negative margin only: adjacent negative margins collapse) */
+  padding: 0.04em 0.12em 0.2125em 0;
+  margin: 0 -0.12em -0.2525em 0;
+}
+.hv2 .hv-wm .hv-li {
+  display: block;
+  animation: hv-line-up 1.3s var(--hv-out) both;
+}
+.hv2 .hv-wm .hv-l:nth-child(1) .hv-li {
+  animation-delay: 0.25s;
+}
+.hv2 .hv-wm .hv-l:nth-child(2) .hv-li {
+  animation-delay: 0.38s;
+}
+.hv2 .hv-wm .hv-l:nth-child(3) .hv-li {
+  animation-delay: 0.51s;
+}
+@keyframes hv-line-up {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: none;
+  }
+}
+/* Once the vector letters take over, the text stays for assistive tech. */
+.hv2 .hv-wm.hv-wm-on .hv-wm-lines {
+  color: transparent;
+}
+
+/* vector overlay */
+.hv2 .hv-wm-svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  touch-action: pan-y;
+}
+.hv2 .hv-wm-svg .hv-g .hv-f {
+  fill: var(--hv-navy);
+  transition: fill-opacity 0.12s linear;
+}
+.hv2 .hv-wm-svg .hv-g .hv-o {
+  fill: none;
+  stroke: var(--hv-navy);
+  stroke-linejoin: round;
+  transition: stroke-opacity 0.12s linear;
+}
+.hv2 .hv-wm-svg .hv-g.hv-drag {
+  cursor: grabbing;
+}
+.hv2 .hv-wm-svg .hv-sel {
+  fill: none;
+  stroke: var(--hv-goldD);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.hv2 .hv-wm-svg .hv-sel.hv-on {
+  opacity: 1;
+}
+.hv2 .hv-wm-svg .hv-hd {
+  fill: var(--hv-cream);
+  stroke: var(--hv-goldD);
+}
+.hv2 .hv-wm-svg .hv-lbl {
+  fill: var(--hv-goldD);
+  font-family: var(--hv-caps);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.hv2 .hv-wm-svg .hv-lbl.hv-on {
+  opacity: 1;
+}
+.hv2 .hv-wm-svg .hv-con {
+  stroke: var(--hv-goldD);
+  stroke-dasharray: 3 3;
+  fill: none;
+  opacity: 0.6;
+}
+.hv2 .hv-wm-svg .hv-sp {
+  fill: var(--hv-gold);
+}
