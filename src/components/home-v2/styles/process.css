@@ -1,0 +1,106 @@
+/* How it works — ported from the reference ".proc / .steps / .thread" rules. */
+
+.hv2 .hv-proc {
+  position: relative;
+  background: var(--hv-lv-ink);
+}
+.hv2 .hv-proc .hv-cols {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(40px, 6vw, 120px);
+}
+.hv2 .hv-proc .hv-sticky {
+  position: sticky;
+  top: 130px;
+  align-self: start;
+}
+.hv2 .hv-proc .hv-lab {
+  margin-bottom: 24px;
+}
+.hv2 .hv-proc .hv-hook {
+  margin-bottom: 26px;
+}
+.hv2 .hv-proc .hv-p {
+  margin-bottom: 36px;
+}
+.hv2 .hv-steps {
+  position: relative;
+  padding-left: 64px;
+}
+.hv2 .hv-thread {
+  position: absolute;
+  left: 14px;
+  top: 0;
+  width: 28px;
+  height: 100%;
+  overflow: visible;
+}
+.hv2 .hv-thread .hv-base {
+  fill: none;
+  stroke: var(--hv-c14);
+  stroke-width: 1;
+}
+.hv2 .hv-thread .hv-draw {
+  fill: none;
+  stroke: url(#hv-proc-foil);
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+.hv2 .hv-step {
+  position: relative;
+  padding: 8px 0 52px;
+  opacity: 0.28;
+  transform: translateX(10px);
+  transition:
+    opacity 0.8s var(--hv-out),
+    transform 0.8s var(--hv-out);
+}
+.hv2 .hv-step.hv-on {
+  opacity: 1;
+  transform: none;
+}
+.hv2 .hv-step::before {
+  content: "";
+  position: absolute;
+  left: -56px;
+  top: 20px;
+  width: 12px;
+  height: 12px;
+  background: var(--hv-lv-ink);
+  border: 1px solid var(--hv-gold);
+  transform: rotate(45deg);
+  transition:
+    background 0.5s,
+    box-shadow 0.5s;
+}
+.hv2 .hv-step.hv-on::before {
+  background: var(--hv-goldL);
+  box-shadow: 0 0 0 6px rgba(201, 162, 77, 0.12);
+}
+.hv2 .hv-step .hv-rn {
+  font: 500 11px var(--hv-caps);
+  letter-spacing: 0.3em;
+  color: var(--hv-goldT);
+  margin-bottom: 10px;
+}
+.hv2 .hv-step h3 {
+  font: 600 23px/1.25 var(--hv-caps);
+  color: var(--hv-ci);
+  margin-bottom: 10px;
+}
+.hv2 .hv-step p {
+  font: 400 17.5px/1.55 var(--hv-serif);
+  color: var(--hv-c70);
+  max-width: 46ch;
+}
+.hv2 .hv-step:last-child {
+  padding-bottom: 10px;
+}
+@media (max-width: 860px) {
+  .hv2 .hv-proc .hv-cols {
+    grid-template-columns: 1fr;
+  }
+  .hv2 .hv-proc .hv-sticky {
+    position: static;
+  }
+}

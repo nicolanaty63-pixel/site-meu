@@ -8,6 +8,9 @@ import StatsSection from "@/components/home-v2/sections/StatsSection";
 import ServicesStack from "@/components/home-v2/sections/ServicesStack";
 import ProjectsGallery from "@/components/home-v2/sections/ProjectsGallery";
 import BeforeAfter from "@/components/home-v2/sections/BeforeAfter";
+import ProcessThread from "@/components/home-v2/sections/ProcessThread";
+import TestimonialLetter from "@/components/home-v2/sections/TestimonialLetter";
+import FaqFolder from "@/components/home-v2/sections/FaqFolder";
 import LegacyHome from "@/components/home-v2/legacy/LegacyHome";
 
 // Home (`/`) renders its own chrome (see components/SiteChrome). Sections not
@@ -27,8 +30,14 @@ export default function HomePage() {
           <ServicesStack />
           <ProjectsGallery />
           <BeforeAfter />
+          <ProcessThread />
+          <TestimonialLetter />
         </HomeRoot>
-        <LegacyHome only={["process", "testimonials", "cta", "faq", "contact"]} />
+        <LegacyHome only={["cta"]} />
+        <HomeRoot>
+          <FaqFolder />
+        </HomeRoot>
+        <LegacyHome only={["contact"]} />
       </main>
       <HomeRoot>
         <HomeFooter />
