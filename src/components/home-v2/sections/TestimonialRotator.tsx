@@ -21,8 +21,9 @@ export default function TestimonialRotator({ items, intervalMs }: { items: HomeT
     const card = root?.closest<HTMLElement>(".hv-card2");
     if (!root || !card) return;
     const q = root.querySelector<HTMLElement>(".hv-q")!;
-    const qt = root.querySelector<HTMLElement>(".hv-qt")!;
+    const qt = root.querySelector<HTMLElement>(".hv-qt:not(.hv-ghost)")!;
     const who = root.querySelector<HTMLElement>(".hv-who")!;
+    const whoText = root.querySelector<HTMLElement>(".hv-wt:not(.hv-ghost)")!;
     const bar = root.querySelector<HTMLElement>(".hv-tprog i")!;
     const cnt = root.querySelector<HTMLElement>(".hv-tcount")!;
     const path = root.querySelector<SVGPathElement>(".hv-q svg path")!;
@@ -38,7 +39,7 @@ export default function TestimonialRotator({ items, intervalMs }: { items: HomeT
     const setWho = (t: HomeTestimonial) => {
       const b = document.createElement("b");
       b.textContent = t.name;
-      who.replaceChildren(b, ` · ${t.meta}`);
+      whoText.replaceChildren(b, ` · ${t.meta}`);
     };
     const setCount = (k: number) => {
       const b = document.createElement("b");
@@ -106,14 +107,33 @@ export default function TestimonialRotator({ items, intervalMs }: { items: HomeT
   const t = items[0];
   return (
     <div ref={rootRef}>
+      {/* Every quote is stacked invisibly in the same grid cell, so the letter
+          always reserves the tallest one — rotating to a shorter review never
+          shifts the page below (the prototype only reserved 4.4em). */}
       <div className="hv-q">
-        <span className="hv-qt">{t.quote}</span>
+        <span className="hv-qcell">
+          <span className="hv-qt">{t.quote}</span>
+          {items.map((it) => (
+            <span key={it.quote} className="hv-qt hv-ghost" aria-hidden="true">
+              {it.quote}
+            </span>
+          ))}
+        </span>
         <svg viewBox="0 0 400 14" preserveAspectRatio="none" aria-hidden="true">
           <path d="M2 9 C 80 4, 160 12, 240 7 S 360 3, 398 8" />
         </svg>
       </div>
       <div className="hv-who">
-        <b>{t.name}</b> · {t.meta}
+        <span className="hv-qcell">
+          <span className="hv-wt">
+            <b>{t.name}</b> · {t.meta}
+          </span>
+          {items.map((it) => (
+            <span key={it.quote} className="hv-wt hv-ghost" aria-hidden="true">
+              <b>{it.name}</b> · {it.meta}
+            </span>
+          ))}
+        </span>
       </div>
       <div className="hv-tprog">
         <i />

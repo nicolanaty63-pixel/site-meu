@@ -228,6 +228,8 @@ export default function FolderFaq({ faqs, copy }: { faqs: FAQ[]; copy: Copy }) {
       window.clearTimeout(popTimer);
       items[i].setAttribute("data-pop", "");
       popTimer = window.setTimeout(() => items[i].removeAttribute("data-pop"), 320);
+      // the picked note is about to be hidden — keep keyboard focus somewhere real
+      if (document.activeElement === items[i]) trig.focus({ preventScroll: true });
       set(false);
     };
     const pointerAt = (e: PointerEvent) => {
@@ -309,7 +311,13 @@ export default function FolderFaq({ faqs, copy }: { faqs: FAQ[]; copy: Copy }) {
         { passive: true },
       );
     }
-    on(trig, "click", () => set(!open));
+    on(trig, "click", (e) => {
+      const opening = !open;
+      set(!open);
+      // Opened from the keyboard: the notes sit before the trigger in the DOM,
+      // so take focus to the first one rather than letting Tab skip them.
+      if (opening && e.detail === 0) items[0]?.focus({ preventScroll: true });
+    });
     on(root, "keydown", (e) => {
       if (e.key === "Escape" && open) {
         e.stopPropagation();

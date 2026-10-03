@@ -195,9 +195,8 @@ export default function DepthCarousel({ slides, label }: { slides: HeroSlide[]; 
               alt={s.alt}
               fill
               sizes="(max-width: 860px) 250px, 360px"
-              quality={k === 0 ? 90 : 75}
               priority={k === 0}
-              loading={k === 0 ? undefined : vis ? "eager" : "lazy"}
+              loading={k === 0 ? undefined : "lazy"}
               fetchPriority={k === 0 ? "high" : "low"}
               draggable={false}
               style={{ objectFit: "cover", objectPosition: s.position ?? "center" }}

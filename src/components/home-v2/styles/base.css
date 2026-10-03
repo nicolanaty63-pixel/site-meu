@@ -87,6 +87,15 @@ body:has(.hv2) {
   overflow-x: clip;
 }
 
+/* The site-wide route fade (app/template.tsx → .animate-page-in) starts the
+   page at opacity 0. On other routes the Navbar sits outside it in the
+   layout, but Home renders its own chrome inside, so the fade held back the
+   first contentful paint (nav, hero) until scripts had run. The approved
+   design has no page fade — it's off for Home only. */
+.animate-page-in:has(.hv2) {
+  animation: none;
+}
+
 /* ---- neutralise the global @layer base typography inside Home ---------- */
 .hv2 :where(h1, h2, h3, h4, h5, h6) {
   font-family: inherit;

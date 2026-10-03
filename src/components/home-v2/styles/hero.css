@@ -107,6 +107,10 @@
 .hv2 .hv-btn-wave span {
   position: relative;
   z-index: 2;
+  /* the label's exact width in Playfair 600 — keeps the arrow still while
+     the web font swaps in (no layout shift) */
+  width: 10.22em;
+  white-space: nowrap;
   background: linear-gradient(100deg, #5f656e 0%, #b9bec6 38%, #6f757e 58%, #d2d6dc 82%, #666c75 100%);
   -webkit-background-clip: text;
   background-clip: text;

@@ -63,7 +63,7 @@ export default function HomeNavbar() {
             width={192}
             height={192}
             unoptimized
-            loading="eager"
+            fetchPriority="low"
           />
         </Link>
         <ul>

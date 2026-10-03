@@ -70,6 +70,15 @@
     opacity 0.45s,
     transform 0.6s var(--hv-out);
 }
+.hv2 .hv-card2 .hv-qcell {
+  display: grid;
+}
+.hv2 .hv-card2 .hv-qcell > * {
+  grid-area: 1 / 1;
+}
+.hv2 .hv-card2 .hv-ghost {
+  visibility: hidden;
+}
 .hv2 .hv-card2 .hv-q.hv-out {
   opacity: 0;
   transform: translateY(8px);
