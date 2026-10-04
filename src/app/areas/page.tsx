@@ -3,6 +3,7 @@ import Container from "@/components/Container";
 import PageHero from "@/components/PageHero";
 import AreasMap from "@/components/AreasMap";
 import { site } from "@/lib/site";
+import MaintenancePage, { isClosed } from "@/components/home-v2/maintenance/MaintenancePage";
 
 export const metadata = pageMeta({
   title: "Areas We Cover — Hertfordshire & North London",
@@ -12,6 +13,7 @@ export const metadata = pageMeta({
 });
 
 export default function AreasPage() {
+  if (isClosed("/areas")) return <MaintenancePage section="/areas" />;
   return (
     <>
       <PageHero

@@ -1,7 +1,10 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useSelectedLayoutSegment } from "next/navigation";
 import { isClosed } from "@/lib/maintenance";
+
+/** The segment Next selects for a URL that matches no route (app/not-found). */
+const NOT_FOUND_SEGMENT = "/_not-found";
 
 /**
  * Route-aware switch for the site chrome in the root layout.
@@ -15,7 +18,10 @@ import { isClosed } from "@/lib/maintenance";
  */
 function useOwnChrome() {
   const pathname = usePathname();
-  return pathname === "/" || isClosed(pathname);
+  // A URL that matches no route is the 404 page, which keeps the shared
+  // chrome — also under a closed section (/about/typo).
+  const notFound = useSelectedLayoutSegment() === NOT_FOUND_SEGMENT;
+  return !notFound && (pathname === "/" || isClosed(pathname));
 }
 
 /** Renders its children on every route except those with their own chrome. */

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { nav, site } from "@/lib/site";
 import { navCopy } from "../copy";
 import "../styles/nav.css";
@@ -23,6 +24,16 @@ export default function HomeNavbar() {
   const [open, setOpen] = useState(false);
   const burgerRef = useRef<HTMLButtonElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
+
+  // Off Home (the maintenance screen) the bar marks the section being viewed
+  // and the contact links point back at Home's contact section.
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const current = isHome
+    ? undefined
+    : nav.find((l) => l.href !== "/" && (pathname === l.href || pathname.startsWith(`${l.href}/`)))
+        ?.href;
+  const contactHref = isHome ? "#contact" : "/#contact";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -69,14 +80,18 @@ export default function HomeNavbar() {
         <ul>
           {nav.map((l) => (
             <li key={l.href}>
-              <Link href={l.href} aria-current={l.href === "/" ? "page" : undefined}>
+              <Link
+                href={l.href}
+                className={l.href === current ? "hv-current" : undefined}
+                aria-current={(isHome ? l.href === "/" : l.href === current) ? "page" : undefined}
+              >
                 {l.label}
               </Link>
             </li>
           ))}
         </ul>
         <div className="hv-right">
-          <a className="hv-rate-pill" href="#contact">
+          <a className="hv-rate-pill" href={contactHref}>
             <span>{navCopy.cta}</span>
             <Arrow className="hv-ar" />
           </a>
@@ -121,7 +136,13 @@ export default function HomeNavbar() {
 
       <div id="hv-drawer" ref={drawerRef} className="hv-drawer" inert={!open}>
         {nav.map((l, i) => (
-          <Link key={l.href} className="hv-m" href={l.href} onClick={() => close(false)}>
+          <Link
+            key={l.href}
+            className={`hv-m${l.href === current ? " hv-current" : ""}`}
+            href={l.href}
+            aria-current={l.href === current ? "page" : undefined}
+            onClick={() => close(false)}
+          >
             <span>{navCopy.numerals[i]}</span>
             {l.label}
           </Link>
@@ -136,7 +157,7 @@ export default function HomeNavbar() {
           </b>
           <a href={`mailto:${site.email}`}>{site.email}</a>
           <span>{navCopy.drawerRating}</span>
-          <a className="hv-btn" href="#contact" onClick={() => close(false)}>
+          <a className="hv-btn" href={contactHref} onClick={() => close(false)}>
             <i className="hv-tk hv-a" />
             <i className="hv-tk hv-b" />
             {navCopy.drawerQuote}

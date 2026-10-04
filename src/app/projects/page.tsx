@@ -7,6 +7,7 @@ import ProjectGallery from "@/components/ProjectGallery";
 import Icon from "@/components/ui/Icon";
 import { projects } from "@/lib/data";
 import { site } from "@/lib/site";
+import MaintenancePage, { isClosed } from "@/components/home-v2/maintenance/MaintenancePage";
 
 export const metadata = pageMeta({
   title: "Projects — Our Portfolio of Renovations",
@@ -73,6 +74,7 @@ const projectsLd = {
 };
 
 export default function ProjectsPage() {
+  if (isClosed("/projects")) return <MaintenancePage section="/projects" />;
   return (
     <>
       <script

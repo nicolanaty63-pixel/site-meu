@@ -8,6 +8,7 @@ import Icon from "@/components/ui/Icon";
 import { services } from "@/lib/data";
 import { site } from "@/lib/site";
 import { serviceImages, servicePositions } from "@/lib/service-images";
+import MaintenancePage, { isClosed } from "@/components/home-v2/maintenance/MaintenancePage";
 
 export const metadata = pageMeta({
   title: "Services — Renovations, Extensions, Lofts & Roofing",
@@ -16,6 +17,7 @@ export const metadata = pageMeta({
 });
 
 export default function ServicesPage() {
+  if (isClosed("/services")) return <MaintenancePage section="/services" />;
   return (
     <>
       <PageHero

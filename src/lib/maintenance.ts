@@ -11,9 +11,9 @@
  * - Reopen everything: set MAINTENANCE_ENABLED = false.
  * No other edit is needed — the original page components are untouched.
  */
-export const MAINTENANCE_ENABLED = false;
+export const MAINTENANCE_ENABLED = true;
 
-export const CLOSED_SECTIONS = [
+export const CLOSED_SECTIONS: readonly string[] = [
   "/about",
   "/services",
   "/projects",
@@ -21,9 +21,10 @@ export const CLOSED_SECTIONS = [
   "/contact",
   "/areas",
   "/guides",
-] as const;
+];
 
-const LABELS: Record<(typeof CLOSED_SECTIONS)[number], string> = {
+/** The name shown on the maintenance page for each section. */
+const LABELS: Record<string, string> = {
   "/about": "About",
   "/services": "Services",
   "/projects": "Projects",
@@ -33,18 +34,18 @@ const LABELS: Record<(typeof CLOSED_SECTIONS)[number], string> = {
   "/guides": "Cost guides",
 };
 
-/** The closed section a path belongs to, or null. */
+/** The closed section a path belongs to, if any. */
 function closedSection(pathname: string) {
-  return CLOSED_SECTIONS.find((s) => pathname === s || pathname.startsWith(`${s}/`)) ?? null;
+  return CLOSED_SECTIONS.find((s) => pathname === s || pathname.startsWith(`${s}/`));
 }
 
 /** True when `pathname` (a section root or anything under it) is closed. */
 export function isClosed(pathname: string): boolean {
-  return MAINTENANCE_ENABLED && closedSection(pathname) !== null;
+  return MAINTENANCE_ENABLED && closedSection(pathname) !== undefined;
 }
 
 /** The section name shown on the maintenance page, e.g. "Projects". */
 export function sectionOf(pathname: string): string {
   const s = closedSection(pathname);
-  return s ? LABELS[s] : "";
+  return s ? (LABELS[s] ?? "") : "";
 }

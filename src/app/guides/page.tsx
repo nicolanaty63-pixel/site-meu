@@ -10,6 +10,7 @@ import Icon from "@/components/ui/Icon";
 import { guides, guideReadMinutes } from "@/lib/guides";
 import { services } from "@/lib/data";
 import { site } from "@/lib/site";
+import MaintenancePage, { isClosed } from "@/components/home-v2/maintenance/MaintenancePage";
 
 type TrustIcon = React.ComponentProps<typeof Icon>["name"];
 
@@ -55,6 +56,7 @@ const trust: Array<{ icon: TrustIcon; title: string; desc: string }> = [
 ];
 
 export default function GuidesIndexPage() {
+  if (isClosed("/guides")) return <MaintenancePage section="/guides" />;
   return (
     <>
       <PageHero

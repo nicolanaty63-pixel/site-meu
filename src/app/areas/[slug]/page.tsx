@@ -14,6 +14,7 @@ import { areas, getArea } from "@/lib/areas";
 import { services } from "@/lib/data";
 import { site } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
+import MaintenancePage, { isClosed } from "@/components/home-v2/maintenance/MaintenancePage";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -33,6 +34,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 }
 
 export default async function AreaPage({ params }: Params) {
+  if (isClosed("/areas")) return <MaintenancePage section="/areas" />;
   const { slug } = await params;
   const area = getArea(slug);
   if (!area) notFound();

@@ -13,6 +13,7 @@ import { guides, getGuide } from "@/lib/guides";
 import { services } from "@/lib/data";
 import { site } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
+import MaintenancePage, { isClosed } from "@/components/home-v2/maintenance/MaintenancePage";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -48,6 +49,7 @@ function renderInline(text: string) {
 }
 
 export default async function GuidePage({ params }: Params) {
+  if (isClosed("/guides")) return <MaintenancePage section="/guides" />;
   const { slug } = await params;
   const g = getGuide(slug);
   if (!g) notFound();
