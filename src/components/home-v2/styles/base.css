@@ -95,6 +95,13 @@ body:has(.hv2) {
 .animate-page-in:has(.hv2) {
   animation: none;
 }
+/* Same for the framer-motion version of that template (the one on main),
+   which server-renders the page wrapper at inline opacity:0 until hydration —
+   that would leave the whole Home, nav included, blank until JS runs. Only
+   the element directly wrapping the Home root is affected. */
+:has(> .hv2) {
+  opacity: 1 !important;
+}
 
 /* ---- neutralise the global @layer base typography inside Home ---------- */
 .hv2 :where(h1, h2, h3, h4, h5, h6) {
