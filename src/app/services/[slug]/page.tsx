@@ -19,6 +19,7 @@ import { areas } from "@/lib/areas";
 import { guides } from "@/lib/guides";
 import { site } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
+import MaintenancePage, { isClosed } from "@/components/home-v2/maintenance/MaintenancePage";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -49,6 +50,7 @@ const benefits = [
 ];
 
 export default async function ServicePage({ params }: Params) {
+  if (isClosed("/services")) return <MaintenancePage section="/services" />;
   const { slug } = await params;
   const s = getService(slug);
   if (!s) notFound();

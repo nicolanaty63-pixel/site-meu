@@ -9,6 +9,7 @@ import CustomerReviews from "@/components/reviews/CustomerReviews";
 import Icon from "@/components/ui/Icon";
 import { testimonials } from "@/lib/data";
 import { site } from "@/lib/site";
+import MaintenancePage, { isClosed } from "@/components/home-v2/maintenance/MaintenancePage";
 
 export const metadata = pageMeta({
   title: `Testimonials — ${site.rating}/5 from ${site.reviewCount}+ Customers`,
@@ -28,6 +29,7 @@ function Stars({ n }: { n: number }) {
 }
 
 export default function TestimonialsPage() {
+  if (isClosed("/testimonials")) return <MaintenancePage section="/testimonials" />;
   return (
     <>
       <PageHero

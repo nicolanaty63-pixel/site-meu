@@ -12,6 +12,7 @@ import Icon from "@/components/ui/Icon";
 import { projects, services, serviceSlugFor } from "@/lib/data";
 import { site } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
+import MaintenancePage, { isClosed } from "@/components/home-v2/maintenance/MaintenancePage";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -37,6 +38,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 }
 
 export default async function ProjectPage({ params }: Params) {
+  if (isClosed("/projects")) return <MaintenancePage section="/projects" />;
   const { slug } = await params;
   const p = getProject(slug);
   if (!p || !p.detail) notFound();

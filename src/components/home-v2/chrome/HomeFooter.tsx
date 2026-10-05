@@ -20,10 +20,43 @@ const ico = {
 /**
  * Home footer (spec §3.12): the same content and columns as the site-wide
  * Footer, in the redesign's styling, with both phone numbers.
+ *
+ * `wave` is the maintenance screen's variant (styles/maintenance.css): a solid
+ * footer with the nav's gold wave, flipped, on its top edge.
  */
-export default function HomeFooter() {
+export default function HomeFooter({ wave = false }: { wave?: boolean }) {
   return (
-    <footer data-hv="footer" className="hv-lv hv-lv-footer">
+    <footer data-hv="footer" className={`hv-lv hv-lv-footer${wave ? " hv-mt-footer" : ""}`}>
+      {wave && (
+        <svg
+          className="hv-mt-wave"
+          viewBox="0 0 1440 26"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <defs>
+            <linearGradient id="hv-mt-foil" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stopColor="#8F6D2A" />
+              <stop offset=".22" stopColor="#E9D287" />
+              <stop offset=".5" stopColor="#B8903F" />
+              <stop offset=".78" stopColor="#F3E5A8" />
+              <stop offset="1" stopColor="#A47F35" />
+            </linearGradient>
+          </defs>
+          <path
+            className="hv-mt-wf"
+            d="M0,0 H1440 V13 C1320,23 1200,3 1080,13 C960,23 840,3 720,13 C600,23 480,3 360,13 C240,23 120,3 0,13 Z"
+          />
+          <path
+            className="hv-mt-ws"
+            d="M0,13 C120,3 240,23 360,13 C480,3 600,23 720,13 C840,3 960,23 1080,13 C1200,3 1320,23 1440,13"
+          />
+          <path
+            className="hv-mt-wh"
+            d="M0,13 C120,3 240,23 360,13 C480,3 600,23 720,13 C840,3 960,23 1080,13 C1200,3 1320,23 1440,13"
+          />
+        </svg>
+      )}
       <div className="hv-lv-wrap hv-lv-fgrid">
         <div className="hv-lv-fbrand">
           <Link href="/" aria-label={`${site.name} home`}>

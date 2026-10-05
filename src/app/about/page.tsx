@@ -11,6 +11,7 @@ import ParallaxImage from "@/components/motion/ParallaxImage";
 import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import { stats } from "@/lib/data";
 import { site } from "@/lib/site";
+import MaintenancePage, { isClosed } from "@/components/home-v2/maintenance/MaintenancePage";
 
 export const metadata = pageMeta({
   title: "About Us — Trusted Builders in Hertfordshire",
@@ -43,6 +44,7 @@ const values = [
 ];
 
 export default function AboutPage() {
+  if (isClosed("/about")) return <MaintenancePage section="/about" />;
   return (
     <>
       <PageHero

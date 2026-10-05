@@ -5,6 +5,7 @@ import PageHero from "@/components/PageHero";
 import ContactForm from "@/components/ContactForm";
 import Icon from "@/components/ui/Icon";
 import { site } from "@/lib/site";
+import MaintenancePage, { isClosed } from "@/components/home-v2/maintenance/MaintenancePage";
 
 export const metadata = pageMeta({
   title: "Contact — Free Quotes for Builders in Hertfordshire",
@@ -21,6 +22,7 @@ const details = [
 ];
 
 export default function ContactPage() {
+  if (isClosed("/contact")) return <MaintenancePage section="/contact" />;
   return (
     <>
       <PageHero

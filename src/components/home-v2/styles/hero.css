@@ -82,92 +82,11 @@
   flex-wrap: wrap;
 }
 
-/* "Get in touch": silver text with a passing gold glint */
-.hv2 .hv-btn-wave {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 16px;
-  padding: 14px 0;
-  font: 600 14px/1 var(--hv-caps);
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: #7a8089;
-}
-.hv2 .hv-btn-wave svg {
-  width: 26px;
-  height: 10px;
-  color: var(--hv-goldD);
-  transition: transform 0.5s var(--hv-ease);
-}
-.hv2 .hv-btn-wave:hover svg {
-  transform: translateX(6px);
-}
-.hv2 .hv-btn-wave span {
-  position: relative;
-  z-index: 2;
+/* "Get in touch" (the shared .hv-btn-wave rules are in base.css) */
+.hv2 .hv-hero .hv-btn-wave span {
   /* the label's exact width in Playfair 600 — keeps the arrow still while
      the web font swaps in (no layout shift) */
   width: 10.22em;
-  white-space: nowrap;
-  background: linear-gradient(100deg, #5f656e 0%, #b9bec6 38%, #6f757e 58%, #d2d6dc 82%, #666c75 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  transition: filter 0.5s;
-}
-.hv2 .hv-btn-wave span::after {
-  content: attr(data-t);
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    100deg,
-    transparent 32%,
-    #9c7a2f 42%,
-    #d2ae5e 47%,
-    #fff6d6 50%,
-    #d2ae5e 53%,
-    #9c7a2f 58%,
-    transparent 68%
-  );
-  background-size: 260% 100%;
-  background-repeat: no-repeat;
-  background-position: 130% 0;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: hv-sheen 5.5s cubic-bezier(0.45, 0, 0.25, 1) infinite 1.2s;
-  pointer-events: none;
-}
-@keyframes hv-sheen {
-  0% {
-    background-position: 130% 0;
-  }
-  50% {
-    background-position: -130% 0;
-  }
-  100% {
-    background-position: -130% 0;
-  }
-}
-.hv2 .hv-btn-wave::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 6px;
-  height: 1px;
-  width: 100%;
-  background: linear-gradient(90deg, var(--hv-goldD), var(--hv-goldL));
-  transform: scaleX(0.32);
-  transform-origin: left;
-  transition: transform 0.6s var(--hv-ease);
-}
-.hv2 .hv-btn-wave:hover::after {
-  transform: scaleX(1);
-}
-.hv2 .hv-btn-wave:hover span {
-  filter: brightness(0.9);
 }
 
 @media (max-width: 860px) {
