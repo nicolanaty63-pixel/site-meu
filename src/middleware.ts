@@ -91,7 +91,9 @@ export const config = {
   matcher: [
     {
       source:
-        "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|webp|svg|ico|txt|xml|webmanifest)$).*)",
+        // `monitoring` is the Sentry tunnel route (next.config.mjs): it must
+        // pass straight through, as Sentry requires.
+        "/((?!monitoring|_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|webp|svg|ico|txt|xml|webmanifest)$).*)",
       missing: [{ type: "header", key: "next-action" }],
     },
   ],

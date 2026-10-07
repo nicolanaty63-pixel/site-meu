@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { fail } from "@/lib/http";
 import { leadSchema } from "@/lib/lead-schema";
+import { markArea, reportFailure } from "@/lib/sentry-report";
 import {
   sendLeadEmail,
   LeadConfigError,
@@ -44,6 +45,8 @@ const ok = (status = 200) =>
 // POST /api/lead — receive a contact/quote enquiry, validate, email the admin.
 // (The edge middleware already rate-limits /api/* and blocks UA-less POSTs.)
 export async function POST(req: Request) {
+  markArea("lead");
+
   // Cheap perimeter checks before any work.
   if ((req.headers.get("content-type") ?? "").split(";")[0]!.trim() !== "application/json") {
     return fail(415, "Unsupported media type.");
@@ -104,6 +107,8 @@ export async function POST(req: Request) {
       source: meta.source,
       at: meta.receivedAt,
     };
+    // Tell Sentry a lead could not be delivered — the error only, no details.
+    reportFailure("lead", err, err instanceof LeadConfigError ? "not-configured" : "delivery");
     if (err instanceof LeadConfigError) {
       console.error("[lead] NOT configured — recover from logs:", JSON.stringify(recoverable));
       return fail(

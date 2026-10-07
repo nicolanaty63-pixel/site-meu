@@ -1,3 +1,5 @@
+import { withSentryConfig } from "@sentry/nextjs/config";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -75,4 +77,45 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+// Source maps are uploaded to Sentry only when the build has all three
+// build-time secrets. Without them (local builds, Vercel previews without the
+// token) no source map is generated at all, so none can end up public.
+const canUploadSourceMaps = Boolean(
+  process.env.SENTRY_AUTH_TOKEN && process.env.SENTRY_ORG && process.env.SENTRY_PROJECT,
+);
+
+export default withSentryConfig(nextConfig, {
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+
+  // Only print the upload logs in CI.
+  silent: !process.env.CI,
+  // Don't send Sentry usage statistics about our builds.
+  telemetry: false,
+
+  // Readable stack traces: upload the maps during the build, then delete them
+  // from the output so no .map file is ever deployed.
+  sourcemaps: {
+    disable: !canUploadSourceMaps,
+    deleteSourcemapsAfterUpload: true,
+  },
+
+  // Browser events go to our own origin and are forwarded to Sentry from
+  // there: covered by the CSP's connect-src 'self' and not dropped by
+  // ad-blockers. The route is excluded from the middleware matcher.
+  tunnelRoute: "/monitoring",
+
+  webpack: {
+    // No Vercel cron monitors.
+    automaticVercelMonitors: false,
+    // Keep the browser bundle to what error reporting and tracing need: no
+    // debug logging and none of the Session Replay code.
+    treeshake: {
+      removeDebugLogging: true,
+      excludeReplayIframe: true,
+      excludeReplayShadowDOM: true,
+      excludeReplayCompressionWorker: true,
+    },
+  },
+});

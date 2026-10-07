@@ -8,6 +8,7 @@ import {
   validateReview,
   type ReviewInput,
 } from "@/lib/reviews";
+import { markArea, reportFailure } from "@/lib/sentry-report";
 
 // Never cache — submissions and the feed must always be live.
 export const dynamic = "force-dynamic";
@@ -41,16 +42,20 @@ function sameOrigin(req: Request): boolean {
 
 // GET /api/reviews — newest-first feed (used as a fallback / for refreshes).
 export async function GET() {
+  markArea("reviews");
   try {
     const reviews = await listReviews(100);
     return NextResponse.json({ ok: true, reviews });
   } catch (err) {
+    reportFailure("reviews", err, "list");
     return fail(500, "Could not load reviews.", err);
   }
 }
 
 // POST /api/reviews — submit a review (validated + spam-protected).
 export async function POST(req: Request) {
+  markArea("reviews");
+
   // Enforce JSON content-type + same-origin before doing any work.
   if ((req.headers.get("content-type") ?? "").split(";")[0].trim() !== "application/json") {
     return fail(415, "Unsupported media type.");
@@ -121,6 +126,7 @@ export async function POST(req: Request) {
     const review = await addReview(result.value);
     return NextResponse.json({ ok: true, review }, { status: 201 });
   } catch (err) {
+    reportFailure("reviews", err, "submit");
     return fail(500, "Something went wrong. Please try again.", err);
   }
 }

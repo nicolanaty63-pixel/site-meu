@@ -1,5 +1,8 @@
 "use client";
 
+import { useEffect } from "react";
+import { reportClientError } from "@/lib/sentry-client";
+
 /**
  * Root error boundary (Vector 5) — catches errors in the root layout itself,
  * so it must render its own <html>/<body>. Digest only; no message/stack.
@@ -11,6 +14,10 @@ export default function GlobalError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  useEffect(() => {
+    reportClientError(error);
+  }, [error]);
+
   return (
     <html lang="en-GB">
       <body
