@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import type { HomeTestimonial } from "../copy";
+import { subscribe, unsubscribe } from "../motion/ticker";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -11,7 +12,9 @@ const pad = (n: number) => String(n).padStart(2, "0");
  * pause on hover — that caused a bug before; keyboard focus inside the
  * letter does pause it). Starts when the letter is 30% visible; each switch
  * fades quote + reviewer out (.45s), swaps at 480ms, fades back in and
- * redraws the underline.
+ * redraws the underline. The clock only ticks (on the shared ticker) while
+ * the letter is on screen — it used to run for the rest of the visit, writing
+ * the bar's transform on every frame.
  */
 export default function TestimonialRotator({ items, intervalMs }: { items: HomeTestimonial[]; intervalMs: number }) {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -32,8 +35,8 @@ export default function TestimonialRotator({ items, intervalMs }: { items: HomeT
     let paused = false;
     let switching = false;
     let elapsed = 0;
-    let last = 0;
-    let raf = 0;
+    let started = false;
+    let ticking = false;
     let swapTimer = 0;
 
     const setWho = (t: HomeTestimonial) => {
@@ -65,28 +68,34 @@ export default function TestimonialRotator({ items, intervalMs }: { items: HomeT
         switching = false;
       }, 480);
     };
-    const frame = (now: number) => {
-      if (!last) last = now;
-      const d = Math.min(100, now - last);
-      last = now;
-      if (!paused && !switching) elapsed += d;
+    const frame = (_now: number, dt: number) => {
+      if (!paused && !switching) elapsed += dt;
       const k = Math.min(1, elapsed / intervalMs);
       bar.style.transform = `scaleX(${k.toFixed(4)})`;
       if (k >= 1 && !switching) {
         switching = true;
         show((i + 1) % n);
       }
-      raf = requestAnimationFrame(frame);
     };
+    const start = () => {
+      if (ticking) return;
+      ticking = true;
+      subscribe(frame, 20);
+    };
+    const stop = () => {
+      if (!ticking) return;
+      ticking = false;
+      unsubscribe(frame);
+    };
+    // starts at 30% visible; pauses (clock and all) while the letter is off
+    // screen and resumes where it left off
     const io = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && !raf) {
-          last = 0;
-          raf = requestAnimationFrame(frame);
-          io.disconnect();
-        }
+        const on = entries.some((e) => e.isIntersecting);
+        if (on && !started) started = true;
+        if (started) (on ? start : stop)();
       },
-      { threshold: 0.3 },
+      { threshold: [0, 0.3] },
     );
     io.observe(card);
     const onFocusIn = () => (paused = true);
@@ -97,7 +106,7 @@ export default function TestimonialRotator({ items, intervalMs }: { items: HomeT
     card.addEventListener("focusout", onFocusOut);
     return () => {
       io.disconnect();
-      cancelAnimationFrame(raf);
+      stop();
       window.clearTimeout(swapTimer);
       card.removeEventListener("focusin", onFocusIn);
       card.removeEventListener("focusout", onFocusOut);
