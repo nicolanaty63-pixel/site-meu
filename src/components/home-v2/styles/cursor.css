@@ -56,13 +56,18 @@
   .hv2 .hv-dot.hv-show {
     display: block;
   }
-  /* native cursor hidden on Home while the custom one runs — the text
+  /* native cursor hidden on Home while the custom one runs. HomeCursor puts
+     the class on <html> itself: the earlier form, html:has(.hv2.hv-cursor-on)
+     with a universal descendant, made Chrome re-evaluate :has() on <html>
+     after pointer-driven class changes and recalculate the style of the
+     whole document (1,660 elements, ~11 ms) several hundred times per visit.
+     The custom cursor runs — the text
      I-beam stays in text fields */
-  html:has(.hv2.hv-cursor-on),
-  html:has(.hv2.hv-cursor-on) * {
+  html.hv-cursor-on,
+  html.hv-cursor-on * {
     cursor: none !important;
   }
-  html:has(.hv2.hv-cursor-on)
+  html.hv-cursor-on
     :is(
       textarea,
       input:not([type="range"], [type="checkbox"], [type="radio"], [type="button"], [type="submit"])
@@ -70,7 +75,7 @@
     cursor: text !important;
   }
   /* the before/after range keeps its resize cursor, as in the prototype */
-  html:has(.hv2.hv-cursor-on) .hv2 .hv-lv-ba-range {
+  html.hv-cursor-on .hv2 .hv-lv-ba-range {
     cursor: ew-resize !important;
   }
 }
