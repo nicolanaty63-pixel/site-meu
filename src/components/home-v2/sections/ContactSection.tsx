@@ -1,6 +1,7 @@
 import { site } from "@/lib/site";
 import { contactCopy } from "../copy";
 import GlowCards from "../contact/GlowCards";
+import GlowLayers from "../contact/GlowLayers";
 import HomeLeadStepper from "../form/HomeLeadStepper";
 import "../styles/contact.css";
 
@@ -33,7 +34,7 @@ export default function ContactSection() {
             </div>
             <GlowCards>
               <div className="hv-lv-rc hv-bgl">
-                <span className="hv-edge-light" aria-hidden="true" />
+                <GlowLayers />
                 <span className="hv-ci">
                   <svg {...ico}>
                     <path d="M6 3h3l2 5-2.5 1.5a11 11 0 0 0 5 5L17 11l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2Z" />
@@ -51,7 +52,7 @@ export default function ContactSection() {
                 </span>
               </div>
               <a className="hv-lv-rc hv-bgl" href={`mailto:${site.email}`}>
-                <span className="hv-edge-light" aria-hidden="true" />
+                <GlowLayers />
                 <span className="hv-ci">
                   <svg {...ico}>
                     <rect x="3" y="5" width="18" height="14" rx="2" />
@@ -64,7 +65,7 @@ export default function ContactSection() {
                 </span>
               </a>
               <div className="hv-lv-rc hv-bgl">
-                <span className="hv-edge-light" aria-hidden="true" />
+                <GlowLayers />
                 <span className="hv-ci">
                   <svg {...ico}>
                     <path d="M12 21s-6.5-5.5-6.5-10a6.5 6.5 0 0 1 13 0c0 4.5-6.5 10-6.5 10Z" />

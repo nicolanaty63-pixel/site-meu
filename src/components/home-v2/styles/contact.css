@@ -65,10 +65,34 @@
   opacity: 0.8;
 }
 
-/* BorderGlow */
+/* BorderGlow (React Bits §4.13), compositor-only.
+   The glow is a cone-shaped window travelling around each card (one turn per
+   7s, cards offset by 120°). Each layer is: a clipped wrapper (the card box;
+   the edge light's box is 40px larger) → `.hv-cone`, a square big enough to
+   cover the box at any angle, carrying a STATIC conic mask and a transform
+   animation → `.hv-cone-fill`, the box again, counter-rotated by the opposite
+   animation, carrying the static gradients / shadows. Rotating the mask as a
+   transform and un-rotating its content keeps the gradient fixed on the
+   card while only the window moves; both animations are compositor-only,
+   so nothing is repainted per frame. The first version animated the mask's
+   angle (`--cursor-angle`) from a rAF loop, which restyled and repainted the
+   three cards — 13 blurred box-shadows each — on every frame they were on
+   screen. The card's size reaches CSS as --bw/--bh and the squares' sides (the
+   diagonals) as --bd/--bde (GlowCards, ResizeObserver); its phase as --phase. */
+@keyframes hv-cone-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes hv-cone-unturn {
+  to {
+    transform: rotate(-360deg);
+  }
+}
 .hv2 .hv-bgl {
   --edge-proximity: 0;
-  --cursor-angle: 45deg;
+  --cursor-angle: 0deg;
+  --phase: 0s;
   --edge-sensitivity: 30;
   --color-sensitivity: calc(var(--edge-sensitivity) + 20);
   --border-radius: 12px;
@@ -99,19 +123,100 @@
   overflow: visible;
   border-radius: var(--border-radius);
 }
-.hv2 .hv-bgl::before,
-.hv2 .hv-bgl::after,
+/* the three wrappers: the card box (edge light: 40px larger), clipped */
+.hv2 .hv-bgl > .hv-glow,
 .hv2 .hv-bgl > .hv-edge-light {
-  content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
+  overflow: hidden;
   transition: opacity 0.25s ease-out;
   z-index: -1;
   pointer-events: none;
 }
-.hv2 .hv-bgl::before {
+.hv2 .hv-bgl > .hv-glow-ring {
+  opacity: calc((var(--edge-proximity) - var(--color-sensitivity)) / (100 - var(--color-sensitivity)));
+}
+.hv2 .hv-bgl > .hv-glow-fill {
+  opacity: calc(var(--fill-opacity) * (var(--edge-proximity) - var(--color-sensitivity)) / (100 - var(--color-sensitivity)));
+  mix-blend-mode: soft-light;
+}
+.hv2 .hv-bgl > .hv-edge-light {
+  inset: calc(var(--glow-padding) * -1);
+  border-radius: 0;
+  z-index: 1;
+  opacity: calc((var(--edge-proximity) - var(--edge-sensitivity)) / (100 - var(--edge-sensitivity)));
+  mix-blend-mode: plus-lighter;
+}
+/* the rotating window: a centred square that covers the box at any angle */
+.hv2 .hv-bgl .hv-cone,
+.hv2 .hv-bgl .hv-cone-fill {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  animation-duration: 7s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-delay: var(--phase);
+  animation-play-state: paused;
+}
+.hv2 .hv-bgl .hv-cone {
+  width: var(--bd, 0px);
+  height: var(--bd, 0px);
+  transform: rotate(var(--cursor-angle));
+  animation-name: hv-cone-turn;
+}
+.hv2 .hv-bgl .hv-cone-fill {
+  width: var(--bw, 0px);
+  height: var(--bh, 0px);
+  transform: rotate(calc(-1 * var(--cursor-angle)));
+  animation-name: hv-cone-unturn;
+  box-sizing: border-box;
+}
+.hv2 .hv-bgl.hv-sweep .hv-cone,
+.hv2 .hv-bgl.hv-sweep .hv-cone-fill {
+  animation-play-state: running;
+}
+.hv2 .hv-bgl > .hv-edge-light .hv-cone {
+  width: var(--bde, 0px);
+  height: var(--bde, 0px);
+}
+.hv2 .hv-bgl > .hv-edge-light .hv-cone-fill {
+  width: calc(var(--bw, 0px) + 2 * var(--glow-padding));
+  height: calc(var(--bh, 0px) + 2 * var(--glow-padding));
+}
+/* the window shapes (the same stops the masks animated before) */
+.hv2 .hv-bgl > .hv-glow-ring .hv-cone {
+  -webkit-mask-image: conic-gradient(
+    from 0deg at center,
+    black calc(var(--cone-spread) * 1%),
+    transparent calc((var(--cone-spread) + 15) * 1%),
+    transparent calc((100 - var(--cone-spread) - 15) * 1%),
+    black calc((100 - var(--cone-spread)) * 1%)
+  );
+  mask-image: conic-gradient(
+    from 0deg at center,
+    black calc(var(--cone-spread) * 1%),
+    transparent calc((var(--cone-spread) + 15) * 1%),
+    transparent calc((100 - var(--cone-spread) - 15) * 1%),
+    black calc((100 - var(--cone-spread)) * 1%)
+  );
+}
+/* the fill showed through everywhere EXCEPT the cone (the conic was
+   subtracted); the same window, inverted, on the rotating element */
+.hv2 .hv-bgl > .hv-glow-fill .hv-cone {
+  -webkit-mask-image: conic-gradient(from 0deg at center, black 5%, transparent 15%, transparent 85%, black 95%);
+  mask-image: conic-gradient(from 0deg at center, black 5%, transparent 15%, transparent 85%, black 95%);
+}
+.hv2 .hv-bgl > .hv-edge-light .hv-cone {
+  -webkit-mask-image: conic-gradient(from 0deg at center, black 2.5%, transparent 10%, transparent 90%, black 97.5%);
+  mask-image: conic-gradient(from 0deg at center, black 2.5%, transparent 10%, transparent 90%, black 97.5%);
+}
+/* the static content of each layer */
+.hv2 .hv-bgl > .hv-glow-ring .hv-cone-fill {
   border: 1px solid transparent;
+  border-radius: var(--border-radius);
   background:
     linear-gradient(var(--card-bg) 0 100%) padding-box,
     linear-gradient(rgb(255 255 255 / 0%) 0% 100%) border-box,
@@ -123,24 +228,10 @@
     var(--gradient-six) border-box,
     var(--gradient-seven) border-box,
     var(--gradient-base) border-box;
-  opacity: calc((var(--edge-proximity) - var(--color-sensitivity)) / (100 - var(--color-sensitivity)));
-  -webkit-mask-image: conic-gradient(
-    from var(--cursor-angle) at center,
-    black calc(var(--cone-spread) * 1%),
-    transparent calc((var(--cone-spread) + 15) * 1%),
-    transparent calc((100 - var(--cone-spread) - 15) * 1%),
-    black calc((100 - var(--cone-spread)) * 1%)
-  );
-  mask-image: conic-gradient(
-    from var(--cursor-angle) at center,
-    black calc(var(--cone-spread) * 1%),
-    transparent calc((var(--cone-spread) + 15) * 1%),
-    transparent calc((100 - var(--cone-spread) - 15) * 1%),
-    black calc((100 - var(--cone-spread)) * 1%)
-  );
 }
-.hv2 .hv-bgl::after {
+.hv2 .hv-bgl > .hv-glow-fill .hv-cone-fill {
   border: 1px solid transparent;
+  border-radius: var(--border-radius);
   background:
     var(--gradient-one) padding-box,
     var(--gradient-two) padding-box,
@@ -156,34 +247,22 @@
     radial-gradient(ellipse at 66% 66%, black 5%, transparent 40%),
     radial-gradient(ellipse at 33% 33%, black 5%, transparent 40%),
     radial-gradient(ellipse at 66% 33%, black 5%, transparent 40%),
-    radial-gradient(ellipse at 33% 66%, black 5%, transparent 40%),
-    conic-gradient(from var(--cursor-angle) at center, transparent 5%, black 15%, black 85%, transparent 95%);
+    radial-gradient(ellipse at 33% 66%, black 5%, transparent 40%);
   mask-image:
     linear-gradient(to bottom, black, black),
     radial-gradient(ellipse at 50% 50%, black 40%, transparent 65%),
     radial-gradient(ellipse at 66% 66%, black 5%, transparent 40%),
     radial-gradient(ellipse at 33% 33%, black 5%, transparent 40%),
     radial-gradient(ellipse at 66% 33%, black 5%, transparent 40%),
-    radial-gradient(ellipse at 33% 66%, black 5%, transparent 40%),
-    conic-gradient(from var(--cursor-angle) at center, transparent 5%, black 15%, black 85%, transparent 95%);
-  -webkit-mask-composite: source-out, source-over, source-over, source-over, source-over, source-over;
-  mask-composite: subtract, add, add, add, add, add;
-  opacity: calc(var(--fill-opacity) * (var(--edge-proximity) - var(--color-sensitivity)) / (100 - var(--color-sensitivity)));
-  mix-blend-mode: soft-light;
+    radial-gradient(ellipse at 33% 66%, black 5%, transparent 40%);
+  -webkit-mask-composite: source-out, source-over, source-over, source-over, source-over;
+  mask-composite: subtract, add, add, add, add;
 }
-.hv2 .hv-bgl > .hv-edge-light {
-  inset: calc(var(--glow-padding) * -1);
-  z-index: 1;
-  -webkit-mask-image: conic-gradient(from var(--cursor-angle) at center, black 2.5%, transparent 10%, transparent 90%, black 97.5%);
-  mask-image: conic-gradient(from var(--cursor-angle) at center, black 2.5%, transparent 10%, transparent 90%, black 97.5%);
-  opacity: calc((var(--edge-proximity) - var(--edge-sensitivity)) / (100 - var(--edge-sensitivity)));
-  mix-blend-mode: plus-lighter;
-}
-.hv2 .hv-bgl > .hv-edge-light::before {
+.hv2 .hv-bgl > .hv-edge-light .hv-cone-fill::before {
   content: "";
   position: absolute;
   inset: var(--glow-padding);
-  border-radius: inherit;
+  border-radius: var(--border-radius);
   box-shadow:
     inset 0 0 0 1px var(--glow-color),
     inset 0 0 1px 0 var(--glow-color-60),
@@ -199,14 +278,20 @@
     0 0 25px 2px var(--glow-color-20),
     0 0 50px 2px var(--glow-color-10);
 }
-.hv2 .hv-bgl > *:not(.hv-edge-light) {
+.hv2 .hv-bgl > *:not(.hv-edge-light, .hv-glow) {
   position: relative;
   z-index: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hv2 .hv-bgl .hv-cone,
+  .hv2 .hv-bgl .hv-cone-fill {
+    animation: none;
+  }
 }
 /* phones/tablets: no soft-light fill layer under the moving glow (the same
    blend-mode perf gate as the site's .img-grade-wash) */
 @media (max-width: 1023px) {
-  .hv2 .hv-bgl::after {
+  .hv2 .hv-bgl > .hv-glow-fill {
     display: none;
   }
   .hv2 .hv-lv-contact-grid {
