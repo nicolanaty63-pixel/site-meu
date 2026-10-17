@@ -106,3 +106,20 @@
     --dc-tilt: 16deg;
   }
 }
+
+/* Phones and tablets: no blur on the back cards. A `filter` on a moving 3D
+   card is a GPU render pass per card per frame: in the drag trace (390×844,
+   4× CPU) every frame took a full 16.7 ms slot with the blur and 4 ms without
+   it (p95 18.5 → 7.1 ms). Depth still reads from the offset, scale, tint and
+   opacity; the blur stays on fine-pointer desktops, where the drag paints in
+   under 1 ms per frame. (CLAUDE.md §6: no filter/blur on moving elements
+   below lg.) */
+@media (max-width: 1023px), (hover: none) {
+  .hv2 .hv-dc-card,
+  .hv2 .hv-dc-card.hv-hidden {
+    filter: none;
+    transition:
+      transform 0.7s var(--hv-out),
+      opacity 0.7s var(--hv-out);
+  }
+}
