@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
+import { reportClientError } from "@/lib/sentry-client";
 
 /**
  * Route-segment error boundary (Vector 5). Renders ONLY the opaque `digest` —
@@ -17,6 +18,7 @@ export default function Error({
   useEffect(() => {
     // Client telemetry: log ONLY the opaque digest (no message/stack/PII).
     console.error("Unhandled UI error", { digest: error.digest });
+    reportClientError(error);
   }, [error]);
 
   return (
