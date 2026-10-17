@@ -376,6 +376,15 @@ body:has(.hv2) {
   animation: hv-sheen 5.5s cubic-bezier(0.45, 0, 0.25, 1) infinite 1.2s;
   pointer-events: none;
 }
+/* background-position cannot run on the compositor: pause the sheen while the
+   hero is off screen (HeroIdle), and give the label its own layer so the
+   frames it does paint are the label's 150×20px, not the hero's root layer */
+.hv2 .hv-btn-wave span {
+  will-change: transform;
+}
+.hv2 .hv-hero.hv-idle .hv-btn-wave span::after {
+  animation-play-state: paused;
+}
 @keyframes hv-sheen {
   0% {
     background-position: 130% 0;

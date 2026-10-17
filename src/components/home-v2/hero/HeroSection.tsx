@@ -1,5 +1,6 @@
 import HeroTitle from "./HeroTitle";
 import DepthCarousel from "./DepthCarousel";
+import HeroIdle from "./HeroIdle";
 import { heroCopy, heroSlides } from "../copy";
 import "../styles/hero.css";
 
@@ -12,6 +13,7 @@ import "../styles/hero.css";
 export default function HeroSection() {
   return (
     <section id="top" data-hv="hero" className="hv-hero">
+      <HeroIdle />
       <div className="hv-cloud hv-a" aria-hidden="true" />
       <div className="hv-cloud hv-b" aria-hidden="true" />
       <div className="hv-cloud hv-c" aria-hidden="true" />

@@ -110,6 +110,13 @@ body {
   );
 }
 
+/* The WhatsApp button's ping ring animates transform + opacity forever on
+   every page: keep it on the compositor so the main thread never restyles
+   or repaints for it. */
+.animate-ping {
+  will-change: transform, opacity;
+}
+
 /* Fine hairline border helper */
 .hairline {
   border: 1px solid rgba(255, 255, 255, 0.08);
