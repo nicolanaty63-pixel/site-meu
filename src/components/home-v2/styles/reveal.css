@@ -13,6 +13,13 @@
     opacity: 1;
     transform: none;
   }
+  /* own compositor layer for the 1.1s of the transition only (RevealObserver
+     adds hv-anim with hv-in and removes it on transitionend): the fade no
+     longer repaints the page's root layer on every frame, and the element
+     is folded back into it afterwards. */
+  .hv2 .hv-rv.hv-anim {
+    will-change: opacity, transform;
+  }
 }
 .hv2 .hv-rv.hv-d1 {
   transition-delay: 0.12s;

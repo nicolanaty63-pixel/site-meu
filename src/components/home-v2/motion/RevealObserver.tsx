@@ -14,11 +14,26 @@ export default function RevealObserver() {
   useEffect(() => {
     const roots = [...document.querySelectorAll(".hv2")];
     if (!roots.length) return;
+    // hv-anim composites the element for the duration of its transition only
+    const settle = (el: Element) => {
+      let done = false;
+      const end = (ev?: Event) => {
+        if (done || (ev && ev.target !== el)) return;
+        done = true;
+        el.classList.remove("hv-anim");
+        el.removeEventListener("transitionend", end);
+        el.removeEventListener("transitioncancel", end);
+      };
+      el.addEventListener("transitionend", end);
+      el.addEventListener("transitioncancel", end);
+      window.setTimeout(end, 1800); // 1.1s + the longest stagger, in case no event fires
+    };
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
           if (e.isIntersecting) {
-            e.target.classList.add("hv-in");
+            e.target.classList.add("hv-anim", "hv-in");
+            settle(e.target);
             io.unobserve(e.target);
           }
         }
