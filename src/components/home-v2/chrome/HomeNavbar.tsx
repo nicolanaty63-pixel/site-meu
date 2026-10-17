@@ -109,29 +109,7 @@ export default function HomeNavbar() {
             <i />
           </button>
         </div>
-        <svg className="hv-wave" viewBox="0 0 1440 26" preserveAspectRatio="none" aria-hidden="true">
-          <defs>
-            <linearGradient id="hv-nav-foil" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#8F6D2A" />
-              <stop offset=".22" stopColor="#E9D287" />
-              <stop offset=".5" stopColor="#B8903F" />
-              <stop offset=".78" stopColor="#F3E5A8" />
-              <stop offset="1" stopColor="#A47F35" />
-            </linearGradient>
-          </defs>
-          <path
-            className="hv-wf"
-            d="M0,0 H1440 V13 C1320,23 1200,3 1080,13 C960,23 840,3 720,13 C600,23 480,3 360,13 C240,23 120,3 0,13 Z"
-          />
-          <path
-            className="hv-ws"
-            d="M0,13 C120,3 240,23 360,13 C480,3 600,23 720,13 C840,3 960,23 1080,13 C1200,3 1320,23 1440,13"
-          />
-          <path
-            className="hv-wh"
-            d="M0,13 C120,3 240,23 360,13 C480,3 600,23 720,13 C840,3 960,23 1080,13 C1200,3 1320,23 1440,13"
-          />
-        </svg>
+        <div className="hv-wave" aria-hidden="true" />
       </nav>
 
       <div id="hv-drawer" ref={drawerRef} className="hv-drawer" inert={!open}>
