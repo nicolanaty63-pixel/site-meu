@@ -16,6 +16,11 @@
  * Keep this list in step with the stylesheets Home imports (cursor.css and
  * nav.css arrive first, with HomeCursor and HomeNavbar). It is a client
  * module because that is what makes the bundler honour the order below.
+ *
+ * The order must be the one Home's stylesheet has in the production build.
+ * That depends on the folder layout: check it in a checkout whose
+ * node_modules sits inside the project root, as on Vercel — not in a
+ * worktree that symlinks node_modules from elsewhere.
  */
 import "../styles/slide-commit.css";
 import "../styles/stepper.css";
@@ -24,14 +29,14 @@ import "../styles/reveal.css";
 import "../styles/base.css";
 import "../styles/footer.css";
 import "../styles/wordmark.css";
+import "../styles/hero.css";
 import "../styles/stats.css";
 import "../styles/services.css";
 import "../styles/projects.css";
+import "../styles/before-after.css";
 import "../styles/process.css";
 import "../styles/testimonials.css";
 import "../styles/faq.css";
-import "../styles/hero.css";
-import "../styles/before-after.css";
 import "../styles/contact.css";
 
 export default function HomeStylesheet() {
