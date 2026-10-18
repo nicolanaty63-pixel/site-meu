@@ -34,6 +34,9 @@
   width: 28px;
   height: 100%;
   overflow: visible;
+  /* its own compositor layer (28px wide): redrawing the dash offset while
+     the section scrolls repaints this strip, not the page's root layer */
+  will-change: transform;
 }
 .hv2 .hv-thread .hv-base {
   fill: none;
@@ -58,6 +61,10 @@
 .hv2 .hv-step.hv-on {
   opacity: 1;
   transform: none;
+}
+/* own compositor layer while the 0.8s transition runs (ThreadSteps) */
+.hv2 .hv-step.hv-anim {
+  will-change: opacity, transform;
 }
 .hv2 .hv-step::before {
   content: "";

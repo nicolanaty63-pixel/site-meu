@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import "../styles/cursor.css";
+import { subscribe, unsubscribe } from "../motion/ticker";
 
 const BIG =
   'a, button, label, select, input[type="range"], [role="button"], [role="slider"], [data-hv-cursor="big"]';
@@ -37,6 +38,7 @@ export default function HomeCursor() {
     const place = (el: HTMLElement, x: number, y: number) => {
       el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) translate(-50%, -50%)`;
     };
+    // eases the ring after the pointer; leaves the ticker once settled
     const tick = () => {
       cx += (mx - cx) * 0.16;
       cy += (my - cy) * 0.16;
@@ -44,8 +46,7 @@ export default function HomeCursor() {
         cx = mx;
         cy = my;
         raf = 0;
-      } else {
-        raf = requestAnimationFrame(tick);
+        unsubscribe(tick);
       }
       place(cur, cx, cy);
     };
@@ -70,7 +71,8 @@ export default function HomeCursor() {
         cy = my;
         place(cur, cx, cy);
       } else if (!raf) {
-        raf = requestAnimationFrame(tick);
+        raf = 1;
+        subscribe(tick, 0);
       }
     };
     const onOver = (e: PointerEvent) => {
@@ -87,6 +89,8 @@ export default function HomeCursor() {
       if (active) return;
       active = true;
       root.classList.add("hv-cursor-on");
+      // on <html> as well: cursor.css hides the native cursor from there (no :has())
+      document.documentElement.classList.add("hv-cursor-on");
       window.addEventListener("pointermove", onMove, { passive: true });
       document.addEventListener("pointerover", onOver, { passive: true });
       document.addEventListener("pointerout", onLeave, { passive: true });
@@ -95,10 +99,11 @@ export default function HomeCursor() {
       if (!active) return;
       active = false;
       root.classList.remove("hv-cursor-on");
+      document.documentElement.classList.remove("hv-cursor-on");
       window.removeEventListener("pointermove", onMove);
       document.removeEventListener("pointerover", onOver);
       document.removeEventListener("pointerout", onLeave);
-      cancelAnimationFrame(raf);
+      unsubscribe(tick);
       raf = 0;
       setVisible(false);
     };

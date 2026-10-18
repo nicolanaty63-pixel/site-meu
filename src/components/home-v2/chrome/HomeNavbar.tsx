@@ -24,6 +24,7 @@ export default function HomeNavbar() {
   const [open, setOpen] = useState(false);
   const burgerRef = useRef<HTMLButtonElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
   // Off Home (the maintenance screen) the bar marks the section being viewed
   // and the contact links point back at Home's contact section.
@@ -35,11 +36,20 @@ export default function HomeNavbar() {
         ?.href;
   const contactHref = isHome ? "#contact" : "/#contact";
 
+  // "Scrolled past 40px" comes from an IntersectionObserver on a 40px
+  // sentinel at the top of the page, so nothing runs per scroll event. The
+  // earlier `window.scrollY` read in a scroll listener forced a synchronous
+  // style + layout pass on every scroll frame (~130 ms per visit at 4× CPU)
+  // whenever another effect had just written to the DOM.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setScrolled(!entry.isIntersecting && entry.boundingClientRect.bottom <= 0),
+      { threshold: 0 },
+    );
+    io.observe(sentinel);
+    return () => io.disconnect();
   }, []);
 
   const close = useCallback((refocus: boolean) => {
@@ -66,6 +76,7 @@ export default function HomeNavbar() {
 
   return (
     <header data-hv="nav" className={`hv-navroot${open ? " hv-menu" : ""}`}>
+      <div ref={sentinelRef} className="hv-nav-sentinel" aria-hidden="true" />
       <nav className={`hv-nav${scrolled ? " hv-on" : ""}`} aria-label="Main">
         <Link href="/" className="hv-logo" aria-label={`${site.name} home`}>
           <Image

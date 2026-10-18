@@ -20,6 +20,17 @@
 .hv2 .hv-nav.hv-on {
   height: 84px;
 }
+/* 40px marker at the top of the page: the bar shrinks once it has scrolled
+   out (IntersectionObserver in HomeNavbar — no scroll listener). */
+.hv2 .hv-nav-sentinel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 41px;
+  pointer-events: none;
+  visibility: hidden;
+}
 
 /* gold metallic wave hanging below the bar: one 360px period repeated, so the
    wavelength is the same on every screen (an inline SVG with

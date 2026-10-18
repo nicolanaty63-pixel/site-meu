@@ -134,6 +134,8 @@
   background: linear-gradient(90deg, var(--hv-goldD), var(--hv-goldL));
   transform-origin: left;
   transform: scaleX(0);
+  /* its own compositor layer: the per-frame scaleX never repaints the page */
+  will-change: transform;
 }
 .hv2 .hv-card2 .hv-tcount {
   margin-top: 10px;

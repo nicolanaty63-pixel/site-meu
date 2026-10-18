@@ -42,3 +42,6 @@ next-env.d.ts
 *.p12
 *.pfx
 secrets.json
+
+# perf traces (scripts/perf-home.mjs)
+scripts/perf-out/

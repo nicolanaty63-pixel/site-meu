@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import type { Body as MatterBody, Engine as MatterEngine } from "matter-js";
 import type { FAQ } from "@/lib/data";
+import { subscribe, unsubscribe } from "../motion/ticker";
 
 type Copy = { folderLabel: string; folderSub: string; clientLabel: string; usLabel: string };
 
@@ -26,7 +27,9 @@ const jitter = (i: number) => {
  * spring easing), then — on fine and coarse pointers alike — matter-js
  * (imported only on the first open) lets them drift in zero gravity and be
  * dragged. Picking a note closes the folder and fades the card to that
- * question. Reduced motion: no flight, no physics.
+ * question. Reduced motion: no flight, no physics. The physics step runs on
+ * the shared ticker and only while the folder is open AND on screen (it used
+ * to keep stepping the engine after the section had scrolled away).
  */
 export default function FolderFaq({ faqs, copy }: { faqs: FAQ[]; copy: Copy }) {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -111,7 +114,7 @@ export default function FolderFaq({ faqs, copy }: { faqs: FAQ[]; copy: Copy }) {
 
     const stopPhysics = () => {
       window.clearTimeout(liveTimer);
-      cancelAnimationFrame(W.raf);
+      unsubscribe(tick);
       W.raf = 0;
       if (W.engine && matter) {
         W.bodies.forEach((b, i) => {
@@ -129,7 +132,7 @@ export default function FolderFaq({ faqs, copy }: { faqs: FAQ[]; copy: Copy }) {
     };
     const startPhysics = () => {
       if (!matter || W.engine || !open || !alive) return;
-      const { Bodies, Body, Composite, Engine } = matter;
+      const { Bodies, Composite, Engine } = matter;
       const engine = Engine.create({ gravity: { x: 0, y: 0, scale: 0.001 } });
       engine.enableSleeping = false;
       W.engine = engine;
@@ -166,29 +169,45 @@ export default function FolderFaq({ faqs, copy }: { faqs: FAQ[]; copy: Copy }) {
       W.last = 0;
       W.t0 = performance.now();
       root.setAttribute("data-live", "");
-      const tick = (now: number) => {
-        if (!W.engine) return;
-        const dt = W.last ? Math.min(32, now - W.last) : 16;
-        W.last = now;
-        const t = (now - W.t0) / 1000;
-        const k = P.drift * 0.00005 * Math.min(1, t / 2);
-        W.bodies.forEach((b, i) => {
-          if (W.drag && W.drag.i === i) return;
-          const ph = (b.plugin as { phase: number }).phase;
-          Body.applyForce(b, b.position, {
-            x: Math.sin(t * 0.9 + ph) * k * b.mass,
-            y: Math.cos(t * 1.3 + ph * 1.7) * k * b.mass,
-          });
-        });
-        Engine.update(W.engine, dt);
-        W.bodies.forEach((b, i) => {
-          items[i].style.setProperty("--x", `${b.position.x.toFixed(1)}px`);
-          items[i].style.setProperty("--y", `${(b.position.y - W.sizes[i].h / 2).toFixed(1)}px`);
-        });
-        W.raf = requestAnimationFrame(tick);
-      };
-      W.raf = requestAnimationFrame(tick);
+      if (onScreen) {
+        W.raf = 1;
+        subscribe(tick, 30);
+      }
     };
+    const tick = (now: number, dtRaw: number) => {
+      if (!W.engine || !matter) return;
+      const { Body, Engine } = matter;
+      const dt = Math.min(32, dtRaw);
+      const t = (now - W.t0) / 1000;
+      const k = P.drift * 0.00005 * Math.min(1, t / 2);
+      W.bodies.forEach((b, i) => {
+        if (W.drag && W.drag.i === i) return;
+        const ph = (b.plugin as { phase: number }).phase;
+        Body.applyForce(b, b.position, {
+          x: Math.sin(t * 0.9 + ph) * k * b.mass,
+          y: Math.cos(t * 1.3 + ph * 1.7) * k * b.mass,
+        });
+      });
+      Engine.update(W.engine, dt);
+      W.bodies.forEach((b, i) => {
+        items[i].style.setProperty("--x", `${b.position.x.toFixed(1)}px`);
+        items[i].style.setProperty("--y", `${(b.position.y - W.sizes[i].h / 2).toFixed(1)}px`);
+      });
+    };
+    // the engine only steps while the folder is on screen
+    let onScreen = true;
+    const io = new IntersectionObserver((entries) => {
+      onScreen = entries.some((e) => e.isIntersecting);
+      if (!W.engine) return;
+      if (onScreen && !W.raf) {
+        W.raf = 1;
+        subscribe(tick, 30);
+      } else if (!onScreen && W.raf) {
+        W.raf = 0;
+        unsubscribe(tick);
+      }
+    });
+    io.observe(root);
     const loadMatter = () => {
       if (matter || matterLoading || reduce) return matterLoading;
       matterLoading = import("matter-js").then((m) => {
@@ -332,6 +351,7 @@ export default function FolderFaq({ faqs, copy }: { faqs: FAQ[]; copy: Copy }) {
     window.addEventListener("resize", onResize);
     return () => {
       alive = false;
+      io.disconnect();
       window.removeEventListener("resize", onResize);
       cleanups.forEach((f) => f());
       stopPhysics();
